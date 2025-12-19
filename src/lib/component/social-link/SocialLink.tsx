@@ -24,7 +24,7 @@ const SocialLink = function ({ model }) {
 
 	return (
 		<Link
-			className={`hover:text-amber-400`}
+			className={`hover:text-[#DCB042]`}
 			href={details.link}
 			title={details.type}
 			target="_blank"

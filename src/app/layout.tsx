@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className="antialiased">
+			<body className={`antialiased`}>
 				<Header
 					model={newReadonlyModel({
 						title: "Nativity of the Theotokos Russian Orthodox Church",

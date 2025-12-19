@@ -18,7 +18,7 @@ const Header = function ({ model }) {
 							<Link
 								key={index}
 								href={navlink.link}
-								className="navlink text-sm uppercase no-underline hover:text-amber-400"
+								className="navlink text-sm uppercase no-underline hover:text-[#DCB042]"
 							>
 								{navlink.text}
 							</Link>
