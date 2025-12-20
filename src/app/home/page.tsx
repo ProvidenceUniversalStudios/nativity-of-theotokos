@@ -7,7 +7,7 @@ export default function Home() {
 	return (
 		<>
 			<main className="home">
-				<div className="hero bg-[url(/nativity-icon.webp)] bg-cover md:bg-size-[40%] md:bg-right bg-no-repeat">
+				<section className="hero bg-[url(/nativity-icon.webp)] bg-cover md:bg-size-[40%] md:bg-right bg-no-repeat">
 					<div className="hero-content flex flex-col justify-center items-center md:flex-row md:justify-start h-[30em] p-20 bg-black/60 md:bg-transparent">
 						<div className="hero-message flex flex-col md:w-[30em] md:max-w-1/2 gap-6">
 							<span
@@ -25,17 +25,17 @@ export default function Home() {
 							</span>
 						</div>
 					</div>
-				</div>
-				<div className="readings bg-[antiquewhite] text-black">
-					<div className="readings-content flex flex-col gap-6 p-9 md:px-20 md:py-10">
-						<span className="text-3xl font- md:w-1/2">
+				</section>
+				<section className="readings bg-[#250203] text-white">
+					<div className="readings-content flex flex-col gap-6 p-9 lg:px-20 md:py-10">
+						<span className="text-3xl font-serif md:w-1/2">
 							Daily Readings
 							<hr className="mt-4 mb-0" />
 						</span>
 						<div className="flex flex-col md:flex-wrap md:flex-row items-center gap-10">
 							<Image
-								className="h-[20em] w-auto hidden md:block"
-								height={1000}
+								className="h-[20em] w-auto border-[#DCB042] border-12 hidden md:block"
+								height={320}
 								width={1000}
 								alt="Saint of the day"
 								src="/st-nicholas.jpg"
@@ -73,7 +73,228 @@ export default function Home() {
 							</div>
 						</div>
 					</div>
-				</div>
+				</section>
+				<section className="daily-thought bg-[#0a0a0a] md:bg-[linear-gradient(to_right,#0a0a0a,transparent),url(/daily-thought-bg.jpg)] text-white bg-no-repeat bg-contain bg-right">
+					<div className="daily-thought-content flex items-center p-9 md:p-20 min-h-[25em]">
+						<div
+							className={`quote-box flex flex-col gap-4 items-center ${ebGaramond.className} md:w-1/2`}
+						>
+							<p className="quote text-lg">
+								The Fathers speak of prayer as consisting of a
+								single thought (monologistos euche). Strictly
+								speaking it is not even a thought, but rather an
+								awareness of being totally absorbed in the
+								reality of God. One can, nevertheless, call this
+								conscious experience ‘thought’, because it is
+								not simply a state of confused feeling or the
+								sensation of being lost in the ocean of
+								inarticulate reality, but it is awareness of
+								encounter with the personal infinity of God who
+								loves us. It is the mind’s confirmation of the
+								reality. I do not lose myself in this infinity,
+								because it is the infinity of a personal God and
+								of his love to which I respond with my love. For
+								the heart is truly the place where one
+								experiences the love of the other, and where one
+								responds to the other. I do not lose myself,
+								because it is the infinity of a personal God
+								whose love is my delight; I depend on his love
+								as I depend on his mercy, for face to face with
+								him I still feel infinitely small, and a sinner.
+							</p>
+							<span className="author italic">
+								— Dumitru Staniloe, Prayer and Holiness: The
+								Icon of Man Renewed in God
+							</span>
+						</div>
+					</div>
+				</section>
+				<section className="news bg-[antiquewhite] text-black">
+					<div className="news-content flex flex-col gap-6 p-9 md:px-20">
+						<span className="text-3xl font-serif md:w-1/2">
+							Latest News
+							<hr className="mt-4" />
+						</span>
+						<div className="flex flex-row flex-wrap gap-x-12 gap-y-6">
+							<div className="featured flex flex-col gap-4 md:max-w-1/2">
+								<span className="uppercase">Featured</span>
+								<div className="featured-card flex flex-col lg:flex-row lg:items-center bg-gray-900 text-white lg:bg-transparent lg:text-black lg:hover:bg-gray-900 lg:hover:text-white">
+									<Image
+										className="w-full h-auto md:h-[10em] lg:min-h-[15em] lg:h-full lg:w-[13em] object-cover"
+										height={500}
+										width={500}
+										alt="Saint of the day"
+										src="/nativity.jpg"
+									/>
+									<div className="card-details p-6 flex flex-col gap-2">
+										<span className="title text-xl font-serif">
+											Fr. George Maximov church visit
+										</span>
+										<span className="timestamp text-base uppercase">
+											23 September 2025, 11:00 AM
+										</span>
+										<p className="text-base line-clamp-6">
+											Lorem ipsum dolor sit amet
+											consectetur, adipisicing elit.
+											Dolorem ipsum, maxime minima
+											blanditiis eum rem est minus fuga
+											praesentium explicabo exercitationem
+											excepturi esse harum nam perferendis
+											pariatur, nesciunt assumenda dolore.
+											Lorem ipsum dolor sit amet
+											consectetur adipisicing elit. Qui
+											expedita perspiciatis nihil minima
+											dolorum sapiente in iure facere ipsa
+											ex doloremque fugiat atque incidunt
+											possimus assumenda quo, fugit
+											asperiores maiores!
+										</p>
+									</div>
+								</div>
+							</div>
+							<div className="schedule flex flex-col md:max-w-1/2">
+								<span className="uppercase">Schedule</span>
+							</div>
+						</div>
+						<div className="other-stories flex flex-col gap-4">
+							<span className="uppercase">Other Stories</span>
+							<div className="grid md:grid-cols-2 gap-4 lg:w-9/10">
+								<div className="normal-card flex flex-col lg:flex-row lg:items-center bg-gray-900 text-white lg:bg-transparent lg:text-black lg:hover:bg-gray-900 lg:hover:text-white">
+									<Image
+										className="w-full h-[10em] lg:max-h-[8em] lg:min-h-full lg:h-full lg:w-[10em] object-cover"
+										height={500}
+										width={500}
+										alt="Saint of the day"
+										src="/nativity-2.jpg"
+									/>
+									<div className="card-details p-6 flex flex-col gap-2">
+										<span className="title text-lg font-serif">
+											Fr Savva conducts liturgy
+										</span>
+										<span className="timestamp text-sm uppercase">
+											04 October 2025, 12:00 AM
+										</span>
+										<p className="line-clamp-2 max-lg:hidden">
+											Lorem ipsum dolor sit amet
+											consectetur, adipisicing elit.
+											Dolorem ipsum, maxime minima
+											blanditiis eum rem est minus fuga
+											praesentium explicabo exercitationem
+											excepturi esse harum nam perferendis
+											pariatur, nesciunt assumenda dolore.
+											Lorem ipsum dolor sit amet
+											consectetur adipisicing elit. Qui
+											expedita perspiciatis nihil minima
+											dolorum sapiente in iure facere ipsa
+											ex doloremque fugiat atque incidunt
+											possimus assumenda quo, fugit
+											asperiores maiores!
+										</p>
+									</div>
+								</div>
+								<div className="normal-card flex flex-col lg:flex-row lg:items-center bg-gray-900 text-white lg:bg-transparent lg:text-black lg:hover:bg-gray-900 lg:hover:text-white">
+									<Image
+										className="w-full h-[10em] lg:max-h-[8em] lg:min-h-full lg:h-full lg:w-[10em] object-cover"
+										height={500}
+										width={500}
+										alt="Saint of the day"
+										src="/nativity-3.jpg"
+									/>
+									<div className="card-details p-6 flex flex-col gap-2">
+										<span className="title text-lg font-serif">
+											Fr Savva conducts liturgy
+										</span>
+										<span className="timestamp text-sm uppercase">
+											04 October 2025, 12:00 AM
+										</span>
+										<p className="line-clamp-2 max-lg:hidden">
+											Lorem ipsum dolor sit amet
+											consectetur, adipisicing elit.
+											Dolorem ipsum, maxime minima
+											blanditiis eum rem est minus fuga
+											praesentium explicabo exercitationem
+											excepturi esse harum nam perferendis
+											pariatur, nesciunt assumenda dolore.
+											Lorem ipsum dolor sit amet
+											consectetur adipisicing elit. Qui
+											expedita perspiciatis nihil minima
+											dolorum sapiente in iure facere ipsa
+											ex doloremque fugiat atque incidunt
+											possimus assumenda quo, fugit
+											asperiores maiores!
+										</p>
+									</div>
+								</div>
+								<div className="normal-card flex flex-col lg:flex-row lg:items-center bg-gray-900 text-white lg:bg-transparent lg:text-black lg:hover:bg-gray-900 lg:hover:text-white">
+									<Image
+										className="w-full h-[10em] lg:max-h-[8em] lg:min-h-full lg:h-full lg:w-[10em] object-cover"
+										height={500}
+										width={500}
+										alt="Saint of the day"
+										src="/nativity-5.jpg"
+									/>
+									<div className="card-details p-6 flex flex-col gap-2">
+										<span className="title text-lg font-serif">
+											Fr Savva conducts liturgy
+										</span>
+										<span className="timestamp text-sm uppercase">
+											04 October 2025, 12:00 AM
+										</span>
+										<p className="line-clamp-2 max-lg:hidden">
+											Lorem ipsum dolor sit amet
+											consectetur, adipisicing elit.
+											Dolorem ipsum, maxime minima
+											blanditiis eum rem est minus fuga
+											praesentium explicabo exercitationem
+											excepturi esse harum nam perferendis
+											pariatur, nesciunt assumenda dolore.
+											Lorem ipsum dolor sit amet
+											consectetur adipisicing elit. Qui
+											expedita perspiciatis nihil minima
+											dolorum sapiente in iure facere ipsa
+											ex doloremque fugiat atque incidunt
+											possimus assumenda quo, fugit
+											asperiores maiores!
+										</p>
+									</div>
+								</div>
+								<div className="normal-card flex flex-col lg:flex-row lg:items-center bg-gray-900 text-white lg:bg-transparent lg:text-black lg:hover:bg-gray-900 lg:hover:text-white">
+									<Image
+										className="w-full h-[10em] lg:max-h-[8em] lg:min-h-full lg:h-full lg:w-[10em] object-cover"
+										height={500}
+										width={500}
+										alt="Saint of the day"
+										src="/nativity-2.jpg"
+									/>
+									<div className="card-details p-6 flex flex-col gap-2">
+										<span className="title text-lg font-serif">
+											Fr Savva conducts liturgy
+										</span>
+										<span className="timestamp text-sm uppercase">
+											04 October 2025, 12:00 AM
+										</span>
+										<p className="line-clamp-2 max-lg:hidden">
+											Lorem ipsum dolor sit amet
+											consectetur, adipisicing elit.
+											Dolorem ipsum, maxime minima
+											blanditiis eum rem est minus fuga
+											praesentium explicabo exercitationem
+											excepturi esse harum nam perferendis
+											pariatur, nesciunt assumenda dolore.
+											Lorem ipsum dolor sit amet
+											consectetur adipisicing elit. Qui
+											expedita perspiciatis nihil minima
+											dolorum sapiente in iure facere ipsa
+											ex doloremque fugiat atque incidunt
+											possimus assumenda quo, fugit
+											asperiores maiores!
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 			</main>
 			<div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
 				<div className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
