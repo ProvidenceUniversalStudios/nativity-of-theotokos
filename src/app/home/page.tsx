@@ -110,7 +110,7 @@ export default function Home() {
 					</div>
 				</section>
 				<section className="news bg-[antiquewhite] text-black">
-					<div className="news-content flex flex-col gap-6 p-9 md:px-20">
+					<div className="news-content flex flex-col gap-6 p-9 lg:px-20">
 						<span className="text-3xl font-serif md:w-1/2">
 							Latest News
 							<hr className="mt-4" />
@@ -152,8 +152,87 @@ export default function Home() {
 									</div>
 								</div>
 							</div>
-							<div className="schedule flex flex-col md:max-w-1/2">
+							<div className="schedule flex flex-col gap-4 flex-1">
 								<span className="uppercase">Schedule</span>
+								<div className="schedule-list flex flex-col w-full gap-4 pr-6 max-h-[20em] lg:max-h-[15em] overflow-y-auto">
+									<div className="latest-scheduled flex items-center">
+										<div className="flex flex-col gap-2 items-center text-center p-4 bg-gray-900 text-white font-serif">
+											<span className="text-4xl">19</span>
+											<span className="uppercase">
+												Dec 25
+											</span>
+										</div>
+										<div className="flex flex-col py-3 px-6 gap-1">
+											<span className="text-xl">
+												Divine Liturgy
+											</span>
+											<span>
+												Nativity of the Theotokos Parish
+											</span>
+											<span className="text-sm">
+												12:00 PM
+											</span>
+										</div>
+									</div>
+									<hr className="my-2" />
+									<div className="scheduled-item flex items-center">
+										<div className="flex flex-col gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
+											<span className="text-xl">25</span>
+											<span className="text-xs uppercase">
+												Dec 25
+											</span>
+										</div>
+										<div className="flex flex-col py-2 px-4">
+											<span className="text-base">
+												Divine Liturgy
+											</span>
+											<span className="text-sm">
+												Nativity of the Theotokos Parish
+											</span>
+											<span className="text-xs">
+												12:00 PM
+											</span>
+										</div>
+									</div>
+									<div className="scheduled-item flex items-center">
+										<div className="flex flex-col gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
+											<span className="text-xl">31</span>
+											<span className="text-xs uppercase">
+												Dec 25
+											</span>
+										</div>
+										<div className="flex flex-col py-2 px-4">
+											<span className="text-base">
+												Divine Liturgy
+											</span>
+											<span className="text-sm">
+												Nativity of the Theotokos Parish
+											</span>
+											<span className="text-xs">
+												12:00 PM
+											</span>
+										</div>
+									</div>
+									<div className="scheduled-item flex items-center">
+										<div className="flex flex-col gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
+											<span className="text-xl">07</span>
+											<span className="text-xs uppercase">
+												Jan 26
+											</span>
+										</div>
+										<div className="flex flex-col py-2 px-4">
+											<span className="text-base">
+												Theophany | Divine Liturgy
+											</span>
+											<span className="text-sm">
+												Nativity of the Theotokos Parish
+											</span>
+											<span className="text-xs">
+												12:00 PM
+											</span>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className="other-stories flex flex-col gap-4">
