@@ -36,7 +36,9 @@ const Footer = function ({ model }) {
 								Email:{" "}
 								<Link
 									className="hover:underline"
-									href={"mailto:austinmkajawa@gmail.com"}
+									href={
+										"mailto:nativityoftheotokos@gmail.com"
+									}
 								>
 									nativityoftheotokos@gmail.com
 								</Link>
@@ -83,7 +85,7 @@ const Footer = function ({ model }) {
 								</Link>
 								<Link
 									className="hover:underline"
-									href={"https://mospat.ru"}
+									href={"https://mospat.ru/en"}
 									target="_blank"
 								>
 									{"Moscow Patriarchate"}
@@ -125,7 +127,7 @@ const Footer = function ({ model }) {
 						model={newReadonlyModel({
 							details: {
 								type: "Facebook",
-								link: "https://facebook.com/",
+								link: "https://facebook.com/people/Orthodox-Church-in-Zimbabwe-Moscow-Patriarchate/61577719142729",
 							},
 						})}
 					/>
@@ -133,7 +135,7 @@ const Footer = function ({ model }) {
 						model={newReadonlyModel({
 							details: {
 								type: "Instagram",
-								link: "https://instagram.com/",
+								link: "https://instagram.com/exarchate.mp",
 							},
 						})}
 					/>
@@ -141,7 +143,7 @@ const Footer = function ({ model }) {
 						model={newReadonlyModel({
 							details: {
 								type: "WhatsApp",
-								link: "https://wa.me/",
+								link: "https://wa.me/263716063616",
 							},
 						})}
 					/>
@@ -150,9 +152,16 @@ const Footer = function ({ model }) {
 					&copy; {copyrightText}
 				</span>
 				<div className="licenses flex gap-4 text-gray-400 text-xs">
-					<Link href="https://lordicon.com/" target="_blank">
-						Logo icon by Lordicon.com
-					</Link>
+					<span>
+						Logo icon by{" "}
+						<Link
+							className="underline hover:text-[#dcb042]"
+							href="https://lordicon.com/"
+							target="_blank"
+						>
+							Lordicon.com
+						</Link>
+					</span>
 				</div>
 			</div>
 		</footer>
