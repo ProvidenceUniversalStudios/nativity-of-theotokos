@@ -18,6 +18,10 @@ import { subscribeToMailingList } from "@/src/lib/utility/server-actions";
 
 type MailingListStatus = "subscribed" | "not_subscribed" | "pending";
 const ebGaramond = EB_Garamond({ subsets: ["latin", "cyrillic"] });
+const calendarDate = new Date();
+const liturgicalCalendarDate = new Date(
+	new Date().setDate(calendarDate.getDate() - 13)
+);
 
 export default function Home() {
 	const [mailingListStatus, setMailingListStatus] =
@@ -38,8 +42,8 @@ export default function Home() {
 	return (
 		<main className="home bg-[whitesmoke]">
 			<section className="hero bg-[#DCB042] text-black bg-[url(/nativity-icon.webp)] bg-cover bg-center bg-no-repeat md:bg-size-[100%] md:bg-position-[60%_85%]">
-				<div className="hero-content flex flex-col justify-center items-center md:flex-row md:justify-start h-[30em] p-10 md:p-20 bg-black/70">
-					<div className="hero-message flex flex-col md:w-[35em] md:max-w-3/4 gap-6 md:p-8 justify-center">
+				<div className="hero-content flex flex-col justify-center items-center md:flex-row h-[30em] p-10 md:p-20 bg-black/70">
+					<div className="hero-message flex flex-col md:w-[35em] md:max-w-1/2 gap-6 md:p-8 justify-center">
 						<span
 							className={`heading text-6xl font-serif text-white ${ebGaramond.className}`}
 						>
@@ -54,6 +58,15 @@ export default function Home() {
 							(est. 2025)
 						</span>
 					</div>
+					<div className="icon md:flex md:w-1/2 hidden justify-center items-center">
+						<Image
+							className="h-[20em] w-[15em]"
+							src="/nativity-icon.webp"
+							alt="Icon of the Nativity of the Theotokos"
+							height={400}
+							width={300}
+						/>
+					</div>
 				</div>
 			</section>
 			<section className="readings bg-[antiquewhite] text-black bg-[url(/ornament_3_tr.svg)] bg-no-repeat bg-size-[13em] md:bg-size-[30em] bg-position-[98%_0.5%] md:bg-position-[100%_0.5%]">
@@ -63,48 +76,61 @@ export default function Home() {
 						<hr className="mt-4 mb-0 w-3/4 md:w-full" />
 					</span>
 					<div className="flex md:flex-row md:h-fit lg:w-209.5 md:mt-4 items-stretch bg-white/70 border border-gray-900/20">
-						<div className="md:flex grow w-100 items-stretch justify-center p-3 hidden bg-gray-900">
+						<div className="md:flex min-w-50 w-70 items-stretch justify-center p-3 hidden bg-gray-900">
 							<Image
 								className="hidden md:block object-cover object-center"
 								height={320}
 								width={240}
 								alt="Saint of the day"
-								src="/st-nicholas.jpg"
+								src={`https://holytrinityorthodox.com/htc/ocalendar/los/${liturgicalCalendarDate.toLocaleString(
+									"default",
+									{ month: "long" }
+								)}/${liturgicalCalendarDate.getDate()}-01.jpg`}
 							/>
 						</div>
-						<div className="info flex flex-col">
-							<div className="texts flex flex-col gap-4 p-5 md:p-4 md:pl-7">
+						<div className="info flex flex-col grow">
+							<div className="texts flex flex-col md:justify-center grow gap-4 p-5 md:p-4 md:pl-7">
 								<span className="text-2xl font-serif">
-									Friday, 19 December 2025
+									{calendarDate.toLocaleDateString("en-uk", {
+										dateStyle: "full",
+									})}
 								</span>
 								<div className="flex flex-col gap-2">
 									<span className="text-lg">
-										28th Week After Pentecost, Tone II
+										30th Sunday after Pentecost. Tone five
 									</span>
 									<p className="text-base">
-										St Nicholas the Wonderworker, Abp. of
-										Myra in Lycia; New Martyr Nicolas
-										Karamos of Smyrna (1657); St Maximus,
-										Metropolitan of Kiev & Vladimir (1305)
+										Sunday before the Nativity of our Lord
+										God and Savior Jesus Christ. Forefeast
+										of the Nativity of Christ. Great-martyr
+										Anastasia of Rome, deliverer from bonds,
+										and her teacher Martyr Chrysogonus, and
+										with them martyrs Theodota, Evodias,
+										Eutychianus, and others who suffered
+										under Diocletian (304). Venerable
+										Nicephorus the Leper (1964). New
+										Hieromartyrs Demetrius and Theodore
+										priests (1938). Martyr Zoilus (Greek).
 									</p>
 								</div>
 								<div className="flex flex-col">
 									<span className="text-base">
-										John 10:9-16 (Matins Gospel)
+										John 20:11-18 (8th Matins Gospel)
 									</span>
 									<span className="text-base">
-										Hebrews 13:17-21 (Epistle, Saint
-										Nicholas)
+										Hebrews 11:9-10, 17-23, 32-40 Sunday
+										Before
 									</span>
 									<span className="text-base">
-										Luke 6:17-23 (Gospel, Saint Nicholas)
+										Matthew 1:1-25 Sunday Before
 									</span>
 								</div>
 							</div>
 							<div className="fasting-info bg-[#250203]/80 text-white text-center md:text-left p-2 px-4 md:px-7 md:mt-0">
 								<span className="text-base">
-									Nativity Fast | By strict monastic charter
-									(bread, vegetables, fruits)
+									{
+										"Nativity (St. Philip's Fast). Food with Oil"
+									}
 								</span>
 							</div>
 						</div>
@@ -145,7 +171,12 @@ export default function Home() {
 					<div className="flex flex-row flex-wrap gap-x-12 gap-y-6 px-9 pb-8 lg:px-20">
 						<div className="featured flex flex-col gap-4 md:max-w-1/2">
 							<span className="text-xl">Featured</span>
-							<div className="featured-card flex flex-col lg:flex-row lg:items-center lg:text-black hover:cursor-pointer bg-white/70 border border-gray-900/20">
+							<div
+								className="featured-card flex flex-col lg:flex-row lg:items-center lg:text-black hover:cursor-pointer bg-white/70 border border-gray-900/20"
+								onClick={() =>
+									alert("Content to be added soon!")
+								}
+							>
 								<Image
 									className="w-full h-auto md:h-[10em] lg:min-h-[15em] lg:h-full lg:w-[13em] object-cover"
 									height={500}
@@ -183,9 +214,9 @@ export default function Home() {
 							<div className="schedule-list flex flex-col w-full gap-4 pr-6 max-h-[20em] lg:max-h-[15em] overflow-y-auto">
 								<div className="latest-scheduled flex items-center">
 									<div className="flex flex-col gap-2 items-center text-center p-4 bg-gray-900 text-white font-serif">
-										<span className="text-4xl">19</span>
+										<span className="text-4xl">04</span>
 										<span className="uppercase">
-											Dec 25
+											Jan 26
 										</span>
 									</div>
 									<div className="flex flex-col py-3 px-6 gap-1">
@@ -203,59 +234,53 @@ export default function Home() {
 								<hr className="my-2" />
 								<div className="scheduled-item flex items-center">
 									<div className="flex flex-col gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
-										<span className="text-xl">25</span>
-										<span className="text-xs uppercase">
-											Dec 25
-										</span>
-									</div>
-									<div className="flex flex-col py-2 px-4">
-										<span className="text-base">
-											Divine Liturgy
-										</span>
-										<span className="text-sm">
-											Nativity of the Theotokos Parish
-										</span>
-										<span className="text-xs">
-											12:00 PM
-										</span>
-									</div>
-								</div>
-								<div className="scheduled-item flex items-center">
-									<div className="flex flex-col gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
-										<span className="text-xl">31</span>
-										<span className="text-xs uppercase">
-											Dec 25
-										</span>
-									</div>
-									<div className="flex flex-col py-2 px-4">
-										<span className="text-base">
-											Divine Liturgy
-										</span>
-										<span className="text-sm">
-											Nativity of the Theotokos Parish
-										</span>
-										<span className="text-xs">
-											12:00 PM
-										</span>
-									</div>
-								</div>
-								<div className="scheduled-item flex items-center">
-									<div className="flex flex-col gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
-										<span className="text-xl">07</span>
+										<span className="text-xl">11</span>
 										<span className="text-xs uppercase">
 											Jan 26
 										</span>
 									</div>
 									<div className="flex flex-col py-2 px-4">
 										<span className="text-base">
-											Nativity Feast | Divine Liturgy
+											Typika Service
 										</span>
 										<span className="text-sm">
-											Nativity of the Theotokos Parish
+											St. Sergius Parish
 										</span>
-										<span className="text-xs">
-											12:00 PM
+										<span className="text-xs">9:00 AM</span>
+									</div>
+								</div>
+								<div className="scheduled-item flex items-center">
+									<div className="flex flex-col gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
+										<span className="text-xl">18</span>
+										<span className="text-xs uppercase">
+											Jan 26
 										</span>
+									</div>
+									<div className="flex flex-col py-2 px-4">
+										<span className="text-base">
+											Typika Service
+										</span>
+										<span className="text-sm">
+											St. Sergius Parish
+										</span>
+										<span className="text-xs">9:00 AM</span>
+									</div>
+								</div>
+								<div className="scheduled-item flex items-center">
+									<div className="flex flex-col gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
+										<span className="text-xl">25</span>
+										<span className="text-xs uppercase">
+											Jan 26
+										</span>
+									</div>
+									<div className="flex flex-col py-2 px-4">
+										<span className="text-base">
+											Typika Service
+										</span>
+										<span className="text-sm">
+											St. Sergius Parish
+										</span>
+										<span className="text-xs">9:00 AM</span>
 									</div>
 								</div>
 							</div>
@@ -264,72 +289,12 @@ export default function Home() {
 					<div className="other-stories flex flex-col gap-4 pt-6 pb-10 px-9 lg:px-20 bg-white/70">
 						<span className="text-xl mb-2">Other Stories</span>
 						<div className="grid lg:grid-cols-2 gap-8 md:gap-6 md:w-3/4 lg:w-9/10">
-							<div className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer">
-								<Image
-									className="max-h-[8em] min-h-full h-full w-[6em] md:w-[10em] object-cover"
-									height={500}
-									width={500}
-									alt="News article image"
-									src="/nativity-2.jpg"
-								/>
-								<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
-									<span className="title text-lg font-serif">
-										Fr Savva and Fr George Maximov conduct
-										liturgy
-									</span>
-									<span className="byline text-sm text-gray-600">
-										Vasily Greyling | 04 October 2025
-									</span>
-									<p className="line-clamp-2 max-lg:hidden">
-										Lorem ipsum dolor sit amet consectetur,
-										adipisicing elit. Dolorem ipsum, maxime
-										minima blanditiis eum rem est minus fuga
-										praesentium explicabo exercitationem
-										excepturi esse harum nam perferendis
-										pariatur, nesciunt assumenda dolore.
-										Lorem ipsum dolor sit amet consectetur
-										adipisicing elit. Qui expedita
-										perspiciatis nihil minima dolorum
-										sapiente in iure facere ipsa ex
-										doloremque fugiat atque incidunt
-										possimus assumenda quo, fugit asperiores
-										maiores!
-									</p>
-								</div>
-							</div>
-							<div className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer">
-								<Image
-									className="max-h-[8em] min-h-full h-full w-[6em] md:w-[10em] object-cover"
-									height={500}
-									width={500}
-									alt="News article image"
-									src="/nativity-3.jpg"
-								/>
-								<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
-									<span className="title text-lg font-serif">
-										Fr Savva conducts liturgy
-									</span>
-									<span className="byline text-sm text-gray-600">
-										Vasily Greyling | 04 October 2025
-									</span>
-									<p className="line-clamp-2 max-lg:hidden">
-										Lorem ipsum dolor sit amet consectetur,
-										adipisicing elit. Dolorem ipsum, maxime
-										minima blanditiis eum rem est minus fuga
-										praesentium explicabo exercitationem
-										excepturi esse harum nam perferendis
-										pariatur, nesciunt assumenda dolore.
-										Lorem ipsum dolor sit amet consectetur
-										adipisicing elit. Qui expedita
-										perspiciatis nihil minima dolorum
-										sapiente in iure facere ipsa ex
-										doloremque fugiat atque incidunt
-										possimus assumenda quo, fugit asperiores
-										maiores!
-									</p>
-								</div>
-							</div>
-							<div className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer">
+							<div
+								className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
+								onClick={() =>
+									alert("Content to be added soon!")
+								}
+							>
 								<Image
 									className="max-h-[8em] min-h-full h-full w-[6em] md:w-[10em] object-cover"
 									height={500}
@@ -339,10 +304,10 @@ export default function Home() {
 								/>
 								<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
 									<span className="title text-lg font-serif">
-										Fr Savva conducts liturgy
+										Liturgy on December 7 with Fr Savva
 									</span>
 									<span className="byline text-sm text-gray-600">
-										Vasily Greyling | 04 October 2025
+										Vasily Greyling | 08 December 2025
 									</span>
 									<p className="line-clamp-2 max-lg:hidden">
 										Lorem ipsum dolor sit amet consectetur,
@@ -361,7 +326,88 @@ export default function Home() {
 									</p>
 								</div>
 							</div>
-							<div className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer">
+							<div
+								className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
+								onClick={() =>
+									alert("Content to be added soon!")
+								}
+							>
+								<Image
+									className="max-h-[8em] min-h-full h-full w-[6em] md:w-[10em] object-cover"
+									height={500}
+									width={500}
+									alt="News article image"
+									src="/nativity-3.jpg"
+								/>
+								<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
+									<span className="title text-lg font-serif">
+										Fr Savva celebrates liturgy with us on
+										the 1st of November
+									</span>
+									<span className="byline text-sm text-gray-600">
+										Vasily Greyling | 03 November 2025
+									</span>
+									<p className="line-clamp-2 max-lg:hidden">
+										Lorem ipsum dolor sit amet consectetur,
+										adipisicing elit. Dolorem ipsum, maxime
+										minima blanditiis eum rem est minus fuga
+										praesentium explicabo exercitationem
+										excepturi esse harum nam perferendis
+										pariatur, nesciunt assumenda dolore.
+										Lorem ipsum dolor sit amet consectetur
+										adipisicing elit. Qui expedita
+										perspiciatis nihil minima dolorum
+										sapiente in iure facere ipsa ex
+										doloremque fugiat atque incidunt
+										possimus assumenda quo, fugit asperiores
+										maiores!
+									</p>
+								</div>
+							</div>
+							<div
+								className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
+								onClick={() =>
+									alert("Content to be added soon!")
+								}
+							>
+								<Image
+									className="max-h-[8em] min-h-full h-full w-[6em] md:w-[10em] object-cover"
+									height={500}
+									width={500}
+									alt="News article image"
+									src="/nativity-4.jpg"
+								/>
+								<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
+									<span className="title text-lg font-serif">
+										Nativity of the Theotokos parish holds
+										its first official liturgy
+									</span>
+									<span className="byline text-sm text-gray-600">
+										Vasily Greyling | 05 October 2025
+									</span>
+									<p className="line-clamp-2 max-lg:hidden">
+										Lorem ipsum dolor sit amet consectetur,
+										adipisicing elit. Dolorem ipsum, maxime
+										minima blanditiis eum rem est minus fuga
+										praesentium explicabo exercitationem
+										excepturi esse harum nam perferendis
+										pariatur, nesciunt assumenda dolore.
+										Lorem ipsum dolor sit amet consectetur
+										adipisicing elit. Qui expedita
+										perspiciatis nihil minima dolorum
+										sapiente in iure facere ipsa ex
+										doloremque fugiat atque incidunt
+										possimus assumenda quo, fugit asperiores
+										maiores!
+									</p>
+								</div>
+							</div>
+							<div
+								className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
+								onClick={() =>
+									alert("Content to be added soon!")
+								}
+							>
 								<Image
 									className="max-h-[8em] min-h-full h-full w-[6em] md:w-[10em] object-cover"
 									height={500}
@@ -371,10 +417,11 @@ export default function Home() {
 								/>
 								<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
 									<span className="title text-lg font-serif">
-										Fr Savva conducts liturgy
+										Fr George Maximov celebrates liturgy
+										with our community
 									</span>
 									<span className="byline text-sm text-gray-600">
-										Vasily Greyling | 04 October 2025
+										Vasily Greyling | 22 September 2025
 									</span>
 									<p className="line-clamp-2 max-lg:hidden">
 										Lorem ipsum dolor sit amet consectetur,
@@ -397,25 +444,49 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="resources bg-[#250203] text-white">
+			<section
+				id="resources"
+				className="resources bg-[#250203] text-white"
+			>
 				<div className="resources-content flex flex-col gap-8 p-9 py-14 lg:px-20">
 					<div className="flex flex-col gap-6 w-full justify-center items-center md:flex-row">
 						<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/nativity-9.jpg)] bg-cover bg-center">
-							<div className="flex size-full p-6 justify-center items-end text-center  text-white">
+							<div
+								className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
+								onClick={() =>
+									alert("Content to be added soon!")
+								}
+							>
 								<span className="text-3xl mb-3 font-serif">
 									About our Parish
 								</span>
 							</div>
 						</div>
 						<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/nativity-11.jpg)] bg-cover">
-							<div className="flex size-full p-6 justify-center items-end text-center  text-white">
+							<div
+								className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
+								onClick={() =>
+									window.open(
+										"https://eadiocese.org/litresource",
+										"_blank"
+									)
+								}
+							>
 								<span className="text-3xl mb-3 font-serif">
 									Liturgical Resources
 								</span>
 							</div>
 						</div>
 						<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/nativity-7.jpg)] bg-cover bg-center">
-							<div className="flex size-full p-6 justify-center items-end text-center  text-white">
+							<div
+								className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
+								onClick={() =>
+									window.open(
+										"https://www.oca.org/orthodoxy/the-orthodox-faith",
+										"_blank"
+									)
+								}
+							>
 								<span className="text-3xl mb-3 font-serif">
 									What is Orthodoxy?
 								</span>
@@ -424,7 +495,10 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="gallery bg-[antiquewhite] text-black">
+			<section
+				id="media"
+				className="gallery bg-[antiquewhite] text-black"
+			>
 				<div className="gallery-content flex flex-col gap-8 p-9 py-14 lg:px-20 bg-[url(/ornament_4.svg)] bg-size-[15em] bg-bottom-left bg-no-repeat">
 					<div className="swiper-container w-full max-w-full">
 						<Swiper

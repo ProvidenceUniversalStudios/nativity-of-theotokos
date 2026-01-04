@@ -13,7 +13,7 @@ const Header = function ({ model }) {
 	const isWideScreen = useMediaQuery({ minWidth: 768 });
 
 	return (
-		<header className="w-full max-w-full top-0 sticky z-10">
+		<header className="w-full max-w-full top-0 sticky z-10 scroll-pt-6.5">
 			<div className="header-content flex flex-nowrap gap-9 justify-between p-3 px-4 md:p-4 lg:px-7 items-center bg-gray-900/99 text-white">
 				<div className="logo flex gap-3 items-center justify-center max-w-[18em]">
 					<Image

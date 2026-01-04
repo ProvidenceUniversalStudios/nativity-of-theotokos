@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 		template: "%s | Nativity of the Theotokos Church",
 		default: "Home | Nativity of the Theotokos Church",
 	},
+	description: "Official website of the Nativity of the Theotokos parish of the Russian Orthodox Church in Zimbabwe. (est. 2025)"
 };
 
 export default function RootLayout({
@@ -24,10 +25,10 @@ export default function RootLayout({
 						title: "Nativity of the Theotokos Russian Orthodox Church",
 						navlinks: [
 							{ link: "/", text: "Home" },
-							{ link: "/", text: "Our Parish" },
-							{ link: "/", text: "Resources" },
-							{ link: "/", text: "Media" },
-							{ link: "/", text: "Contact" },
+							{ link: "/#resources", text: "About Us" },
+							{ link: "/#resources", text: "Resources" },
+							{ link: "/#media", text: "Media" },
+							{ link: "/#footer", text: "Contact" },
 						],
 					})}
 				/>
