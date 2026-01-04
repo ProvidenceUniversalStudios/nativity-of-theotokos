@@ -450,18 +450,6 @@ export default function Home() {
 			>
 				<div className="resources-content flex flex-col gap-8 p-9 py-14 lg:px-20">
 					<div className="flex flex-col gap-6 w-full justify-center items-center md:flex-row">
-						<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/nativity-9.jpg)] bg-cover bg-center">
-							<div
-								className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
-								onClick={() =>
-									alert("Content to be added soon!")
-								}
-							>
-								<span className="text-3xl mb-3 font-serif">
-									About our Parish
-								</span>
-							</div>
-						</div>
 						<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/nativity-11.jpg)] bg-cover">
 							<div
 								className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
@@ -489,6 +477,18 @@ export default function Home() {
 							>
 								<span className="text-3xl mb-3 font-serif">
 									What is Orthodoxy?
+								</span>
+							</div>
+						</div>
+						<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/nativity-9.jpg)] bg-cover bg-center">
+							<div
+								className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
+								onClick={() =>
+									alert("Content to be added soon!")
+								}
+							>
+								<span className="text-3xl mb-3 font-serif">
+									About our Parish
 								</span>
 							</div>
 						</div>
