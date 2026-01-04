@@ -579,10 +579,7 @@ export default function Home() {
 							<form
 								action={formData => {
 									subscribe(
-										formData
-											.get("mailing-email")!
-											.toString()
-											.trim()
+										formData.get("email")!.toString().trim()
 									);
 								}}
 								onSubmit={() => {
@@ -594,7 +591,7 @@ export default function Home() {
 										className="grow p-4 bg-[whitesmoke]"
 										type="email"
 										placeholder="you@example.com"
-										name="mailing-email"
+										name="email"
 										id="mailing-email"
 										required
 									/>
