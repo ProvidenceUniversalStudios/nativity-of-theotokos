@@ -27,8 +27,8 @@ export default function RootLayout({
 						navlinks: [
 							{ link: "/", text: "Home" },
 							{ link: "/#resources", text: "Resources" },
-							{ link: "/#resources", text: "About Us" },
 							{ link: "/#media", text: "Media" },
+							{ link: "/#resources", text: "About Us" },
 							{ link: "/#footer", text: "Contact" },
 						],
 					})}
