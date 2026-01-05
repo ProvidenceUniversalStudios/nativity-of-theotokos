@@ -84,10 +84,10 @@ export default function Home() {
 						<hr className="mt-4 mb-0 w-3/4 md:w-full" />
 					</span>
 					{dailyReadings ? (
-						<div className="flex md:flex-row md:h-fit lg:w-209.5 md:mt-4 items-stretch bg-white/70 border border-gray-900/20">
-							<div className="md:flex min-w-50 w-70 items-stretch justify-center p-3 hidden bg-gray-900">
+						<div className="flex md:flex-row md:h-fit lg:w-9/10 md:mt-4 items-stretch bg-white/70 border border-gray-900/20">
+							<div className="md:flex min-w-70 w-70 items-stretch justify-center p-3 hidden bg-gray-900">
 								<Image
-									className="hidden md:block object-cover object-center"
+									className="hidden md:block grow object-cover object-center"
 									height={320}
 									width={240}
 									alt="Saint of the day"
@@ -95,7 +95,7 @@ export default function Home() {
 								/>
 							</div>
 							<div className="info flex flex-col grow">
-								<div className="texts flex flex-col md:justify-center grow gap-4 p-5 md:p-4 md:pl-7">
+								<div className="texts flex flex-col md:justify-center grow gap-4 p-5 md:p-4 md:px-7">
 									<span className="text-2xl font-serif">
 										{dailyReadings.currentDate}
 									</span>
@@ -140,13 +140,12 @@ export default function Home() {
 						<p className="quote text-lg">
 							<span>“</span>
 							{
-								"The Fathers speak of prayer as consisting of a single thought (monologistos euche). Strictly speaking it is not even a thought, but rather an awareness of being totally absorbed in the reality of God. One can, nevertheless, call this conscious experience ‘thought’, because it is not simply a state of confused feeling or the sensation of being lost in the ocean of inarticulate reality, but it is awareness of encounter with the personal infinity of God who loves us."
+								"That I am a monk and you are a layman is of no importance ... rather that we are both in the light of the Holy Spirit ... Acquire peace, and thousands around you will be saved."
 							}
 							<span>”</span>
 						</p>
 						<span className="author italic">
-							— Dumitru Staniloe, Prayer and Holiness: The Icon of
-							Man Renewed in God
+							— St. Seraphim of Sarov
 						</span>
 					</div>
 				</div>
