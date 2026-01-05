@@ -9,5 +9,6 @@ export type DailyReadings = {
 	saints: string;
 	scriptures: string[];
 	fastingInfo: string;
-	saintOfTheDayThumbnail: string;
+	iconOfTheDay: string;
+	readingsLink: URL;
 };

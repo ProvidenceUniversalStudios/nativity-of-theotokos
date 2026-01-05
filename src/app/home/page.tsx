@@ -84,14 +84,22 @@ export default function Home() {
 						<hr className="mt-4 mb-0 w-3/4 md:w-full" />
 					</span>
 					{dailyReadings ? (
-						<div className="flex md:flex-row md:h-fit lg:w-9/10 md:mt-4 items-stretch bg-white/70 border border-gray-900/20">
-							<div className="md:flex min-w-70 w-70 items-stretch justify-center p-3 hidden bg-gray-900">
+						<div
+							className="flex md:flex-row md:h-fit lg:w-9/10 md:mt-4 items-stretch bg-white/70 border border-gray-900/20 hover:cursor-pointer"
+							onClick={() => {
+								window.open(
+									dailyReadings.readingsLink,
+									"_blank"
+								);
+							}}
+						>
+							<div className="md:flex min-w-60 w-60 lg:min-w-70 lg:w-70 items-stretch justify-center p-3 hidden bg-gray-900">
 								<Image
 									className="hidden md:block grow object-cover object-center"
 									height={320}
 									width={240}
-									alt="Saint of the day"
-									src={dailyReadings.saintOfTheDayThumbnail}
+									alt="Icon of the day"
+									src={dailyReadings.iconOfTheDay}
 								/>
 							</div>
 							<div className="info flex flex-col grow">
