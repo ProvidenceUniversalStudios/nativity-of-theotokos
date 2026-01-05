@@ -1,32 +1,32 @@
 "use client";
 
-import Image from "next/image";
 import { EB_Garamond } from "next/font/google";
-import { Navigation, Autoplay } from "swiper/modules";
+import Image from "next/image";
+import { Autoplay, Navigation } from "swiper/modules";
 
-import { Swiper, SwiperSlide } from "swiper/react";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { Swiper, SwiperSlide } from "swiper/react";
 // import { faEnvelope as Email } from "@fortawesome/free-regular-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Import Swiper styles
+import { DailyReadings } from "@/src/lib/type/miscellaneous";
+import {
+	getDailyReadings,
+	subscribeToMailingList,
+} from "@/src/lib/utility/server-actions";
+import { useCallback, useLayoutEffect, useState } from "react";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/autoplay";
-import { useCallback, useState } from "react";
-import { subscribeToMailingList } from "@/src/lib/utility/server-actions";
+import "swiper/css/navigation";
 
 type MailingListStatus = "subscribed" | "not_subscribed" | "pending";
 const ebGaramond = EB_Garamond({ subsets: ["latin", "cyrillic"] });
-const calendarDate = new Date();
-const liturgicalCalendarDate = new Date(
-	new Date().setDate(calendarDate.getDate() - 13)
-);
 
 export default function Home() {
 	const [mailingListStatus, setMailingListStatus] =
 		useState<MailingListStatus>("not_subscribed");
-
+	const [dailyReadings, setDailyReadings] = useState<DailyReadings>();
 	const subscribe = useCallback((email: string) => {
 		subscribeToMailingList(email)
 			.then(() => {
@@ -38,6 +38,14 @@ export default function Home() {
 				setMailingListStatus("not_subscribed");
 			});
 	}, []);
+
+	useLayoutEffect(() => {
+		if (!dailyReadings) {
+			getDailyReadings().then(dailyReadings =>
+				setDailyReadings(dailyReadings)
+			);
+		}
+	}, [dailyReadings]);
 
 	return (
 		<main className="home bg-[whitesmoke]">
@@ -75,66 +83,52 @@ export default function Home() {
 						Daily Readings
 						<hr className="mt-4 mb-0 w-3/4 md:w-full" />
 					</span>
-					<div className="flex md:flex-row md:h-fit lg:w-209.5 md:mt-4 items-stretch bg-white/70 border border-gray-900/20">
-						<div className="md:flex min-w-50 w-70 items-stretch justify-center p-3 hidden bg-gray-900">
-							<Image
-								className="hidden md:block object-cover object-center"
-								height={320}
-								width={240}
-								alt="Saint of the day"
-								src={`https://holytrinityorthodox.com/htc/ocalendar/los/${liturgicalCalendarDate.toLocaleString(
-									"default",
-									{ month: "long" }
-								)}/${liturgicalCalendarDate.getDate()}-01.jpg`}
-							/>
-						</div>
-						<div className="info flex flex-col grow">
-							<div className="texts flex flex-col md:justify-center grow gap-4 p-5 md:p-4 md:pl-7">
-								<span className="text-2xl font-serif">
-									{calendarDate.toLocaleDateString("en-uk", {
-										dateStyle: "full",
-									})}
-								</span>
-								<div className="flex flex-col gap-2">
-									<span className="text-lg">
-										30th Sunday after Pentecost. Tone five
+					{dailyReadings ? (
+						<div className="flex md:flex-row md:h-fit lg:w-209.5 md:mt-4 items-stretch bg-white/70 border border-gray-900/20">
+							<div className="md:flex min-w-50 w-70 items-stretch justify-center p-3 hidden bg-gray-900">
+								<Image
+									className="hidden md:block object-cover object-center"
+									height={320}
+									width={240}
+									alt="Saint of the day"
+									src={dailyReadings.saintOfTheDayThumbnail}
+								/>
+							</div>
+							<div className="info flex flex-col grow">
+								<div className="texts flex flex-col md:justify-center grow gap-4 p-5 md:p-4 md:pl-7">
+									<span className="text-2xl font-serif">
+										{dailyReadings.currentDate}
 									</span>
-									<p className="text-base">
-										Sunday before the Nativity of our Lord
-										God and Savior Jesus Christ. Forefeast
-										of the Nativity of Christ. Great-martyr
-										Anastasia of Rome, deliverer from bonds,
-										and her teacher Martyr Chrysogonus, and
-										with them martyrs Theodota, Evodias,
-										Eutychianus, and others who suffered
-										under Diocletian (304). Venerable
-										Nicephorus the Leper (1964). New
-										Hieromartyrs Demetrius and Theodore
-										priests (1938). Martyr Zoilus (Greek).
-									</p>
+									<div className="flex flex-col gap-2">
+										<span className="text-lg">
+											{dailyReadings.liturgicalWeek}
+										</span>
+										<p className="text-base">
+											{dailyReadings.saints}
+										</p>
+									</div>
+									<div className="flex flex-col">
+										{[
+											...dailyReadings.scriptures.map(
+												(scripture, index) => (
+													<span key={index}>
+														{scripture}
+													</span>
+												)
+											),
+										]}
+									</div>
 								</div>
-								<div className="flex flex-col">
+								<div className="fasting-info bg-[#250203]/80 text-white text-center md:text-left p-2 px-4 md:px-7 md:mt-0">
 									<span className="text-base">
-										John 20:11-18 (8th Matins Gospel)
-									</span>
-									<span className="text-base">
-										Hebrews 11:9-10, 17-23, 32-40 Sunday
-										Before
-									</span>
-									<span className="text-base">
-										Matthew 1:1-25 Sunday Before
+										{dailyReadings.fastingInfo}
 									</span>
 								</div>
 							</div>
-							<div className="fasting-info bg-[#250203]/80 text-white text-center md:text-left p-2 px-4 md:px-7 md:mt-0">
-								<span className="text-base">
-									{
-										"Nativity (St. Philip's Fast). Food with Oil"
-									}
-								</span>
-							</div>
 						</div>
-					</div>
+					) : (
+						<span>Please Wait...</span>
+					)}
 				</div>
 			</section>
 			<section className="daily-thought  border-t-15 border-b-15 border-t-gray-900/85 border-b-[#250203]/85">
