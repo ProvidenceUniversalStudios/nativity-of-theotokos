@@ -32,11 +32,7 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 		};
 	}
 	async getLiturgicalWeek(date: Date) {
-		const requestURL = new URL(this.baseURL);
-
-		requestURL.searchParams.set("today", String(date.getDate()));
-		requestURL.searchParams.set("month", String(date.getMonth() + 1));
-		requestURL.searchParams.set("year", String(date.getFullYear()));
+		const requestURL = this._getDatedBaseURL(date);
 		requestURL.searchParams.set("header", "1");
 
 		return fetch(requestURL)
@@ -54,11 +50,7 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 			.then(markedUpText => removeMarkup(markedUpText));
 	}
 	async getSaints(date: Date) {
-		const requestURL = new URL(this.baseURL);
-
-		requestURL.searchParams.set("today", String(date.getDate()));
-		requestURL.searchParams.set("month", String(date.getMonth() + 1));
-		requestURL.searchParams.set("year", String(date.getFullYear()));
+		const requestURL = this._getDatedBaseURL(date);
 		requestURL.searchParams.set("lives", "2");
 
 		return fetch(requestURL)
@@ -71,11 +63,7 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 			.then(markedUpText => removeMarkup(markedUpText));
 	}
 	getScriptures(date: Date) {
-		const requestURL = new URL(this.baseURL);
-
-		requestURL.searchParams.set("today", String(date.getDate()));
-		requestURL.searchParams.set("month", String(date.getMonth() + 1));
-		requestURL.searchParams.set("year", String(date.getFullYear()));
+		const requestURL = this._getDatedBaseURL(date);
 		requestURL.searchParams.set("scripture", "2");
 
 		return fetch(requestURL)
@@ -95,11 +83,7 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 			});
 	}
 	getFastingInfo(date: Date) {
-		const requestURL = new URL(this.baseURL);
-
-		requestURL.searchParams.set("today", String(date.getDate()));
-		requestURL.searchParams.set("month", String(date.getMonth() + 1));
-		requestURL.searchParams.set("year", String(date.getFullYear()));
+		const requestURL = this._getDatedBaseURL(date);
 		requestURL.searchParams.set("header", "1");
 
 		return fetch(requestURL)
@@ -113,7 +97,8 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 				const $ = load(html);
 				return $(".headerfast").text();
 			})
-			.then(markedUpText => removeMarkup(markedUpText));
+			.then(markedUpText => removeMarkup(markedUpText))
+			.then(info => (info.trim().length == 0 ? "No Fast" : info));
 	}
 
 	async getSaintOfTheDayThumbnailLink(date: Date) {
@@ -132,6 +117,15 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 			link = saintOfTheDayLink;
 		}
 		return link;
+	}
+
+	private _getDatedBaseURL(date: Date) {
+		const requestURL = new URL(this.baseURL);
+
+		requestURL.searchParams.set("today", date.getDate().toString());
+		requestURL.searchParams.set("month", (date.getMonth() + 1).toString());
+		requestURL.searchParams.set("year", date.getFullYear().toString());
+		return requestURL;
 	}
 }
 
