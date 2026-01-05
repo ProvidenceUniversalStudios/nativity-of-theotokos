@@ -15,7 +15,7 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 	private readonly baseURL =
 		"https://www.holytrinityorthodox.com/htc/ocalendar/v2calendar.php";
 	private readonly saintOfTheDayBaseURL =
-		"https://holytrinityorthodox.com/htc/ocalendar/los";
+		"https://holytrinityorthodox.com/htc/iconoftheday/bigimages";
 
 	async getDailyReadings(date: Date) {
 		return {
@@ -118,22 +118,18 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 
 	async getSaintOfTheDayThumbnailLink(date: Date) {
 		const liturgicalCalendarDate = julianDate(date);
+		const month = (liturgicalCalendarDate.getMonth() + 1)
+			.toString()
+			.padStart(2, "0");
+		const day = liturgicalCalendarDate
+			.getDate()
+			.toString()
+			.padStart(2, "0");
 		let link = "/theotokos.webp";
-		let count = 1;
-		while (count < 6) {
-			const currentLink = `${
-				this.saintOfTheDayBaseURL
-			}/${liturgicalCalendarDate.toLocaleDateString("default", {
-				month: "long",
-			})}/${liturgicalCalendarDate.getDate()}-${count
-				.toString()
-				.padStart(2, "0")}.jpg`;
-			const response = await fetch(currentLink, { method: "HEAD" });
-			if (response.ok) {
-				link = currentLink;
-				break;
-			}
-			count++;
+		const saintOfTheDayLink = `${this.saintOfTheDayBaseURL}/${month}/${month}${day}.jpg`;
+		const response = await fetch(saintOfTheDayLink, { method: "HEAD" });
+		if (response.ok) {
+			link = saintOfTheDayLink;
 		}
 		return link;
 	}

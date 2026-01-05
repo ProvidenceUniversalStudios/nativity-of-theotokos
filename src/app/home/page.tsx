@@ -100,13 +100,14 @@ export default function Home() {
 										{dailyReadings.currentDate}
 									</span>
 									<div className="flex flex-col gap-2">
-										<span className="text-lg">
+										<span className="text-xl">
 											{dailyReadings.liturgicalWeek}
 										</span>
-										<p className="text-base">
+										<p className={`text-base`}>
 											{dailyReadings.saints}
 										</p>
 									</div>
+									<hr className="md:w-3/4 text-black/60" />
 									<div className="flex flex-col">
 										{[
 											...dailyReadings.scriptures.map(

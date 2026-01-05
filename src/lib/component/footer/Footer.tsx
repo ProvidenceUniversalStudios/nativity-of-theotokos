@@ -151,7 +151,18 @@ const Footer = function ({ model }) {
 				<span className="copyright text-xs">
 					&copy; {copyrightText}
 				</span>
-				<div className="licenses flex gap-4 text-gray-400 text-xs">
+				<div className="licenses flex flex-wrap gap-2 text-gray-400 text-xs">
+					<span>
+						Daily readings sourced from{" "}
+						<Link
+							className="underline hover:text-[#dcb042]"
+							href="https://holytrinityorthodox.com/"
+							target="_blank"
+						>
+							Holy Trinity Orthodox Church
+						</Link>
+					</span>
+					|
 					<span>
 						Logo icon by{" "}
 						<Link
