@@ -144,7 +144,7 @@ export default function Home() {
 							}
 							<span>”</span>
 						</p>
-						<span className="author italic">
+						<span className="author italic w-full text-right">
 							— St. Seraphim of Sarov
 						</span>
 					</div>
