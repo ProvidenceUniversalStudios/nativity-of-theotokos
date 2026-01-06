@@ -6,6 +6,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Fragment } from "react";
 // import { faEnvelope as Email } from "@fortawesome/free-regular-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -84,15 +85,7 @@ export default function Home() {
 						<hr className="mt-4 mb-0 w-3/4 md:w-full" />
 					</span>
 					{dailyReadings ? (
-						<div
-							className="flex md:flex-row md:h-fit lg:w-9/10 md:mt-4 items-stretch bg-white/70 border border-gray-900/20 hover:cursor-pointer"
-							onClick={() => {
-								window.open(
-									dailyReadings.readingsLink,
-									"_blank"
-								);
-							}}
-						>
+						<div className="flex md:flex-row md:h-fit lg:w-9/10 md:mt-4 items-stretch bg-white/70 border border-gray-900/20">
 							<div className="md:flex min-w-60 w-60 lg:min-w-70 lg:w-70 items-stretch justify-center p-3 hidden bg-gray-900">
 								<Image
 									className="hidden md:block grow object-cover object-center"
@@ -103,7 +96,7 @@ export default function Home() {
 								/>
 							</div>
 							<div className="info flex flex-col grow">
-								<div className="texts flex flex-col md:justify-center grow gap-4 p-5 md:p-4 md:px-7">
+								<div className="texts flex flex-col md:justify-center grow gap-4 p-5 md:p-4 md:px-7 [&_a]:text-red-900">
 									<span className="text-2xl font-serif">
 										{dailyReadings.currentDate}
 									</span>
@@ -111,18 +104,24 @@ export default function Home() {
 										<span className="text-xl">
 											{dailyReadings.liturgicalWeek}
 										</span>
-										<p className={`text-base`}>
-											{dailyReadings.saints}
-										</p>
+										<p
+											className={`text-base [&_a]:underline`}
+											dangerouslySetInnerHTML={{
+												__html: dailyReadings.saints,
+											}}
+										/>
 									</div>
 									<hr className="md:w-3/4 text-black/60" />
 									<div className="flex flex-col">
 										{[
 											...dailyReadings.scriptures.map(
 												(scripture, index) => (
-													<span key={index}>
-														{scripture}
-													</span>
+													<span
+														key={index}
+														dangerouslySetInnerHTML={{
+															__html: scripture,
+														}}
+													/>
 												)
 											),
 										]}

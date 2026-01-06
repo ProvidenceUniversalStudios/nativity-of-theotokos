@@ -9,7 +9,7 @@ interface HolyTrinityOrthodox {
 	getScriptures: (date: Date) => Promise<string[]>;
 	getFastingInfo: (date: Date) => Promise<string>;
 	getIconOfTheDay: (date: Date) => Promise<string>;
-	getReadingsLink: (date: Date) => URL;
+	getReadingsLink: (date: Date) => string;
 }
 
 class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
@@ -60,7 +60,11 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 					`${response.status}: ${response.statusText}`
 				);
 			})
-			.then(markedUpText => removeMarkup(markedUpText));
+			.then(html => {
+				const $ = load(html);
+				$(".cal-main").removeAttr("onclick");
+				return $(".normaltext").html()!;
+			});
 	}
 	async getScriptures(date: Date) {
 		const requestURL = this._getDatedBaseURL(date);
@@ -68,18 +72,48 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 
 		return fetch(requestURL)
 			.then(response => {
-				if (response.ok) return response.text();
+				if (response.ok) return response.arrayBuffer();
 				return Promise.reject(
 					`${response.status}: ${response.statusText}`
 				);
 			})
+			.then(encodedResponse =>
+				new TextDecoder("windows-1251").decode(encodedResponse)
+			)
 			.then(html => {
 				const $ = load(html);
-				return [
-					...$(".cal-main").map(function () {
-						return $(this).text();
-					}),
-				];
+				$(".normaltext")
+					.contents()
+					.filter(function () {
+						return this.nodeType === 3 && this.nodeValue == "\n";
+					})
+					.each(function () {
+						$(this).remove();
+					});
+				$(".cal-main").removeAttr("onclick");
+				$(".normaltext")
+					.contents()
+					.filter(function () {
+						return this.nodeType === 3;
+					})
+					.each(function () {
+						$(this).wrap('<span class="designation"></span>');
+					});
+				const childrenHtml = $(".normaltext")
+					.children()
+					.map(function () {
+						return $.html(this);
+					})
+					.toArray()
+					.join("");
+				const verses = childrenHtml.split("<br>");
+				const cleanedScriptures: string[] = [];
+				verses.forEach(verse => {
+					const _$ = load(verse, null, false);
+					_$("*").wrapAll('<span class="scripture"></span>');
+					cleanedScriptures.push(_$(".scripture").html()!);
+				});
+				return cleanedScriptures;
 			});
 	}
 	async getFastingInfo(date: Date) {
@@ -127,7 +161,7 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 		requestURL.searchParams.set("dt", "1");
 		requestURL.searchParams.set("trp", "1");
 
-		return requestURL;
+		return requestURL.href;
 	}
 
 	private _getDatedBaseURL(date: Date) {
