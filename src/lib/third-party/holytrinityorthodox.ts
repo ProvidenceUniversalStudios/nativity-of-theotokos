@@ -69,6 +69,9 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 			})
 			.then(html => {
 				const $ = load(html);
+				for (let i = 0; i < 10; i++) {
+					$(`.typicon-${i}`).remove();
+				}
 				$(".cal-main").removeAttr("onclick");
 				$(".cal-main").each(function () {
 					$(this).attr("target", "_blank");
