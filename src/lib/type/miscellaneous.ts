@@ -9,6 +9,11 @@ export type DailyReadingsScripture = {
 	link: string;
 };
 
+export type Hymn = {
+	title: string;
+	text: string;
+};
+
 export type DailyReadings = {
 	currentDate: string;
 	liturgicalWeek: string;
@@ -16,7 +21,7 @@ export type DailyReadings = {
 	scriptures: DailyReadingsScripture[];
 	fastingInfo: string;
 	iconOfTheDay: string;
-	hymnsLink: string;
+	hymns: Hymn[];
 };
 
 export type DailyQuote = {

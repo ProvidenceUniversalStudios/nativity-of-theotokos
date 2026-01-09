@@ -17,6 +17,7 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import Link from "next/link";
 import { useHome } from "@/src/lib/model-implementation/home";
+import { Modal, ModalBody, ModalFooter } from "flowbite-react";
 
 type MailingListStatus = "subscribed" | "not_subscribed" | "pending";
 const ebGaramond = EB_Garamond({ subsets: ["latin", "cyrillic"] });
@@ -25,6 +26,7 @@ export default function Home() {
 	const { modelView } = useHome();
 	const [mailingListStatus, setMailingListStatus] =
 		useState<MailingListStatus>("not_subscribed");
+	const [hymnsModalOpen, setHymnsModalOpen] = useState<boolean>(false);
 	const subscribe = useCallback((email: string) => {
 		subscribeToMailingList(email)
 			.then(() => {
@@ -53,6 +55,50 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
+			)}
+			{modelView && (
+				<Modal
+					show={hymnsModalOpen}
+					onClose={() => setHymnsModalOpen(false)}
+					dismissible
+				>
+					<ModalBody
+						className={`bg-[whitesmoke] text-black ${ebGaramond.className}`}
+					>
+						<div className="flex flex-col justify-center items-center gap-5">
+							{modelView.dailyReadings.hymns.map(
+								(hymn, index) => (
+									<div
+										className="flex flex-col gap-1 text-center"
+										key={index}
+									>
+										<span className="font-serif">
+											{hymn.title}
+										</span>
+										<p className="whitespace-pre-line">
+											{hymn.text.replaceAll(
+												/\/\s+/g,
+												"/\n"
+											)}
+										</p>
+									</div>
+								)
+							)}
+						</div>
+					</ModalBody>
+					<ModalFooter className={`bg-[#250203]/50 text-white`}>
+						<div className="flex justify-center items-center w-full">
+							<button
+								className="border border-white p-3 w-[8em]"
+								onClick={() => {
+									setHymnsModalOpen(false);
+								}}
+							>
+								Close
+							</button>
+						</div>
+					</ModalFooter>
+				</Modal>
 			)}
 			<main className={`home bg-[whitesmoke] ${!modelView && "hidden"}`}>
 				<section className="hero bg-[#DCB042] text-black bg-[url(/nativity-icon.webp)] bg-cover bg-center bg-no-repeat md:bg-size-[100%] md:bg-position-[60%_85%]">
@@ -128,11 +174,10 @@ export default function Home() {
 												/>
 												<Link
 													className="text-lg underline"
-													href={
-														modelView.dailyReadings
-															.hymnsLink
+													href="#"
+													onClick={() =>
+														setHymnsModalOpen(true)
 													}
-													target="_blank"
 												>
 													{"Hymns for the Day"}
 												</Link>

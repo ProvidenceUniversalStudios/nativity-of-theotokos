@@ -1,4 +1,4 @@
-import { DailyReadings } from "../type/miscellaneous";
+import { DailyReadings, Hymn } from "../type/miscellaneous";
 import { julianDate, removeMarkup } from "../utility/miscellaneous";
 import { load } from "cheerio";
 
@@ -15,7 +15,7 @@ interface HolyTrinityOrthodox {
 	>;
 	getFastingInfo: (date: Date) => Promise<string>;
 	getIconOfTheDay: (date: Date) => Promise<string>;
-	getHymnsLink: (date: Date) => string;
+	getHymns: (date: Date) => Promise<Hymn[]>;
 }
 
 class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
@@ -34,20 +34,14 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 			scriptures: await this.getScriptures(date),
 			fastingInfo: await this.getFastingInfo(date),
 			iconOfTheDay: await this.getIconOfTheDay(date),
-			hymnsLink: this.getHymnsLink(date),
+			hymns: await this.getHymns(date),
 		};
 	}
 	async getLiturgicalWeek(date: Date) {
 		const requestURL = this._getDatedBaseURL(date);
 		requestURL.searchParams.set("header", "1");
 
-		return fetch(requestURL)
-			.then(response => {
-				if (response.ok) return response.text();
-				return Promise.reject(
-					`${response.status}: ${response.statusText}`
-				);
-			})
+		return this._getMarkedUpText(requestURL)
 			.then(html => {
 				const $ = load(html);
 				$(".headerfast").remove();
@@ -60,105 +54,81 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 		const requestURL = this._getDatedBaseURL(date);
 		requestURL.searchParams.set("lives", "2");
 
-		return fetch(requestURL)
-			.then(response => {
-				if (response.ok) return response.text();
-				return Promise.reject(
-					`${response.status}: ${response.statusText}`
-				);
-			})
-			.then(html => {
-				const $ = load(html);
-				for (let i = 0; i < 10; i++) {
-					$(`.typicon-${i}`).remove();
-				}
-				$(".cal-main").removeAttr("onclick");
-				$(".cal-main").each(function () {
-					$(this).attr("target", "_blank");
-				});
-				return $(".normaltext").html()!;
+		return this._getMarkedUpText(requestURL).then(html => {
+			const $ = load(html);
+			for (let i = 0; i < 10; i++) {
+				$(`.typicon-${i}`).remove();
+			}
+			$(".cal-main").removeAttr("onclick");
+			$(".cal-main").each(function () {
+				$(this).attr("target", "_blank");
 			});
+			return $(".normaltext").html()!;
+		});
 	}
 	async getScriptures(date: Date) {
 		const requestURL = this._getDatedBaseURL(date);
 		requestURL.searchParams.set("scripture", "2");
 
-		return fetch(requestURL)
-			.then(response => {
-				if (response.ok) return response.arrayBuffer();
-				return Promise.reject(
-					`${response.status}: ${response.statusText}`
-				);
-			})
-			.then(encodedResponse =>
-				new TextDecoder("windows-1251").decode(encodedResponse)
-			)
-			.then(html => {
-				const $ = load(html);
-				$(".normaltext")
-					.contents()
-					.filter(function () {
-						return this.nodeType === 3 && this.nodeValue == "\n";
-					})
-					.each(function () {
-						$(this).remove();
-					});
-				$(".cal-main").removeAttr("onclick");
-				$(".cal-main").each(function () {
-					$(this).removeClass();
-					$(this).addClass("scripture-text");
+		return this._getMarkedUpText(requestURL).then(html => {
+			const $ = load(html);
+			$(".normaltext")
+				.contents()
+				.filter(function () {
+					return this.nodeType === 3 && this.nodeValue == "\n";
+				})
+				.each(function () {
+					$(this).remove();
 				});
-				$(".normaltext")
-					.contents()
-					.filter(function () {
-						return this.nodeType === 3;
-					})
-					.each(function () {
-						$(this).wrap('<span class="designation"></span>');
-					});
-				const childrenHtml = $(".normaltext")
-					.children()
-					.map(function () {
-						return $.html(this);
-					})
-					.toArray()
-					.join("");
-				const verses = childrenHtml.split("<br>");
-				const markedUpScriptures: string[] = [];
-				verses.forEach(verse => {
-					// HACK
-					if (!verse.trim()) return;
-
-					const _$ = load(verse, null, false);
-					_$("*").wrapAll('<span class="scripture"></span>');
-					markedUpScriptures.push(_$(".scripture").html()!);
-				});
-				const scriptures = markedUpScriptures.map(scripture => {
-					const _$ = load(scripture, null, false);
-					return {
-						scriptureText: _$(".scripture-text").text().trim(),
-						designation: _$(".designation").text().trim(),
-						link: _$(".scripture-text").attr("href")!.trim(),
-					};
-				});
-				return scriptures;
+			$(".cal-main").removeAttr("onclick");
+			$(".cal-main").each(function () {
+				$(this).removeClass();
+				$(this).addClass("scripture-text");
 			});
+			$(".normaltext")
+				.contents()
+				.filter(function () {
+					return this.nodeType === 3;
+				})
+				.each(function () {
+					$(this).wrap('<span class="designation"></span>');
+				});
+			const childrenHtml = $(".normaltext")
+				.children()
+				.map(function () {
+					return $.html(this);
+				})
+				.toArray()
+				.join("");
+			const verses = childrenHtml.split("<br>");
+			const markedUpScriptures: string[] = [];
+			verses.forEach(verse => {
+				// HACK
+				if (!verse.trim()) return;
+
+				const _$ = load(verse, null, false);
+				_$("*").wrapAll('<span class="scripture"></span>');
+				markedUpScriptures.push(_$(".scripture").html()!);
+			});
+			const scriptures = markedUpScriptures.map(scripture => {
+				const _$ = load(scripture, null, false);
+				return {
+					scriptureText: _$(".scripture-text").text().trim(),
+					designation: _$(".designation").text().trim(),
+					link: _$(".scripture-text").attr("href")!.trim(),
+				};
+			});
+			return scriptures;
+		});
 	}
 	async getFastingInfo(date: Date) {
 		const requestURL = this._getDatedBaseURL(date);
 		requestURL.searchParams.set("header", "1");
 
-		return fetch(requestURL)
-			.then(response => {
-				if (response.ok) return response.text();
-				return Promise.reject(
-					`${response.status}: ${response.statusText}`
-				);
-			})
+		return this._getMarkedUpText(requestURL)
 			.then(html => {
 				const $ = load(html);
 				const fastText = $(".headerfast").text();
-				console.log(fastText ?? $(".headernofast").text());
 				return (fastText ? fastText : $(".headernofast").text()).trim();
 			})
 			.then(markedUpText => removeMarkup(markedUpText))
@@ -183,12 +153,37 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 		return link;
 	}
 
-	getHymnsLink(date: Date) {
+	async getHymns(date: Date) {
 		const requestURL = this._getDatedBaseURL(date);
-		requestURL.searchParams.set("dt", "1");
-		requestURL.searchParams.set("trp", "1");
+		requestURL.searchParams.set("trp", "2");
 
-		return requestURL.href;
+		return await this._getMarkedUpText(requestURL).then(html => {
+			const $ = load(html);
+			const hymns: Hymn[] = [];
+			const markedUpHymns = $(".normaltext p");
+			markedUpHymns.each(function () {
+				const _$ = load(this);
+				const title = _$("b").text().replace(" —", "");
+				_$("b").remove();
+				_$("br").remove();
+				const text = _$("*").html()!.trim().replaceAll("\n", "");
+				hymns.push({ title, text });
+			});
+			return hymns;
+		});
+	}
+
+	private _getMarkedUpText(url: URL) {
+		return fetch(url)
+			.then(response => {
+				if (response.ok) return response.arrayBuffer();
+				return Promise.reject(
+					`${response.status}: ${response.statusText}`
+				);
+			})
+			.then(encodedResponse =>
+				new TextDecoder("windows-1251").decode(encodedResponse)
+			);
 	}
 
 	private _getDatedBaseURL(date: Date) {
