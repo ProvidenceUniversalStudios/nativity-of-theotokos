@@ -1,5 +1,6 @@
 "use server";
 
+import "dotenv/config";
 import { DailyQuote, DailyReadings } from "../type/miscellaneous";
 import holytrinityorthodox from "../third-party/holytrinityorthodox";
 import mailerLite from "../third-party/mailer-lite";
@@ -15,8 +16,6 @@ export type HomeSnapshot = {
 const prismaAdapter = new PrismaPg({
 	connectionString: process.env.DATABASE_URL,
 });
-
-console.error(process.env.DATABASE_URL);
 
 export async function getHomeSnapshot(): Promise<HomeSnapshot> {
 	const prismaClient = new PrismaClient({

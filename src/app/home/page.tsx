@@ -50,11 +50,6 @@ export default function Home() {
 								height={80}
 								width={80}
 							/>
-							<span className="text-xl font-serif">
-								{
-									"Nativity of the Theotokos Russian Orthodox Church"
-								}
-							</span>
 						</div>
 					</div>
 				</div>
