@@ -40,7 +40,7 @@ export default function Home() {
 	return (
 		<>
 			{!modelView ? (
-				<div className="splash flex absolute w-screen h-screen z-30 top-0 overflow-hidden">
+				<div className="splash flex absolute w-screen h-full z-30 top-0 overflow-hidden">
 					<div className="bg-gray-900 flex items-center justify-center grow p-9">
 						<div className="logo flex gap-3 items-center justify-center max-w-[25em] animate-pulse">
 							<Image
