@@ -1,3 +1,4 @@
+import { toZonedTime } from "date-fns-tz";
 import { DailyReadings, Hymn } from "../type/miscellaneous";
 import { julianDate, removeMarkup } from "../utility/miscellaneous";
 import { load } from "cheerio";
@@ -25,14 +26,15 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 		"https://holytrinityorthodox.com/htc/iconoftheday/bigimages";
 
 	async getDailyReadings(date: Date) {
+		const localDate = toZonedTime(date, "CAT");
 		return {
 			currentDate: date,
-			liturgicalWeek: await this.getLiturgicalWeek(date),
-			saints: await this.getSaints(date),
-			scriptures: await this.getScriptures(date),
-			fastingInfo: await this.getFastingInfo(date),
-			iconOfTheDay: await this.getIconOfTheDay(date),
-			hymns: await this.getHymns(date),
+			liturgicalWeek: await this.getLiturgicalWeek(localDate),
+			saints: await this.getSaints(localDate),
+			scriptures: await this.getScriptures(localDate),
+			fastingInfo: await this.getFastingInfo(localDate),
+			iconOfTheDay: await this.getIconOfTheDay(localDate),
+			hymns: await this.getHymns(localDate),
 		};
 	}
 	async getLiturgicalWeek(date: Date) {

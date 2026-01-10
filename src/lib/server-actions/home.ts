@@ -21,10 +21,11 @@ const prismaClient = new PrismaClient({
 
 export async function getHomeSnapshot(): Promise<HomeSnapshot> {
 	const dailyReadings = await getDailyReadings();
+	const localDate = toZonedTime(dailyReadings.currentDate, "CAT");
 	let dailyQuote = await prismaClient.dailyQuote
 		.findFirst({
 			where: {
-				date: dailyReadings.currentDate,
+				date: localDate,
 			},
 		})
 		.quote();
@@ -33,17 +34,14 @@ export async function getHomeSnapshot(): Promise<HomeSnapshot> {
 		dailyQuote = quotes[Math.round(Math.random() * (quotes.length - 1))];
 		await prismaClient.dailyQuote.create({
 			data: {
-				date: dailyReadings.currentDate,
+				date: localDate,
 				quoteId: dailyQuote.id,
 			},
 		});
 	}
 
 	return {
-		dailyReadings: {
-			...dailyReadings,
-			currentDate: toZonedTime(dailyReadings.currentDate, "UTC"),
-		},
+		dailyReadings,
 		dailyQuote,
 	};
 }
@@ -53,6 +51,5 @@ export async function subscribeToMailingList(email: string) {
 }
 
 export async function getDailyReadings() {
-	const localDate = toZonedTime(new Date(), "CAT");
-	return holytrinityorthodox.getDailyReadings(localDate);
+	return holytrinityorthodox.getDailyReadings(new Date());
 }
