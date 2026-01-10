@@ -29,7 +29,6 @@ export async function getHomeSnapshot(): Promise<HomeSnapshot> {
 		})
 		.quote();
 	if (!dailyQuote) {
-		console.log(`Which is it: ${dailyQuote}`);
 		const quotes = await prismaClient.quote.findMany()!;
 		dailyQuote = quotes[Math.round(Math.random() * (quotes.length - 1))];
 		await prismaClient.dailyQuote.create({
@@ -41,7 +40,10 @@ export async function getHomeSnapshot(): Promise<HomeSnapshot> {
 	}
 
 	return {
-		dailyReadings,
+		dailyReadings: {
+			...dailyReadings,
+			currentDate: toZonedTime(dailyReadings.currentDate, "UTC"),
+		},
 		dailyQuote,
 	};
 }
