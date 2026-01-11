@@ -76,7 +76,7 @@ export default function Home() {
 						as={() => (
 							<div className="ornament w-full h-[4em] bg-contain bg-position-[50%_50%] bg-no-repeat bg-[url(/ornament_9_white.svg)]" />
 						)}
-						className="bg-gray-700 text-white border-0 p-4 rounded-none"
+						className="bg-gray-800 text-white border-0 p-4 rounded-none"
 					/>
 					<ModalBody className={`bg-[#FEF8F3] text-black p-0`}>
 						<div className="flex justify-center items-center p-5 pt-8">
