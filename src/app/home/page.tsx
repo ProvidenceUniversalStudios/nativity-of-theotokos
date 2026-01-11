@@ -66,19 +66,19 @@ export default function Home() {
 					onClose={() => setHymnsModalOpen(false)}
 					theme={{
 						content: {
-							inner: "border border-[#CECBCA]/30 rounded-none",
+							inner: "border border-[#868686] rounded-none",
 						},
 					}}
 					position="center"
 				>
 					<ModalHeader
 						as={() => (
-							<div className="ornament w-full mt-5 h-[4em] bg-contain bg-center bg-no-repeat bg-[url(/ornament_21.svg)]" />
+							<div className="ornament w-full h-[4em] bg-contain bg-position-[50%_50%] bg-no-repeat bg-[url(/ornament_9_white.svg)]" />
 						)}
-						className="bg-[#FEF8F3] text-black border-0 p-0 rounded-none"
+						className="bg-gray-700 text-white border-0 p-4 rounded-none"
 					/>
 					<ModalBody className={`bg-[#FEF8F3] text-black p-0`}>
-						<div className="flex justify-center items-center p-5">
+						<div className="flex justify-center items-center p-5 pt-8">
 							<div className="flex flex-col justify-center items-center px-2 max-w-[25em]">
 								{modelView.dailyReadings.hymns.map(
 									(hymn, index) => (
@@ -103,11 +103,11 @@ export default function Home() {
 						</div>
 					</ModalBody>
 					<ModalFooter
-						className={`bg-[#513433] text-black border-0 rounded-none p-0`}
+						className={`bg-[#FEF8F3] text-black border-0 rounded-none p-0`}
 					>
-						<div className="flex justify-center items-center w-full p-4.5">
+						<div className="flex justify-center items-center w-full p-5">
 							<button
-								className="border-white border text-white p-3 w-[8em]"
+								className="bg-[#513433] text-white p-4 w-[8em]"
 								onClick={() => {
 									setHymnsModalOpen(false);
 								}}
