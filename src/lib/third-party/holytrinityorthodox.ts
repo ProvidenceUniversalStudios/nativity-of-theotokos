@@ -62,6 +62,8 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 			$(".cal-main").removeAttr("onclick");
 			$(".cal-main").each(function () {
 				$(this).attr("target", "_blank");
+				$(this).removeClass();
+				$(this).addClass("commemoration");
 			});
 			return $(".normaltext").html()!;
 		});
@@ -166,7 +168,7 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 				const title = _$("b").first().text().replace(" —", "");
 				_$("b").first().remove();
 				_$("br").remove();
-				const text = _$("*").html()!.trim().replaceAll("\n", "");
+				const text = _$("*").html()!.trim().replaceAll("\n", " ");
 				hymns.push({ title, text: removeMarkup(text) });
 			});
 			return hymns;
