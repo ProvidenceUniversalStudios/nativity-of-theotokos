@@ -17,7 +17,12 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import Link from "next/link";
 import { useHome } from "@/src/lib/model-implementation/home";
-import { Modal, ModalBody, ModalFooter, ModalHeader } from "flowbite-react";
+import {
+	Dialog,
+	DialogBackdrop,
+	DialogPanel,
+	DialogTitle,
+} from "@headlessui/react";
 import ScheduleItem from "@/src/lib/component/schedule-item/ScheduleItem";
 import { newReadonlyModel } from "@mvc-react/mvc";
 
@@ -63,63 +68,71 @@ export default function Home() {
 				</div>
 			)}
 			{modelView && (
-				<Modal
-					show={hymnsModalOpen}
-					onClose={() => setHymnsModalOpen(false)}
-					theme={{
-						content: {
-							inner: "border border-[#868686] rounded-none",
-						},
-					}}
-					position="center"
-					size="xl"
+				<Dialog
+					open={hymnsModalOpen}
+					onClose={open => setHymnsModalOpen(open)}
+					className="relative z-20"
+					as="div"
 				>
-					<ModalHeader
-						as={() => (
-							<div className="ornament w-full h-[4em] bg-contain bg-position-[50%_50%] bg-no-repeat bg-[url(/ornament_9_white.svg)]" />
-						)}
-						className="bg-gray-800 text-white border-0 p-4 rounded-none"
-					/>
-					<ModalBody className={`bg-[#FEF8F3] text-black p-0`}>
-						<div className="flex justify-center items-center p-5 pt-8">
-							<div className="flex flex-col justify-center items-center px-2 max-w-[25em]">
-								{modelView.dailyReadings.hymns.map(
-									(hymn, index) => (
-										<div
-											className="flex flex-col gap-3 text-center items-center justify-center"
-											key={index}
-										>
-											<span className="text-lg font-semibold font-serif">
-												{hymn.title}
-											</span>
-											<p className="whitespace-pre-line">
-												{hymn.text.replaceAll(
-													/\/\s+/g,
-													"/\n"
-												)}
-											</p>
-											<hr className="w-3/4 my-5 text-black/50" />
-										</div>
-									)
-								)}
-							</div>
-						</div>
-					</ModalBody>
-					<ModalFooter
-						className={`bg-[#FEF8F3] text-black border-0 rounded-none p-0`}
+					<div
+						className={`fixed inset-0 z-21 flex w-screen items-center justify-center p-4`}
 					>
-						<div className="flex justify-center items-center w-full p-5">
-							<button
-								className="bg-[#513433] text-white p-4 w-[8em]"
-								onClick={() => {
-									setHymnsModalOpen(false);
-								}}
+						<DialogBackdrop
+							transition
+							className="fixed inset-0 bg-black/50 duration-400 ease-out data-closed:opacity-0"
+						/>
+						<DialogPanel
+							className={`flex flex-col max-h-[95dvh] md:min-w-lg bg-[#FEF8F3] text-black border border-[#868686] rounded-none gap-0 duration-300 ease-out data-closed:transform-[scale(92%)] data-closed:opacity-0 z-22`}
+							transition
+						>
+							<DialogTitle className="sr-only">
+								{"Today's Hymns"}
+							</DialogTitle>
+							<div className="bg-gray-800 text-white border-0 p-4 rounded-none">
+								<div className="ornament w-full h-[4em] bg-contain bg-position-[50%_50%] bg-no-repeat bg-[url(/ornament_9_white.svg)]" />
+							</div>
+							<div className="overflow-y-auto data-closed:overflow-hidden">
+								<div className="flex justify-center items-center p-5 pt-8 bg-[#FEF8F3] text-black">
+									<div className="flex flex-col justify-center items-center px-2 max-w-[25em]">
+										{modelView.dailyReadings.hymns.map(
+											(hymn, index) => (
+												<div
+													className="flex flex-col gap-3 text-center items-center justify-center"
+													key={index}
+												>
+													<span className="text-lg font-semibold font-serif">
+														{hymn.title}
+													</span>
+													<p className="whitespace-pre-line">
+														{hymn.text.replaceAll(
+															/\/\s+/g,
+															"/\n"
+														)}
+													</p>
+													<hr className="w-3/4 my-5 text-black/70 border-black/70" />
+												</div>
+											)
+										)}
+									</div>
+								</div>
+							</div>
+							<div
+								className={`bg-[#FEF8F3] text-black border-0 rounded-none p-0`}
 							>
-								Close
-							</button>
-						</div>
-					</ModalFooter>
-				</Modal>
+								<div className="flex justify-center items-center w-full p-5">
+									<button
+										className="bg-[#513433] text-white p-4 w-[8em]"
+										onClick={() => {
+											setHymnsModalOpen(false);
+										}}
+									>
+										Close
+									</button>
+								</div>
+							</div>
+						</DialogPanel>
+					</div>
+				</Dialog>
 			)}
 			<main className={`home bg-[whitesmoke] ${!modelView && "hidden"}`}>
 				<section className="hero bg-[#DCB042] text-black bg-[url(/nativity-icon.webp)] bg-cover bg-center bg-no-repeat md:bg-size-[100%] md:bg-position-[60%_85%]">
