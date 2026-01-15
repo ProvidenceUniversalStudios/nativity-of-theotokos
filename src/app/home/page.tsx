@@ -82,7 +82,7 @@ export default function Home() {
 							className="fixed inset-0 bg-black/50 duration-400 ease-out data-closed:opacity-0"
 						/>
 						<DialogPanel
-							className={`flex flex-col max-h-[95dvh] md:min-w-lg bg-[#FEF8F3] text-black border border-[#868686] rounded-none gap-0 duration-300 ease-out data-closed:transform-[scale(92%)] data-closed:opacity-0 z-22`}
+							className={`flex flex-col max-h-[80dvh] [@media(height<=448px)]:max-h-[95dvh] md:min-w-lg bg-[#FEF8F3] text-black border border-[#868686] rounded-none gap-0 duration-300 ease-out data-closed:transform-[scale(92%)] data-closed:opacity-0 z-22`}
 							transition
 						>
 							<DialogTitle className="sr-only">
@@ -136,7 +136,7 @@ export default function Home() {
 			)}
 			<main className={`home bg-[whitesmoke] ${!modelView && "hidden"}`}>
 				<section className="hero bg-[#DCB042] text-black bg-[url(/nativity-icon.webp)] bg-cover bg-center bg-no-repeat md:bg-size-[100%] md:bg-position-[60%_85%]">
-					<div className="hero-content flex flex-col justify-center items-center md:flex-row h-[30em] p-10 md:p-20 bg-black/70">
+					<div className="hero-content flex flex-col justify-center items-center md:flex-row h-[30em] p-8 md:p-20 bg-black/70">
 						<div className="hero-message flex flex-col md:w-[35em] md:max-w-1/2 gap-6 md:p-8 justify-center">
 							<span
 								className={`heading text-6xl font-serif text-white ${ebGaramond.className}`}
@@ -166,7 +166,7 @@ export default function Home() {
 					</div>
 				</section>
 				<section className="readings bg-[antiquewhite] text-black bg-[url(/ornament_3_tr.svg)] bg-no-repeat bg-size-[13em] md:bg-size-[30em] bg-position-[98%_0.5%] md:bg-position-[100%_0.5%]">
-					<div className="readings-content flex flex-col gap-6 p-9 lg:px-20 md:py-10">
+					<div className="readings-content flex flex-col gap-6 p-8 py-9 lg:px-20 md:py-10">
 						<span className="text-3xl font-serif md:w-1/2">
 							Daily Readings
 							<hr className="mt-4 mb-0 w-3/4 md:w-full" />
@@ -289,7 +289,7 @@ export default function Home() {
 				</section>
 				<section className="daily-thought  border-t-15 border-b-15 border-t-gray-900/85 border-b-[#250203]/85">
 					{modelView?.dailyQuote && (
-						<div className="daily-thought-content flex items-center p-9 md:p-20 min-h-[25em] bg-[#0a0a0a] md:bg-[linear-gradient(to_right,#0a0a0a,transparent),url(/daily-thought-bg.jpg)] text-white bg-no-repeat bg-contain bg-right">
+						<div className="daily-thought-content flex items-center p-8 py-9 md:p-20 min-h-[25em] bg-[#0a0a0a] md:bg-[linear-gradient(to_right,#0a0a0a,transparent),url(/daily-thought-bg.jpg)] text-white bg-no-repeat bg-contain bg-right">
 							<div
 								className={`quote-box flex flex-col gap-4 items-center ${ebGaramond.className} md:w-1/2`}
 							>
@@ -310,11 +310,11 @@ export default function Home() {
 				<section className="news pt-4 bg-[antiquewhite] text-black">
 					<div className="ornament mb-4 md:mb-0 w-full h-[5em] bg-contain bg-center bg-no-repeat bg-[url(/ornament_1.svg)]" />
 					<div className="news-content flex flex-col gap-8">
-						<span className="text-3xl font-serif md:w-1/2 px-9 lg:px-20">
+						<span className="text-3xl font-serif md:w-1/2 px-8 lg:px-20">
 							Latest News
 							<hr className="mt-4" />
 						</span>
-						<div className="flex flex-row flex-wrap gap-x-12 gap-y-6 px-9 pb-6 lg:px-20">
+						<div className="flex flex-row flex-wrap gap-x-12 gap-y-6 px-8 pb-6 lg:px-20">
 							<div className="featured flex flex-col gap-4 md:max-w-1/2">
 								<span className="text-xl">Featured</span>
 								<div
@@ -359,7 +359,7 @@ export default function Home() {
 							{modelView && (
 								<div className="schedule flex flex-col gap-4 flex-1">
 									<span className="text-xl">Schedule</span>
-									<div className="schedule-list flex flex-col w-full gap-4 pr-4 max-h-[20em] lg:max-h-[19em] overflow-y-auto">
+									<div className="schedule-list flex flex-col w-full gap-4 pr-3 lg:pr-6 max-h-[20em] lg:max-h-[19em] overflow-y-auto">
 										<ScheduleItem
 											model={newReadonlyModel({
 												scheduleItem:
@@ -368,7 +368,7 @@ export default function Home() {
 											})}
 										/>
 										<hr className="my-2 text-black/50" />
-										<div className="flex flex-col gap-3 md:w-3/4">
+										<div className="flex flex-col gap-3 lg:w-3/4">
 											{modelView.scheduleItems
 												.slice(1)
 												.map((scheduleItem, index) => (
@@ -388,7 +388,7 @@ export default function Home() {
 								</div>
 							)}
 						</div>
-						<div className="other-stories flex flex-col gap-4 pt-6 pb-10 px-9 lg:px-20 bg-white/70">
+						<div className="other-stories flex flex-col gap-4 pt-6 pb-10 px-8 lg:px-20 bg-white/70">
 							<span className="text-xl mb-2">More News</span>
 							<div className="grid lg:grid-cols-2 gap-8 md:gap-6 md:w-3/4 lg:w-9/10">
 								<div
@@ -554,7 +554,7 @@ export default function Home() {
 					id="resources"
 					className="resources bg-[#250203] text-white"
 				>
-					<div className="resources-content flex flex-col gap-8 p-9 py-14 lg:px-20">
+					<div className="resources-content flex flex-col gap-8 p-8 py-14 lg:px-20">
 						<div className="flex flex-col gap-6 w-full justify-center items-center md:flex-row">
 							<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/nativity-11.jpg)] bg-cover">
 								<div
@@ -605,7 +605,7 @@ export default function Home() {
 					id="media"
 					className="gallery bg-[antiquewhite] text-black"
 				>
-					<div className="gallery-content flex flex-col gap-8 p-9 py-14 lg:px-20 bg-[url(/ornament_4.svg)] bg-size-[15em] bg-bottom-left bg-no-repeat">
+					<div className="gallery-content flex flex-col gap-8 p-8 py-14 lg:px-20 bg-[url(/ornament_4.svg)] bg-size-[15em] bg-bottom-left bg-no-repeat">
 						<div className="swiper-container w-full max-w-full">
 							<Swiper
 								modules={[Navigation, Autoplay]}
@@ -670,7 +670,7 @@ export default function Home() {
 					</div>
 				</section>
 				<section className="mailing-list bg-gray-900 text-white">
-					<div className="mailing-list-content flex flex-col gap-8 p-9 py-14 md:w-3/4 lg:px-20">
+					<div className="mailing-list-content flex flex-col gap-8 p-8 py-14 md:w-3/4 lg:px-20">
 						<span className="text-3xl font-serif md:w-1/2">
 							Join our Mailing List
 							<hr className="mt-4 mb-0" />

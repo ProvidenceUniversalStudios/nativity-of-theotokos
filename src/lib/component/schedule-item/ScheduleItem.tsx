@@ -1,5 +1,6 @@
 import { ModeledVoidComponent } from "@mvc-react/components";
 import { ScheduleItemModel } from "../../model/schedule-item";
+import Image from "next/image";
 
 const ScheduleItem = function ({ model }) {
 	const { scheduleItem, isFeatured } = model.modelView;
@@ -7,7 +8,7 @@ const ScheduleItem = function ({ model }) {
 
 	return isFeatured ? (
 		<div className="featured-schedule-item flex items-center bg-[#FEF8F3] border border-gray-900/20">
-			<div className="grow self-stretch flex flex-col max-w-fit gap-2 items-center text-center p-4 px-5 bg-gray-900 text-white font-serif">
+			<div className="grow self-stretch flex flex-col w-fit max-w-fit gap-2 items-center text-center p-4 px-5 bg-gray-900 text-white font-serif">
 				<span className="text-4xl">
 					{date.toLocaleDateString("default", { day: "2-digit" })}
 				</span>
@@ -17,6 +18,13 @@ const ScheduleItem = function ({ model }) {
 						year: "2-digit",
 					})}
 				</span>
+				<Image
+					className="h-10 w-10"
+					width={32}
+					height={48}
+					src="/ornament_12.svg"
+					alt="Featured schedule item ornament"
+				/>
 			</div>
 			<div className="flex flex-col py-3 px-6 gap-1">
 				<span className="text-xl">{title}</span>
@@ -34,7 +42,7 @@ const ScheduleItem = function ({ model }) {
 		</div>
 	) : (
 		<div className="schedule-item flex items-center bg-[#FEF8F3] border border-gray-900/20">
-			<div className="grow self-stretch flex flex-col max-w-fit gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
+			<div className="grow self-stretch flex flex-col min-w-fit max-w-fit gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
 				<span className="text-xl">
 					{date.toLocaleDateString("default", { day: "2-digit" })}
 				</span>
