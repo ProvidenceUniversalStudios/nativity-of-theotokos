@@ -53,10 +53,10 @@ const ScheduleItem = function ({ model }) {
 					})}
 				</span>
 			</div>
-			<div className="flex flex-col py-2 px-4">
-				<span className="text-base">{title}</span>
+			<div className="flex flex-col py-2 px-4 gap-1">
+				<span className="text-lg">{title}</span>
 				<span className="text-sm">{location}</span>
-				<span className="text-xs">
+				<span className="text-sm">
 					{times[0].time.toLocaleTimeString("default", {
 						hour: "2-digit",
 						minute: "2-digit",

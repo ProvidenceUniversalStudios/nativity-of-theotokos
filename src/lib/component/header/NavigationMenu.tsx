@@ -17,6 +17,7 @@ const NavigationMenu = function ({ model }) {
 						key={index}
 						href={navlink.link}
 						className="navlink text-sm uppercase no-underline hover:text-[#DCB042]"
+						replace={navlink.isInteractive}
 					>
 						{navlink.text}
 					</Link>
@@ -27,7 +28,7 @@ const NavigationMenu = function ({ model }) {
 		<>
 			<Menu>
 				<MenuButton as={Fragment}>
-					<button className="flex items-center justify-center p-1 text-3xl bg-transparent hover:bg-black/45 hover:text-[#DCB042]">
+					<button className="flex items-center justify-center p-1 text-3xl bg-transparent hover:text-[#DCB042] data-open:text-[#DCB042] data-open:bg-black/45">
 						<FontAwesomeIcon icon={menuIcon} />
 					</button>
 				</MenuButton>
@@ -38,7 +39,11 @@ const NavigationMenu = function ({ model }) {
 				>
 					{navlinks.map((navlink, index) => (
 						<MenuItem key={index} as={Fragment}>
-							<Link className="block" href={navlink.link}>
+							<Link
+								className="block"
+								href={navlink.link}
+								replace={navlink.isInteractive}
+							>
 								{navlink.text}
 							</Link>
 						</MenuItem>

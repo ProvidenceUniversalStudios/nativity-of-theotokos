@@ -26,10 +26,26 @@ export default function RootLayout({
 						title: "Nativity of the Theotokos Russian Orthodox Church",
 						navlinks: [
 							{ link: "/", text: "Home" },
-							{ link: "/#resources", text: "Resources" },
-							{ link: "/#media", text: "Media" },
-							{ link: "/#resources", text: "About Us" },
-							{ link: "/#footer", text: "Contact" },
+							{
+								link: "/#resources",
+								text: "Resources",
+								isInteractive: true,
+							},
+							{
+								link: "/#media",
+								text: "Media",
+								isInteractive: true,
+							},
+							{
+								link: "/#resources",
+								text: "About Us",
+								isInteractive: true,
+							},
+							{
+								link: "/#footer",
+								text: "Contact",
+								isInteractive: true,
+							},
 						],
 					})}
 				/>

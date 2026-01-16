@@ -1,6 +1,7 @@
 export type Navlink = {
 	text: string;
 	link: string;
+	isInteractive?: boolean;
 };
 
 export type DailyReadingsScripture = {
