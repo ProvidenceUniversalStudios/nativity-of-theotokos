@@ -16,12 +16,14 @@ export function useHome(): HomeModel {
 						dailyQuote,
 						scheduleItems,
 						newsArticles,
+						dailyGalleryImages,
 					} = await getHomeSnapshot(4, 4);
 					return {
 						dailyReadings,
 						dailyQuote,
 						scheduleItems,
 						newsArticles,
+						dailyGalleryImages,
 					};
 				}
 			}

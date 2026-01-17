@@ -1,3 +1,6 @@
+import { PrismaClient } from "@/src/generated/prisma/client";
+import { ImagePlaceholder, PlaceholderRepository } from "@grod56/placeholder";
+
 export function julianDate(date: Date) {
 	return new Date(new Date().setDate(date.getDate() - 13));
 }
@@ -15,3 +18,35 @@ export function isRemotePath(src: string) {
 		return false;
 	}
 }
+
+export const getPrismaPlaceholderRepository = (
+	baseUrl: string,
+	prismaClient: PrismaClient,
+): PlaceholderRepository => {
+	return {
+		async findPlaceholder(src: string) {
+			const result = await prismaClient.imagePlaceholder.findFirst({
+				where: {
+					imageLink: src,
+				},
+			});
+			return result?.placeholder as ImagePlaceholder;
+		},
+		async setPlaceholder(
+			src: string,
+			placeholder: ImagePlaceholder,
+		): Promise<void> {
+			const url = new URL(src);
+			let processedSrc = url.href;
+			if (baseUrl.includes(url.hostname)) {
+				processedSrc = url.pathname;
+			}
+			await prismaClient.imagePlaceholder.create({
+				data: {
+					imageLink: processedSrc,
+					placeholder,
+				},
+			});
+		},
+	};
+};

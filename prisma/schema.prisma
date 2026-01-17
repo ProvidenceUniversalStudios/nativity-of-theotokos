@@ -85,6 +85,20 @@ model FeaturedArticle {
     newsArticleId Int         @id
 }
 
+model GalleryImage {
+    id                 Int                 @id @default(autoincrement())
+    imageLink          String
+    dailyGalleryImages DailyGalleryImage[]
+}
+
+model DailyGalleryImage {
+    date           DateTime     @db.Date
+    galleryImage   GalleryImage @relation(fields: [galleryImageId], references: [id])
+    galleryImageId Int
+
+    @@id([date, galleryImageId])
+}
+
 model ImagePlaceholder {
     imageLink   String @id
     placeholder String

@@ -1,5 +1,10 @@
 import { InteractiveModel, ModelInteraction } from "@mvc-react/mvc";
-import { DailyQuote, DailyReadings, ScheduleItem } from "../type/miscellaneous";
+import {
+	DailyQuote,
+	DailyReadings,
+	GalleryImage,
+	ScheduleItem,
+} from "../type/miscellaneous";
 import { LatestNews } from "../server-actions/home";
 
 export interface HomeModelView {
@@ -7,6 +12,7 @@ export interface HomeModelView {
 	dailyQuote: DailyQuote;
 	scheduleItems: ScheduleItem[];
 	newsArticles: LatestNews;
+	dailyGalleryImages: GalleryImage[];
 }
 
 export type HomeModelInteraction = ModelInteraction<"REFRESH">;

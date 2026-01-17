@@ -1,6 +1,11 @@
 "use server";
 
-import { DailyQuote, DailyReadings, ScheduleItem } from "../type/miscellaneous";
+import {
+	DailyQuote,
+	DailyReadings,
+	GalleryImage,
+	ScheduleItem,
+} from "../type/miscellaneous";
 import holytrinityorthodox from "../third-party/holytrinityorthodox";
 import mailerLite from "../third-party/mailer-lite";
 import { toZonedTime } from "date-fns-tz";
@@ -12,8 +17,12 @@ import {
 	ImagePlaceholder,
 	PlaceholderRepository,
 } from "@grod56/placeholder";
-import { isRemotePath } from "../utility/miscellaneous";
+import {
+	getPrismaPlaceholderRepository,
+	isRemotePath,
+} from "../utility/miscellaneous";
 import { getBaseURL } from "./miscellaneous";
+import { arrayToShuffled } from "array-shuffle";
 
 export type LatestNews = {
 	featuredArticle: NewsArticlePreview;
@@ -25,6 +34,7 @@ export type HomeSnapshot = {
 	dailyQuote: DailyQuote;
 	scheduleItems: ScheduleItem[];
 	newsArticles: LatestNews;
+	dailyGalleryImages: GalleryImage[];
 };
 
 const prismaAdapter = new PrismaPg({
@@ -35,13 +45,42 @@ const prismaClient = new PrismaClient({
 });
 
 export async function getHomeSnapshot(
-	scheduleItemCount: number,
-	otherArticleCount: number
+	scheduleItemCount: number = 4,
+	otherArticleCount: number = 4,
+	dailyGalleryImagesCount: number = 5,
 ): Promise<HomeSnapshot> {
-	const scheduleItems = await getScheduleItems(scheduleItemCount);
+	const currentDate = new Date();
+	const scheduleItems = await getScheduleItems(
+		scheduleItemCount,
+		currentDate,
+	);
 	const newsArticles = await getLatestNews(otherArticleCount);
-	const dailyReadings = await getDailyReadings();
-	const localDate = toZonedTime(dailyReadings.currentDate, "CAT");
+	const dailyReadings = await getDailyReadings(currentDate);
+	const dailyQuote = await getDailyQuote(currentDate);
+	const dailyGalleryImages = await getDailyGalleryImages(
+		dailyGalleryImagesCount,
+		currentDate,
+	);
+
+	return {
+		dailyReadings,
+		dailyQuote,
+		scheduleItems,
+		newsArticles,
+		dailyGalleryImages,
+	};
+}
+
+export async function subscribeToMailingList(email: string) {
+	mailerLite.subscribers.createOrUpdate({ email });
+}
+
+export async function getDailyReadings(currentDate: Date = new Date()) {
+	return holytrinityorthodox.getDailyReadings(currentDate);
+}
+
+export async function getDailyQuote(currentDate: Date = new Date()) {
+	const localDate = toZonedTime(currentDate, "CAT");
 	let dailyQuote = await prismaClient.dailyQuote
 		.findFirst({
 			where: {
@@ -59,28 +98,16 @@ export async function getHomeSnapshot(
 			},
 		});
 	}
-
-	return {
-		dailyReadings,
-		dailyQuote,
-		scheduleItems,
-		newsArticles,
-	};
+	return dailyQuote;
 }
 
-export async function subscribeToMailingList(email: string) {
-	mailerLite.subscribers.createOrUpdate({ email });
-}
-
-export async function getDailyReadings() {
-	return holytrinityorthodox.getDailyReadings(new Date());
-}
-
-export async function getScheduleItems(count: number) {
-	const localDate = new Date();
+export async function getScheduleItems(
+	count: number,
+	currentDate = new Date(),
+) {
 	const data = await prismaClient.scheduleItem.findMany({
 		where: {
-			date: { gte: localDate },
+			date: { gte: currentDate },
 			removedScheduleItem: { is: null },
 		},
 		orderBy: {
@@ -95,13 +122,12 @@ export async function getScheduleItems(count: number) {
 			title: record.title,
 			location: record.location,
 			times: record.scheduleItemTimes,
-		})
+		}),
 	);
-	let nextScheduleItemDate = new Date(localDate);
+	let nextScheduleItemDate = new Date(currentDate);
 	while (scheduleItems.length < count) {
-		const nextScheduleItem = await _getNextDefaultScheduleItem(
-			nextScheduleItemDate
-		);
+		const nextScheduleItem =
+			await _getNextDefaultScheduleItem(nextScheduleItemDate);
 		const isPresent = await prismaClient.scheduleItem.count({
 			where: {
 				date: { equals: nextScheduleItem.date },
@@ -122,15 +148,15 @@ export async function getScheduleItems(count: number) {
 		}
 		nextScheduleItemDate = new Date(
 			new Date(nextScheduleItem.date).setDate(
-				nextScheduleItem.date.getDate() + 1
-			)
+				nextScheduleItem.date.getDate() + 1,
+			),
 		);
 	}
 	return scheduleItems;
 }
 
 export async function getLatestNews(
-	otherArticlesCount: number
+	otherArticlesCount: number,
 ): Promise<LatestNews> {
 	const baseURL = await getBaseURL();
 	const otherArticles = await prismaClient.newsArticle.findMany({
@@ -147,7 +173,7 @@ export async function getLatestNews(
 	const featuredArticle = await prismaClient.featuredArticle.findFirstOrThrow(
 		{
 			include: { newsArticle: true },
-		}
+		},
 	);
 	const allArticles = [featuredArticle.newsArticle, ...otherArticles];
 	const unplaceholderedArticles: typeof allArticles = [];
@@ -170,7 +196,7 @@ export async function getLatestNews(
 				},
 			setPlaceholder: async function (
 				src: string,
-				placeholder: ImagePlaceholder
+				placeholder: ImagePlaceholder,
 			): Promise<void> {
 				const url = new URL(src);
 				let processedSrc = url.href;
@@ -189,7 +215,7 @@ export async function getLatestNews(
 			const imageLink = unplaceholderedArticles[i].imageLink;
 			const imageURL = isRemotePath(imageLink)
 				? imageLink
-				: `${baseURL}${imageLink}`;
+				: `${baseURL}/${imageLink}`;
 			await getPlaceholder(imageURL, repository);
 		}
 	}
@@ -202,7 +228,7 @@ export async function getLatestNews(
 					},
 				},
 			})
-		).map(placeholder => [placeholder.imageLink, placeholder.placeholder])
+		).map(placeholder => [placeholder.imageLink, placeholder.placeholder]),
 	);
 	return {
 		featuredArticle: {
@@ -210,7 +236,7 @@ export async function getLatestNews(
 			articleImage: {
 				source: featuredArticle.newsArticle.imageLink,
 				placeholder: articlePlaceholders.get(
-					featuredArticle.newsArticle.imageLink
+					featuredArticle.newsArticle.imageLink,
 				) as ImagePlaceholder,
 				about: "Featured article image",
 			},
@@ -221,11 +247,89 @@ export async function getLatestNews(
 				source: article.imageLink,
 				about: "News article image",
 				placeholder: articlePlaceholders.get(
-					article.imageLink
+					article.imageLink,
 				) as ImagePlaceholder,
 			},
 		})),
 	};
+}
+
+export async function getDailyGalleryImages(
+	count: number,
+	currentDate = new Date(),
+): Promise<GalleryImage[]> {
+	const baseUrl = await getBaseURL();
+	const localDate = toZonedTime(currentDate, "CAT");
+	let dailyGalleryImages = await prismaClient.dailyGalleryImage
+		.findMany({
+			select: {
+				galleryImage: true,
+			},
+			where: {
+				date: localDate,
+			},
+		})
+		.then(records => records.map(record => record.galleryImage));
+	if (
+		dailyGalleryImages.length < count &&
+		(await prismaClient.galleryImage.count({
+			where: {
+				dailyGalleryImages: { none: { date: localDate } },
+			},
+		})) > 0
+	) {
+		const otherGalleryImages = await prismaClient.galleryImage.findMany({
+			where: {
+				dailyGalleryImages: {
+					none: { date: localDate },
+				},
+			},
+		});
+		const shuffledGalleryImages = arrayToShuffled(otherGalleryImages);
+		if (otherGalleryImages.length + dailyGalleryImages.length <= count) {
+			await prismaClient.dailyGalleryImage.createMany({
+				data: shuffledGalleryImages.map(galleryImage => ({
+					date: localDate,
+					galleryImageId: galleryImage.id,
+				})),
+			});
+			dailyGalleryImages = [
+				...dailyGalleryImages,
+				...shuffledGalleryImages,
+			];
+		} else {
+			const newDailyGalleryImages = shuffledGalleryImages.slice(
+				0,
+				count - dailyGalleryImages.length,
+			);
+			await prismaClient.dailyGalleryImage.createMany({
+				data: newDailyGalleryImages.map(galleryImage => ({
+					date: localDate,
+					galleryImageId: galleryImage.id,
+				})),
+			});
+			dailyGalleryImages = [
+				...dailyGalleryImages,
+				...newDailyGalleryImages,
+			];
+		}
+	}
+	const placeholderedGalleryImages: GalleryImage[] = [];
+	const repository = getPrismaPlaceholderRepository(baseUrl, prismaClient);
+	// TODO: Optimize
+	for (let i = 0; i < dailyGalleryImages.length; i++) {
+		placeholderedGalleryImages.push({
+			image: {
+				source: dailyGalleryImages[i].imageLink,
+				about: "Gallery image",
+				placeholder: await getPlaceholder(
+					dailyGalleryImages[i].imageLink,
+					repository,
+				),
+			},
+		});
+	}
+	return placeholderedGalleryImages;
 }
 
 // TODO: To be refactored to something less ... static
@@ -236,10 +340,10 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 	}
 	if (scheduleItemDate.getDay() == 6) {
 		const nextSundayDate = new Date(
-			new Date(scheduleItemDate).setDate(scheduleItemDate.getDate() + 1)
+			new Date(scheduleItemDate).setDate(scheduleItemDate.getDate() + 1),
 		);
 		const previousSundayDate = new Date(
-			new Date(scheduleItemDate).setDate(scheduleItemDate.getDate() - 6)
+			new Date(scheduleItemDate).setDate(scheduleItemDate.getDate() - 6),
 		);
 		if (nextSundayDate.getMonth() != previousSundayDate.getMonth())
 			return {
@@ -249,19 +353,19 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 				times: [
 					{
 						time: new Date(
-							new Date(scheduleItemDate).setHours(12, 0, 0, 0)
+							new Date(scheduleItemDate).setHours(12, 0, 0, 0),
 						),
 						designation: "Hours",
 					},
 					{
 						time: new Date(
-							new Date(scheduleItemDate).setHours(12, 30, 0, 0)
+							new Date(scheduleItemDate).setHours(12, 30, 0, 0),
 						),
 						designation: "Confessions",
 					},
 					{
 						time: new Date(
-							new Date(scheduleItemDate).setHours(13, 0, 0, 0)
+							new Date(scheduleItemDate).setHours(13, 0, 0, 0),
 						),
 						designation: "Liturgy",
 					},
@@ -274,19 +378,19 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 			times: [
 				{
 					time: new Date(
-						new Date(nextSundayDate).setHours(9, 0, 0, 0)
+						new Date(nextSundayDate).setHours(9, 0, 0, 0),
 					),
 					designation: "Hours",
 				},
 				{
 					time: new Date(
-						new Date(nextSundayDate).setHours(9, 30, 0, 0)
+						new Date(nextSundayDate).setHours(9, 30, 0, 0),
 					),
 					designation: "Typika",
 				},
 				{
 					time: new Date(
-						new Date(nextSundayDate).setHours(10, 30, 0, 0)
+						new Date(nextSundayDate).setHours(10, 30, 0, 0),
 					),
 					designation: "Catechism",
 				},
@@ -294,7 +398,7 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 		};
 	} else {
 		const previousSundayDate = new Date(
-			new Date(scheduleItemDate).setDate(scheduleItemDate.getDate() - 7)
+			new Date(scheduleItemDate).setDate(scheduleItemDate.getDate() - 7),
 		);
 		if (scheduleItemDate.getMonth() != previousSundayDate.getMonth())
 			return {
@@ -304,19 +408,19 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 				times: [
 					{
 						time: new Date(
-							new Date(scheduleItemDate).setHours(9, 0, 0, 0)
+							new Date(scheduleItemDate).setHours(9, 0, 0, 0),
 						),
 						designation: "Hours",
 					},
 					{
 						time: new Date(
-							new Date(scheduleItemDate).setHours(9, 30, 0, 0)
+							new Date(scheduleItemDate).setHours(9, 30, 0, 0),
 						),
 						designation: "Confessions",
 					},
 					{
 						time: new Date(
-							new Date(scheduleItemDate).setHours(10, 0, 0, 0)
+							new Date(scheduleItemDate).setHours(10, 0, 0, 0),
 						),
 						designation: "Liturgy",
 					},
@@ -325,9 +429,9 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 		return await _getNextDefaultScheduleItem(
 			new Date(
 				new Date(scheduleItemDate).setDate(
-					scheduleItemDate.getDate() - 1
-				)
-			)
+					scheduleItemDate.getDate() - 1,
+				),
+			),
 		); // HACK
 	}
 }

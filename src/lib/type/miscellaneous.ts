@@ -58,3 +58,7 @@ export type NewsArticle = {
 	snippet: string;
 	articleImage: Image;
 };
+
+export type GalleryImage = {
+	image: Image;
+};

@@ -22,6 +22,7 @@
 		"@mvc-react/mvc": "^3.1.0",
 		"@mvc-react/stateful": "^3.8.0",
 		"@plaiceholder/next": "^3.0.0",
+		"array-shuffle": "^4.0.0",
 		"autoprefixer": "^10.4.23",
 		"cheerio": "^1.1.2",
 		"date-fns-tz": "^3.2.0",

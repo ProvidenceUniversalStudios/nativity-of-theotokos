@@ -328,46 +328,6 @@ export default function Home() {
 													.featuredArticle,
 										})}
 									/>
-									{/* <div
-									className="featured-card flex flex-col hover:cursor-pointer bg-[#FEF8F3] border border-gray-900/20"
-									onClick={() =>
-										alert("Content to be added soon!")
-									}
-								>
-									<div className="flex justify-stretch items-stretch w-full h-[15em] max-h-[70dvh]">
-										<Image
-											className="grow object-cover object-center"
-											height={500}
-											width={500}
-											alt="News article image"
-											src="/nativity.jpg"
-										/>
-									</div>
-									<div className="card-details p-4 flex flex-col gap-1.5">
-										<span className="title text-xl font-serif">
-											Fr. George Maximov church visit
-										</span>
-										<span className="timestamp text-sm text-gray-600">
-											Vasily Greyling | 23 September 2025
-										</span>
-										<p className="text-base line-clamp-6">
-											Lorem ipsum dolor sit amet
-											consectetur, adipisicing elit.
-											Dolorem ipsum, maxime minima
-											blanditiis eum rem est minus fuga
-											praesentium explicabo exercitationem
-											excepturi esse harum nam perferendis
-											pariatur, nesciunt assumenda dolore.
-											Lorem ipsum dolor sit amet
-											consectetur adipisicing elit. Qui
-											expedita perspiciatis nihil minima
-											dolorum sapiente in iure facere ipsa
-											ex doloremque fugiat atque incidunt
-											possimus assumenda quo, fugit
-											asperiores maiores!
-										</p>
-									</div>
-								</div> */}
 								</div>
 
 								<div className="schedule flex flex-col gap-4 flex-1 lg:max-w-5/10 ">
@@ -414,170 +374,6 @@ export default function Home() {
 											})}
 										/>
 									))}
-									{/*
-								<div
-									className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
-									onClick={() =>
-										alert("Content to be added soon!")
-									}
-								>
-									<div className="flex justify-stretch items-stretch w-[7em] min-w-[7em] h-[6em] max-h-[6em] md:w-[10em] md:min-w-[10em] md:h-[8em] md:max-h-[8em]">
-										<Image
-											className="grow object-cover object-center"
-											height={128}
-											width={160}
-											alt="News article image"
-											src="/nativity-5.jpg"
-										/>
-									</div>
-									<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
-										<span className="title text-sm md:text-lg font-serif">
-											Liturgy on December 7 with Fr Savva
-										</span>
-										<span className="byline text-xs md:text-sm text-gray-600">
-											Vasily Greyling | 08 December 2025
-										</span>
-										<p className="line-clamp-2 max-lg:hidden">
-											Lorem ipsum dolor sit amet
-											consectetur, adipisicing elit.
-											Dolorem ipsum, maxime minima
-											blanditiis eum rem est minus fuga
-											praesentium explicabo exercitationem
-											excepturi esse harum nam perferendis
-											pariatur, nesciunt assumenda dolore.
-											Lorem ipsum dolor sit amet
-											consectetur adipisicing elit. Qui
-											expedita perspiciatis nihil minima
-											dolorum sapiente in iure facere ipsa
-											ex doloremque fugiat atque incidunt
-											possimus assumenda quo, fugit
-											asperiores maiores!
-										</p>
-									</div>
-								</div>
-								<div
-									className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
-									onClick={() =>
-										alert("Content to be added soon!")
-									}
-								>
-									<div className="flex justify-stretch items-stretch w-[7em] min-w-[7em] h-[6em] max-h-[6em] md:w-[10em] md:min-w-[10em] md:h-[8em] md:max-h-[8em]">
-										<Image
-											className="grow object-cover object-center"
-											height={128}
-											width={160}
-											alt="News article image"
-											src="/nativity-3.jpg"
-										/>
-									</div>
-									<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
-										<span className="title text-sm md:text-lg font-serif">
-											Fr Savva celebrates liturgy with us
-											on the 1st of November
-										</span>
-										<span className="byline text-xs md:text-sm text-gray-600">
-											Vasily Greyling | 03 November 2025
-										</span>
-										<p className="line-clamp-2 max-lg:hidden">
-											Lorem ipsum dolor sit amet
-											consectetur, adipisicing elit.
-											Dolorem ipsum, maxime minima
-											blanditiis eum rem est minus fuga
-											praesentium explicabo exercitationem
-											excepturi esse harum nam perferendis
-											pariatur, nesciunt assumenda dolore.
-											Lorem ipsum dolor sit amet
-											consectetur adipisicing elit. Qui
-											expedita perspiciatis nihil minima
-											dolorum sapiente in iure facere ipsa
-											ex doloremque fugiat atque incidunt
-											possimus assumenda quo, fugit
-											asperiores maiores!
-										</p>
-									</div>
-								</div>
-								<div
-									className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
-									onClick={() =>
-										alert("Content to be added soon!")
-									}
-								>
-									<div className="flex justify-stretch items-stretch w-[7em] min-w-[7em] h-[6em] max-h-[6em] md:w-[10em] md:min-w-[10em] md:h-[8em] md:max-h-[8em]">
-										<Image
-											className="grow object-cover object-center"
-											height={128}
-											width={160}
-											alt="News article image"
-											src="/nativity-4.jpg"
-										/>
-									</div>
-									<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
-										<span className="title text-sm md:text-lg font-serif">
-											Nativity of the Theotokos parish
-											holds its first official liturgy
-										</span>
-										<span className="byline text-xs md:text-sm text-gray-600">
-											Vasily Greyling | 05 October 2025
-										</span>
-										<p className="line-clamp-2 max-lg:hidden">
-											Lorem ipsum dolor sit amet
-											consectetur, adipisicing elit.
-											Dolorem ipsum, maxime minima
-											blanditiis eum rem est minus fuga
-											praesentium explicabo exercitationem
-											excepturi esse harum nam perferendis
-											pariatur, nesciunt assumenda dolore.
-											Lorem ipsum dolor sit amet
-											consectetur adipisicing elit. Qui
-											expedita perspiciatis nihil minima
-											dolorum sapiente in iure facere ipsa
-											ex doloremque fugiat atque incidunt
-											possimus assumenda quo, fugit
-											asperiores maiores!
-										</p>
-									</div>
-								</div>
-								<div
-									className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
-									onClick={() =>
-										alert("Content to be added soon!")
-									}
-								>
-									<div className="flex justify-stretch items-stretch w-[7em] min-w-[7em] h-[6em] max-h-[6em] md:w-[10em] md:min-w-[10em] md:h-[8em] md:max-h-[8em]">
-										<Image
-											className="grow object-cover object-center"
-											height={128}
-											width={160}
-											alt="News article image"
-											src="/nativity-2.jpg"
-										/>
-									</div>
-									<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
-										<span className="title text-sm md:text-lg font-serif">
-											Fr George Maximov celebrates liturgy
-											with our community
-										</span>
-										<span className="byline text-xs md:text-sm text-gray-600">
-											Vasily Greyling | 22 September 2025
-										</span>
-										<p className="line-clamp-2 max-lg:hidden">
-											Lorem ipsum dolor sit amet
-											consectetur, adipisicing elit.
-											Dolorem ipsum, maxime minima
-											blanditiis eum rem est minus fuga
-											praesentium explicabo exercitationem
-											excepturi esse harum nam perferendis
-											pariatur, nesciunt assumenda dolore.
-											Lorem ipsum dolor sit amet
-											consectetur adipisicing elit. Qui
-											expedita perspiciatis nihil minima
-											dolorum sapiente in iure facere ipsa
-											ex doloremque fugiat atque incidunt
-											possimus assumenda quo, fugit
-											asperiores maiores!
-										</p>
-									</div>
-								</div> */}
 								</div>
 							</div>
 						</div>
@@ -638,75 +434,58 @@ export default function Home() {
 					id="media"
 					className="gallery bg-[antiquewhite] text-black"
 				>
-					<div className="gallery-content flex flex-col gap-8 p-8 py-14 lg:px-20 bg-[url(/ornament_4.svg)] bg-size-[15em] bg-bottom-left bg-no-repeat">
-						<div className="swiper-container w-full max-w-full h-[20em] max-h-[20em]">
-							<Swiper
-								className="h-full"
-								modules={[Navigation, Autoplay]}
-								spaceBetween={30}
-								breakpoints={{ 768: { slidesPerView: 3 } }}
-								slidesPerView={"auto"}
-								navigation
-								autoplay
-							>
-								<SwiperSlide>
-									<div className="flex justify-stretch items-stretch w-full h-full">
-										<Image
-											className="grow object-cover object-center"
-											src="/nativity.jpg"
-											alt="gallery item"
-											width={480}
-											height={320}
-										/>
-									</div>
-								</SwiperSlide>
-								<SwiperSlide>
-									<div className="grow flex justify-stretch items-stretch w-full h-full">
-										<Image
-											className="object-cover object-center"
-											src="/nativity-5.jpg"
-											alt="gallery item"
-											width={480}
-											height={320}
-										/>
-									</div>
-								</SwiperSlide>
-								<SwiperSlide>
-									<div className="flex justify-stretch items-stretch w-full h-full">
-										<Image
-											className="grow object-cover object-center"
-											src="/nativity-2.jpg"
-											alt="gallery item"
-											width={480}
-											height={320}
-										/>
-									</div>
-								</SwiperSlide>
-								<SwiperSlide>
-									<div className="flex justify-stretch items-stretch w-full h-full">
-										<Image
-											className="grow object-cover object-center"
-											src="/nativity-3.jpg"
-											alt="gallery item"
-											width={480}
-											height={320}
-										/>
-									</div>
-								</SwiperSlide>
-								<SwiperSlide>
-									<div className="flex justify-stretch items-stretch w-full h-full">
-										<Image
-											className="grow object-cover object-center"
-											src="/nativity-4.jpg"
-											alt="gallery item"
-											width={480}
-											height={320}
-										/>
-									</div>
-								</SwiperSlide>
-							</Swiper>
+					{modelView && (
+						<div className="gallery-content flex flex-col gap-8 p-8 py-14 lg:px-20 bg-[url(/ornament_4.svg)] bg-size-[15em] bg-bottom-left bg-no-repeat">
+							<div className="swiper-container w-full max-w-full h-[20em] max-h-[20em]">
+								<Swiper
+									className="h-full"
+									modules={[Navigation, Autoplay]}
+									spaceBetween={30}
+									breakpoints={{ 768: { slidesPerView: 3 } }}
+									slidesPerView={"auto"}
+									navigation
+									autoplay
+								>
+									{[
+										...modelView.dailyGalleryImages.map(
+											(galleryImage, index) => (
+												<SwiperSlide key={index}>
+													<div className="flex justify-stretch items-stretch w-full h-full">
+														<Image
+															className="grow object-cover object-center"
+															src={
+																galleryImage
+																	.image
+																	.source
+															}
+															alt={
+																galleryImage
+																	.image
+																	.about ??
+																"gallery item"
+															}
+															title={
+																galleryImage
+																	.image.about
+															}
+															placeholder="blur"
+															blurDataURL={
+																galleryImage
+																	.image
+																	.placeholder
+															}
+															width={480}
+															height={320}
+														/>
+													</div>
+												</SwiperSlide>
+											),
+										),
+									]}
+								</Swiper>
+							</div>
 						</div>
-					</div>
+					)}
 				</section>
 				<section className="mailing-list bg-gray-900 text-white">
 					<div className="mailing-list-content flex flex-col gap-8 p-8 py-14 md:w-3/4 lg:w-6/10 lg:px-20">
