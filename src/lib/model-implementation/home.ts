@@ -11,12 +11,17 @@ export function useHome(): HomeModel {
 		async produceModelView(interaction) {
 			switch (interaction.type) {
 				case "REFRESH": {
-					const { dailyReadings, dailyQuote, scheduleItems } =
-						await getHomeSnapshot();
+					const {
+						dailyReadings,
+						dailyQuote,
+						scheduleItems,
+						newsArticles,
+					} = await getHomeSnapshot(4, 4);
 					return {
 						dailyReadings,
 						dailyQuote,
 						scheduleItems,
+						newsArticles,
 					};
 				}
 			}

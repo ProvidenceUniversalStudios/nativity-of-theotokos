@@ -1,3 +1,5 @@
+import { ImagePlaceholder } from "@grod56/placeholder";
+
 export type Navlink = {
 	text: string;
 	link: string;
@@ -39,4 +41,20 @@ export type ScheduleItem = {
 		time: Date;
 		designation: string;
 	}[];
+};
+
+export type Image = {
+	source: string;
+	placeholder: ImagePlaceholder;
+	about?: string;
+};
+
+export type NewsArticle = {
+	title: string;
+	author: string;
+	body: string;
+	dateCreated: Date;
+	dateUpdated?: Date;
+	snippet: string;
+	articleImage: Image;
 };

@@ -6,11 +6,25 @@ import mailerLite from "../third-party/mailer-lite";
 import { toZonedTime } from "date-fns-tz";
 import { PrismaClient } from "@/src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { NewsArticlePreview } from "../model/news-article-preview";
+import {
+	getPlaceholder,
+	ImagePlaceholder,
+	PlaceholderRepository,
+} from "@grod56/placeholder";
+import { isRemotePath } from "../utility/miscellaneous";
+import { getBaseURL } from "./miscellaneous";
+
+export type LatestNews = {
+	featuredArticle: NewsArticlePreview;
+	otherNewsArticles: NewsArticlePreview[];
+};
 
 export type HomeSnapshot = {
 	dailyReadings: DailyReadings;
 	dailyQuote: DailyQuote;
 	scheduleItems: ScheduleItem[];
+	newsArticles: LatestNews;
 };
 
 const prismaAdapter = new PrismaPg({
@@ -20,8 +34,12 @@ const prismaClient = new PrismaClient({
 	adapter: prismaAdapter,
 });
 
-export async function getHomeSnapshot(): Promise<HomeSnapshot> {
-	const scheduleItems = await getScheduleItems();
+export async function getHomeSnapshot(
+	scheduleItemCount: number,
+	otherArticleCount: number
+): Promise<HomeSnapshot> {
+	const scheduleItems = await getScheduleItems(scheduleItemCount);
+	const newsArticles = await getLatestNews(otherArticleCount);
 	const dailyReadings = await getDailyReadings();
 	const localDate = toZonedTime(dailyReadings.currentDate, "CAT");
 	let dailyQuote = await prismaClient.dailyQuote
@@ -46,6 +64,7 @@ export async function getHomeSnapshot(): Promise<HomeSnapshot> {
 		dailyReadings,
 		dailyQuote,
 		scheduleItems,
+		newsArticles,
 	};
 }
 
@@ -57,15 +76,17 @@ export async function getDailyReadings() {
 	return holytrinityorthodox.getDailyReadings(new Date());
 }
 
-export async function getScheduleItems() {
-	const size = 4;
+export async function getScheduleItems(count: number) {
 	const localDate = new Date();
 	const data = await prismaClient.scheduleItem.findMany({
 		where: {
 			date: { gte: localDate },
 			removedScheduleItem: { is: null },
 		},
-		take: size,
+		orderBy: {
+			date: "asc",
+		},
+		take: count,
 		include: { scheduleItemTimes: true },
 	});
 	const scheduleItems = data.map(
@@ -77,8 +98,8 @@ export async function getScheduleItems() {
 		})
 	);
 	let nextScheduleItemDate = new Date(localDate);
-	while (scheduleItems.length < size) {
-		const nextScheduleItem = await getNextDefaultScheduleItem(
+	while (scheduleItems.length < count) {
+		const nextScheduleItem = await _getNextDefaultScheduleItem(
 			nextScheduleItemDate
 		);
 		const isPresent = await prismaClient.scheduleItem.count({
@@ -108,10 +129,107 @@ export async function getScheduleItems() {
 	return scheduleItems;
 }
 
+export async function getLatestNews(
+	otherArticlesCount: number
+): Promise<LatestNews> {
+	const baseURL = await getBaseURL();
+	const otherArticles = await prismaClient.newsArticle.findMany({
+		where: {
+			featuredArticle: {
+				is: null,
+			},
+		},
+		orderBy: {
+			dateCreated: "desc",
+		},
+		take: otherArticlesCount,
+	});
+	const featuredArticle = await prismaClient.featuredArticle.findFirstOrThrow(
+		{
+			include: { newsArticle: true },
+		}
+	);
+	const allArticles = [featuredArticle.newsArticle, ...otherArticles];
+	const unplaceholderedArticles: typeof allArticles = [];
+
+	for (let i = 0; i < allArticles.length; i++) {
+		const item = await prismaClient.imagePlaceholder.findFirst({
+			where: {
+				imageLink: {
+					equals: allArticles[i].imageLink,
+				},
+			},
+		});
+		if (!item) unplaceholderedArticles.push(allArticles[i]);
+	}
+	if (unplaceholderedArticles.length) {
+		const repository: PlaceholderRepository = {
+			findPlaceholder:
+				async function (): Promise<ImagePlaceholder | null> {
+					return null;
+				},
+			setPlaceholder: async function (
+				src: string,
+				placeholder: ImagePlaceholder
+			): Promise<void> {
+				const url = new URL(src);
+				let processedSrc = url.href;
+				if (baseURL.includes(url.hostname)) {
+					processedSrc = url.pathname;
+				}
+				await prismaClient.imagePlaceholder.create({
+					data: {
+						imageLink: processedSrc,
+						placeholder,
+					},
+				});
+			},
+		};
+		for (let i = 0; i < unplaceholderedArticles.length; i++) {
+			const imageLink = unplaceholderedArticles[i].imageLink;
+			const imageURL = isRemotePath(imageLink)
+				? imageLink
+				: `${baseURL}${imageLink}`;
+			await getPlaceholder(imageURL, repository);
+		}
+	}
+	const articlePlaceholders = new Map(
+		(
+			await prismaClient.imagePlaceholder.findMany({
+				where: {
+					imageLink: {
+						in: allArticles.map(article => article.imageLink),
+					},
+				},
+			})
+		).map(placeholder => [placeholder.imageLink, placeholder.placeholder])
+	);
+	return {
+		featuredArticle: {
+			...featuredArticle.newsArticle,
+			articleImage: {
+				source: featuredArticle.newsArticle.imageLink,
+				placeholder: articlePlaceholders.get(
+					featuredArticle.newsArticle.imageLink
+				) as ImagePlaceholder,
+				about: "Featured article image",
+			},
+		},
+		otherNewsArticles: otherArticles.map(article => ({
+			...article,
+			articleImage: {
+				source: article.imageLink,
+				about: "News article image",
+				placeholder: articlePlaceholders.get(
+					article.imageLink
+				) as ImagePlaceholder,
+			},
+		})),
+	};
+}
+
 // TODO: To be refactored to something less ... static
-export async function getNextDefaultScheduleItem(
-	date: Date
-): Promise<ScheduleItem> {
+async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 	const scheduleItemDate = new Date(date);
 	while (scheduleItemDate.getDay() > 0 && scheduleItemDate.getDay() < 6) {
 		scheduleItemDate.setDate(scheduleItemDate.getDate() + 1);
@@ -204,7 +322,7 @@ export async function getNextDefaultScheduleItem(
 					},
 				],
 			};
-		return await getNextDefaultScheduleItem(
+		return await _getNextDefaultScheduleItem(
 			new Date(
 				new Date(scheduleItemDate).setDate(
 					scheduleItemDate.getDate() - 1

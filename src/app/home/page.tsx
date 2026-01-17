@@ -25,6 +25,7 @@ import {
 } from "@headlessui/react";
 import ScheduleItem from "@/src/lib/component/schedule-item/ScheduleItem";
 import { newReadonlyModel } from "@mvc-react/mvc";
+import NewsArticlePreview from "@/src/lib/component/news-article-preview/NewsArticlePreview";
 
 type MailingListStatus = "subscribed" | "not_subscribed" | "pending";
 const ebGaramond = EB_Garamond({ subsets: ["latin", "cyrillic"] });
@@ -106,12 +107,12 @@ export default function Home() {
 													<p className="whitespace-pre-line">
 														{hymn.text.replaceAll(
 															/\/\s+/g,
-															"/\n"
+															"/\n",
 														)}
 													</p>
 													<hr className="w-3/4 my-5 text-black/70 border-black/70" />
 												</div>
-											)
+											),
 										)}
 									</div>
 								</div>
@@ -187,7 +188,7 @@ export default function Home() {
 											window.open(
 												modelView.dailyReadings
 													.iconOfTheDay,
-												"_blank"
+												"_blank",
 											);
 										}}
 									/>
@@ -199,7 +200,7 @@ export default function Home() {
 												"en-uk",
 												{
 													dateStyle: "full",
-												}
+												},
 											)}
 										</span>
 										<div className="flex flex-col gap-2">
@@ -265,7 +266,7 @@ export default function Home() {
 																</span>
 															)}
 														</div>
-													)
+													),
 												),
 											]}
 										</div>
@@ -308,17 +309,26 @@ export default function Home() {
 						</div>
 					)}
 				</section>
-				<section className="news pt-4 bg-[antiquewhite] text-black">
-					<div className="ornament mb-4 md:mb-0 w-full h-[5em] bg-contain bg-center bg-no-repeat bg-[url(/ornament_1.svg)]" />
-					<div className="news-content flex flex-col gap-8">
-						<span className="text-3xl font-serif md:w-1/2 px-8 lg:px-20">
-							Latest News
-							<hr className="mt-4" />
-						</span>
-						<div className="flex flex-row flex-wrap lg:justify-between gap-x-12 gap-y-6 px-8 pb-6 lg:px-20">
-							<div className="featured flex flex-col gap-4 md:max-w-1/2 lg:max-w-[45%]">
-								<span className="text-xl">Featured</span>
-								<div
+				{modelView && (
+					<section className="news pt-4 bg-[antiquewhite] text-black">
+						<div className="ornament mb-4 md:mb-0 w-full h-[5em] bg-contain bg-center bg-no-repeat bg-[url(/ornament_1.svg)]" />
+						<div className="news-content flex flex-col gap-8">
+							<span className="text-3xl font-serif md:w-1/2 px-8 lg:px-20">
+								Latest News
+								<hr className="mt-4" />
+							</span>
+							<div className="flex flex-row flex-wrap lg:justify-between gap-x-12 gap-y-6 px-8 pb-6 lg:px-20">
+								<div className="featured flex flex-col gap-4 md:max-w-1/2 lg:max-w-[45%]">
+									<span className="text-xl">Featured</span>
+									<NewsArticlePreview
+										model={newReadonlyModel({
+											isFeatured: true,
+											articlePreview:
+												modelView.newsArticles
+													.featuredArticle,
+										})}
+									/>
+									{/* <div
 									className="featured-card flex flex-col hover:cursor-pointer bg-[#FEF8F3] border border-gray-900/20"
 									onClick={() =>
 										alert("Content to be added soon!")
@@ -357,9 +367,9 @@ export default function Home() {
 											asperiores maiores!
 										</p>
 									</div>
+								</div> */}
 								</div>
-							</div>
-							{modelView && (
+
 								<div className="schedule flex flex-col gap-4 flex-1 lg:max-w-5/10 ">
 									<span className="text-xl">Schedule</span>
 									<div className="schedule-list flex flex-col w-full gap-4 pr-3 lg:pr-6 max-h-[25em] lg:max-h-[28em] overflow-y-auto">
@@ -380,20 +390,31 @@ export default function Home() {
 														model={newReadonlyModel(
 															{
 																scheduleItem,
-																isFeatured:
-																	false,
-															}
+																isFeatured: false,
+															},
 														)}
 													/>
 												))}
 										</div>
 									</div>
 								</div>
-							)}
-						</div>
-						<div className="other-stories flex flex-col gap-4 pt-6 pb-10 px-8 lg:px-20 bg-white/70">
-							<span className="text-xl mb-2">More News</span>
-							<div className="grid lg:grid-cols-2 gap-8 md:gap-6 md:w-3/4 lg:w-9/10">
+							</div>
+							<div className="other-stories flex flex-col gap-4 pt-6 pb-10 px-8 lg:px-20 bg-white/70">
+								<span className="text-xl mb-1">More News</span>
+								<div className="grid lg:grid-cols-2 gap-8 md:gap-6 md:w-3/4 lg:w-9/10">
+									{[
+										...modelView.newsArticles
+											.otherNewsArticles,
+									].map((articlePreview, index) => (
+										<NewsArticlePreview
+											key={index}
+											model={newReadonlyModel({
+												isFeatured: false,
+												articlePreview,
+											})}
+										/>
+									))}
+									{/*
 								<div
 									className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
 									onClick={() =>
@@ -556,11 +577,12 @@ export default function Home() {
 											asperiores maiores!
 										</p>
 									</div>
+								</div> */}
 								</div>
 							</div>
 						</div>
-					</div>
-				</section>
+					</section>
+				)}
 				<section
 					id="resources"
 					className="resources bg-[#250203] text-white"
@@ -573,7 +595,7 @@ export default function Home() {
 									onClick={() =>
 										window.open(
 											"https://eadiocese.org/litresource",
-											"_blank"
+											"_blank",
 										)
 									}
 								>
@@ -588,7 +610,7 @@ export default function Home() {
 									onClick={() =>
 										window.open(
 											"https://www.oca.org/orthodoxy/the-orthodox-faith",
-											"_blank"
+											"_blank",
 										)
 									}
 								>
@@ -705,7 +727,7 @@ export default function Home() {
 											formData
 												.get("email")!
 												.toString()
-												.trim()
+												.trim(),
 										);
 									}}
 									onSubmit={() => {
