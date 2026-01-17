@@ -3,13 +3,7 @@
 import { EB_Garamond } from "next/font/google";
 import Image from "next/image";
 import { Autoplay, Navigation } from "swiper/modules";
-
-import "@fortawesome/fontawesome-svg-core/styles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import { faEnvelope as Email } from "@fortawesome/free-regular-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// Import Swiper styles
 import { subscribeToMailingList } from "@/src/lib/server-actions/home";
 import { useCallback, useLayoutEffect, useState } from "react";
 import "swiper/css";
@@ -17,24 +11,22 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import Link from "next/link";
 import { useHome } from "@/src/lib/model-implementation/home";
-import {
-	Dialog,
-	DialogBackdrop,
-	DialogPanel,
-	DialogTitle,
-} from "@headlessui/react";
 import ScheduleItem from "@/src/lib/component/schedule-item/ScheduleItem";
 import { newReadonlyModel } from "@mvc-react/mvc";
 import NewsArticlePreview from "@/src/lib/component/news-article-preview/NewsArticlePreview";
+import { useNewStatefulInteractiveModel } from "@mvc-react/stateful";
+import { hymnsModalVIInterface } from "@/src/lib/model-implementation/hymns-modal";
+import HymnsModal from "@/src/lib/component/hymns-modal/HymnsModal";
+import SplashScreen from "@/src/lib/component/splash-screen/SplashScreen";
 
 type MailingListStatus = "subscribed" | "not_subscribed" | "pending";
 const ebGaramond = EB_Garamond({ subsets: ["latin", "cyrillic"] });
 
 export default function Home() {
 	const { modelView } = useHome();
+	const hymnsModal = useNewStatefulInteractiveModel(hymnsModalVIInterface());
 	const [mailingListStatus, setMailingListStatus] =
 		useState<MailingListStatus>("not_subscribed");
-	const [hymnsModalOpen, setHymnsModalOpen] = useState<boolean>(false);
 	const subscribe = useCallback((email: string) => {
 		subscribeToMailingList(email)
 			.then(() => {
@@ -53,88 +45,7 @@ export default function Home() {
 
 	return (
 		<>
-			{!modelView && (
-				<div className="splash flex absolute w-screen h-full z-30 top-0 overflow-hidden">
-					<div className="bg-gray-900 flex items-center justify-center grow p-9">
-						<div className="logo flex gap-3 items-center justify-center max-w-[25em] animate-pulse">
-							<Image
-								className="h-20 w-20"
-								src="/logo-icon.svg"
-								alt="logo"
-								height={80}
-								width={80}
-							/>
-						</div>
-					</div>
-				</div>
-			)}
-			{modelView && (
-				<Dialog
-					open={hymnsModalOpen}
-					onClose={open => setHymnsModalOpen(open)}
-					className="relative z-20"
-					as="div"
-				>
-					<div
-						className={`fixed inset-0 z-21 flex w-screen items-center justify-center p-4`}
-					>
-						<DialogBackdrop
-							transition
-							className="fixed inset-0 bg-black/50 duration-400 ease-out data-closed:opacity-0"
-						/>
-						<DialogPanel
-							className={`flex flex-col max-h-[80dvh] [@media(height<=448px)]:max-h-[95dvh] md:min-w-lg bg-[#FEF8F3] text-black border border-[#868686] rounded-none gap-0 duration-300 ease-out data-closed:transform-[scale(92%)] data-closed:opacity-0 z-22`}
-							transition
-						>
-							<DialogTitle className="sr-only">
-								{"Today's Hymns"}
-							</DialogTitle>
-							<div className="bg-gray-800 text-white border-0 p-4 rounded-none">
-								<div className="ornament w-full h-[4em] bg-contain bg-position-[50%_50%] bg-no-repeat bg-[url(/ornament_9_white.svg)]" />
-							</div>
-							<div className="overflow-y-auto data-closed:overflow-hidden">
-								<div className="flex justify-center items-center p-5 pt-8 bg-[#FEF8F3] text-black">
-									<div className="flex flex-col justify-center items-center px-2 max-w-[25em]">
-										{modelView.dailyReadings.hymns.map(
-											(hymn, index) => (
-												<div
-													className="flex flex-col gap-3 text-center items-center justify-center"
-													key={index}
-												>
-													<span className="text-lg font-semibold font-serif">
-														{hymn.title}
-													</span>
-													<p className="whitespace-pre-line">
-														{hymn.text.replaceAll(
-															/\/\s+/g,
-															"/\n",
-														)}
-													</p>
-													<hr className="w-3/4 my-5 text-black/70 border-black/70" />
-												</div>
-											),
-										)}
-									</div>
-								</div>
-							</div>
-							<div
-								className={`bg-[#FEF8F3] text-black border-0 rounded-none p-0`}
-							>
-								<div className="flex justify-center items-center w-full p-5">
-									<button
-										className="bg-[#513433] text-white p-4 w-[8em]"
-										onClick={() => {
-											setHymnsModalOpen(false);
-										}}
-									>
-										Close
-									</button>
-								</div>
-							</div>
-						</DialogPanel>
-					</div>
-				</Dialog>
-			)}
+			<SplashScreen model={newReadonlyModel({ isShown: !modelView })} />
 			<main className={`home bg-[whitesmoke] ${!modelView && "hidden"}`}>
 				<section className="hero bg-[#DCB042] text-black bg-[url(/nativity-icon.webp)] bg-cover bg-center bg-no-repeat md:bg-size-[100%] md:bg-position-[60%_85%]">
 					<div className="hero-content flex flex-col justify-center items-center md:flex-row h-[30em] p-8 md:p-20 bg-black/70">
@@ -174,6 +85,14 @@ export default function Home() {
 						</span>
 						{modelView?.dailyReadings ? (
 							<div className="flex md:flex-row md:h-fit lg:w-9/10 md:mt-4 items-stretch bg-white/70 border border-gray-900/20">
+								{hymnsModal.modelView && (
+									<HymnsModal
+										model={{
+											modelView: hymnsModal.modelView,
+											interact: hymnsModal.interact,
+										}}
+									/>
+								)}
 								<div className="md:flex min-w-60 w-60 lg:min-w-70 lg:w-70 items-stretch justify-center p-3 hidden bg-gray-900">
 									<Image
 										className="grow object-cover object-center hover:cursor-pointer"
@@ -221,8 +140,17 @@ export default function Home() {
 												<Link
 													className="text-lg underline"
 													href="#"
-													onClick={() =>
-														setHymnsModalOpen(true)
+													onClick={async () =>
+														await hymnsModal.interact(
+															{
+																type: "OPEN",
+																input: {
+																	hymns: modelView
+																		.dailyReadings
+																		.hymns,
+																},
+															},
+														)
 													}
 													replace
 												>

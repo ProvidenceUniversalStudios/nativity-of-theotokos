@@ -10,10 +10,10 @@ const ScheduleItem = function ({ model }) {
 		<div className="featured-schedule-item flex items-center bg-[#FEF8F3] border border-gray-900/20">
 			<div className="grow self-stretch flex flex-col w-fit max-w-fit gap-2 items-center text-center p-4 px-5 bg-gray-900 text-white font-serif">
 				<span className="text-4xl">
-					{date.toLocaleDateString("default", { day: "2-digit" })}
+					{date.toLocaleDateString("en-uk", { day: "2-digit" })}
 				</span>
 				<span className="uppercase">
-					{date.toLocaleDateString("default", {
+					{date.toLocaleDateString("en-uk", {
 						month: "short",
 						year: "2-digit",
 					})}
@@ -31,7 +31,7 @@ const ScheduleItem = function ({ model }) {
 				<span>{location}</span>
 				{times.map((time, index) => (
 					<span key={index} className="text-sm">
-						{time.time.toLocaleTimeString("default", {
+						{time.time.toLocaleTimeString("en-uk", {
 							hour: "2-digit",
 							minute: "2-digit",
 						})}{" "}
@@ -44,10 +44,10 @@ const ScheduleItem = function ({ model }) {
 		<div className="schedule-item flex items-center bg-[#FEF8F3] border border-gray-900/20">
 			<div className="grow self-stretch flex flex-col min-w-fit max-w-fit gap-1 items-center text-center p-4 bg-gray-900 text-white font-serif">
 				<span className="text-xl">
-					{date.toLocaleDateString("default", { day: "2-digit" })}
+					{date.toLocaleDateString("en-uk", { day: "2-digit" })}
 				</span>
 				<span className="text-xs uppercase">
-					{date.toLocaleDateString("default", {
+					{date.toLocaleDateString("en-uk", {
 						month: "short",
 						year: "2-digit",
 					})}
@@ -57,7 +57,7 @@ const ScheduleItem = function ({ model }) {
 				<span className="text-lg">{title}</span>
 				<span className="text-sm">{location}</span>
 				<span className="text-sm">
-					{times[0].time.toLocaleTimeString("default", {
+					{times[0].time.toLocaleTimeString("en-uk", {
 						hour: "2-digit",
 						minute: "2-digit",
 					})}
