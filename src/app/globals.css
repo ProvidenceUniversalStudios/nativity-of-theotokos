@@ -41,11 +41,11 @@ body:has(.splash) {
 }
 
 ::-webkit-scrollbar-track {
-	background: transparent;
+	background: #d2d4d7;
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #10182873;
+	background: #93979e;
 }
 
 ::-webkit-scrollbar-thumb:hover {

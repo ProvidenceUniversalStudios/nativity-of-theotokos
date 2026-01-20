@@ -1,28 +1,28 @@
 "use server";
 
+import { PrismaClient } from "@/src/generated/prisma/client";
+import {
+	getPlaceholder,
+	ImagePlaceholder,
+	PlaceholderRepository,
+} from "@grod56/placeholder";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { arrayToShuffled } from "array-shuffle";
+import { formatInTimeZone } from "date-fns-tz";
+import { NewsArticlePreview } from "../model/news-article-preview";
+import holytrinityorthodox from "../third-party/holytrinityorthodox";
+import mailerLite from "../third-party/mailer-lite";
 import {
 	DailyQuote,
 	DailyReadings,
 	GalleryImage,
 	ScheduleItem,
 } from "../type/miscellaneous";
-import holytrinityorthodox from "../third-party/holytrinityorthodox";
-import mailerLite from "../third-party/mailer-lite";
-import { toZonedTime } from "date-fns-tz";
-import { PrismaClient } from "@/src/generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { NewsArticlePreview } from "../model/news-article-preview";
-import {
-	getPlaceholder,
-	ImagePlaceholder,
-	PlaceholderRepository,
-} from "@grod56/placeholder";
 import {
 	getPrismaPlaceholderRepository,
 	isRemotePath,
 } from "../utility/miscellaneous";
 import { getBaseURL } from "./miscellaneous";
-import { arrayToShuffled } from "array-shuffle";
 
 export type LatestNews = {
 	featuredArticle: NewsArticlePreview;
@@ -80,7 +80,10 @@ export async function getDailyReadings(currentDate: Date = new Date()) {
 }
 
 export async function getDailyQuote(currentDate: Date = new Date()) {
-	const localDate = toZonedTime(currentDate, "CAT");
+	const localDate = new Date(
+		formatInTimeZone(currentDate, "CAT", "yyyy-MM-dd"),
+	);
+
 	let dailyQuote = await prismaClient.dailyQuote
 		.findFirst({
 			where: {
@@ -105,9 +108,12 @@ export async function getScheduleItems(
 	count: number,
 	currentDate = new Date(),
 ) {
+	const localDate = new Date(
+		formatInTimeZone(currentDate, "CAT", "yyyy-MM-dd"),
+	);
 	const data = await prismaClient.scheduleItem.findMany({
 		where: {
-			date: { gte: currentDate },
+			date: { gte: localDate },
 			removedScheduleItem: { is: null },
 		},
 		orderBy: {
@@ -259,7 +265,9 @@ export async function getDailyGalleryImages(
 	currentDate = new Date(),
 ): Promise<GalleryImage[]> {
 	const baseUrl = await getBaseURL();
-	const localDate = toZonedTime(currentDate, "CAT");
+	const localDate = new Date(
+		formatInTimeZone(currentDate, "CAT", "yyyy-MM-dd"),
+	);
 	let dailyGalleryImages = await prismaClient.dailyGalleryImage
 		.findMany({
 			select: {

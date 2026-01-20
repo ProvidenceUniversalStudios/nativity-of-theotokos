@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "../lib/component/header/Header";
 import { newReadonlyModel } from "@mvc-react/mvc";
 import Footer from "../lib/component/footer/Footer";
+import { googleSansFlex } from "../lib/third-party/fonts";
 
 export const metadata: Metadata = {
 	title: {
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`antialiased`}>
+			<body className={`antialiased ${googleSansFlex.className}`}>
 				<Header
 					model={newReadonlyModel({
 						title: "Nativity of the Theotokos Russian Orthodox Church",

@@ -4,7 +4,8 @@ import Link from "next/link";
 import SocialLink from "../social-link/SocialLink";
 import { newReadonlyModel } from "@mvc-react/mvc";
 import FooterSection from "./FooterSection";
-import Image from "next/image";
+import LogoIcon from "@/public/logo-icon.svg";
+import { georgia } from "../../third-party/fonts";
 
 const Footer = function ({ model }) {
 	const { copyrightText } = model.modelView;
@@ -14,12 +15,9 @@ const Footer = function ({ model }) {
 			<div className="footer-content flex flex-col p-9 gap-4 bg-[#0a0a0a] text-white text-sm">
 				<div className="footer-sections flex flex-col gap-x-14 gap-y-8 md:flex-row">
 					<div className="flex flex-col gap-6 md:flex-row">
-						<Image
-							className="md:self-center"
-							src="/logo-icon.svg"
-							alt="logo"
-							height={70}
-							width={70}
+						<LogoIcon
+							className="md:self-center size-17.5"
+							viewBox="0 0 430 430"
 						/>
 						<FooterSection
 							model={newReadonlyModel({
@@ -164,7 +162,8 @@ const Footer = function ({ model }) {
 					/>
 				</div>
 				<span className="copyright text-xs">
-					&copy; {copyrightText}
+					<span className={georgia.className}>&copy;</span>{" "}
+					{copyrightText}
 				</span>
 				<div className="licenses flex flex-wrap gap-2 text-gray-400 text-xs">
 					<span>
