@@ -28,7 +28,7 @@ const ScheduleItem = function ({ model }) {
 				<span>{location}</span>
 				{times.map((time, index) => (
 					<div key={index} className="text-sm inline-flex gap-1">
-						<span>
+						<span className="w-17">
 							{time.time
 								.toLocaleTimeString("en-uk", {
 									hour: "2-digit",
@@ -37,7 +37,7 @@ const ScheduleItem = function ({ model }) {
 								})
 								.toUpperCase()}
 						</span>
-						<span>{"—"}</span>
+						<span className="mr-1">{"—"}</span>
 						<span>{time.designation}</span>
 					</div>
 				))}

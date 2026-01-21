@@ -99,7 +99,7 @@ export default function Home() {
 									/>
 								)}
 								<div className="flex flex-col gap-y-6 gap-x-8 lg:flex-row">
-									<div className="flex md:flex-row md:h-fit items-stretch bg-white border text-black border-gray-900/20 rounded-lg overflow-clip">
+									<div className="flex md:flex-row md:h-fit items-stretch bg-[#FEF8F3] border text-black border-gray-900/20 rounded-lg overflow-clip">
 										<div className="md:flex min-w-60 w-60 lg:min-w-60 lg:w-60 items-stretch justify-center p-2 hidden bg-gray-800">
 											<Image
 												className="grow object-cover object-center hover:cursor-pointer"
