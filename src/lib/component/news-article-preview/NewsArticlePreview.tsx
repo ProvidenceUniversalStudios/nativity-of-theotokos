@@ -21,8 +21,8 @@ const NewsArticlePreview = function ({ model }) {
 			<div className="flex justify-stretch items-stretch w-full h-[15em] max-h-[80dvh]">
 				<Image
 					className="grow object-cover object-center"
-					height={500}
-					width={500}
+					height={538}
+					width={538}
 					alt={about ?? "News article image"}
 					title={about}
 					src={source}

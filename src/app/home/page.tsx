@@ -17,10 +17,11 @@ import { useInitializedStatefulInteractiveModel } from "@mvc-react/stateful";
 import { hymnsModalVIInterface } from "@/src/lib/model-implementation/hymns-modal";
 import HymnsModal from "@/src/lib/component/hymns-modal/HymnsModal";
 import SplashScreen from "@/src/lib/component/splash-screen/SplashScreen";
-import ReadingsOrnament from "@/public/ornament_1_uncolored.svg";
+import ReadingsOrnament from "@/public/ornament_1.svg";
 import HymnsOrnament from "@/public/ornament_9.svg";
 import LatestNewsOrnament from "@/public/ornament_11.svg";
 import { georgia } from "@/src/lib/third-party/fonts";
+import "./home.css";
 
 type MailingListStatus = "subscribed" | "not_subscribed" | "pending";
 
@@ -83,7 +84,7 @@ export default function Home() {
 					</div>
 				</section>
 				<section className="readings text-black border-t-15 border-t-[#976029] bg-[url(/ornament_3_tr.svg)] bg-no-repeat bg-size-[13em,60em] md:bg-size-[30em,80em] bg-position-[98%_0.5%,40%_-30em] lg:bg-position-[100%_0.5%,750%_-40em]">
-					<div className="readings-content flex flex-col gap-6 p-8 py-9 lg:px-20 md:py-10">
+					<div className="readings-content flex flex-col gap-6 p-8 py-9 lg:px-20 md:py-10 max-w-345">
 						<span
 							className={`text-[2.75rem]/tight w-3/4 mb-2 font-semibold md:text-black md:w-1/2 ${georgia.className}`}
 						>
@@ -105,7 +106,7 @@ export default function Home() {
 										<div className="md:flex min-w-60 w-60 lg:min-w-60 lg:w-60 items-stretch justify-center p-2 hidden bg-gray-800">
 											<Image
 												className="grow object-cover object-center hover:cursor-pointer"
-												height={320}
+												height={364}
 												width={240}
 												alt="Icon of the day"
 												title="Icon of the day"
@@ -203,7 +204,7 @@ export default function Home() {
 												Readings
 											</span>
 										</div>
-										<div className="fasting-info bg-gray-950 text-white text-center md:text-left lg:text-center p-2.5 px-4 md:px-7 md:mt-0">
+										<div className="fasting-info bg-gray-950 text-white text-center md:text-left lg:text-center p-2.5 px-4 md:px-10 md:mt-0">
 											<span className="text-base">
 												{
 													modelView.dailyReadings
@@ -211,14 +212,14 @@ export default function Home() {
 												}
 											</span>
 										</div>
-										<div className="flex p-6 bg-gray-700 text-white [&_a]:underline [&_a]:hover:underline [&_a]:hover:text-[#DCB042] max-h-[15em] md:max-h-[11em]">
+										<div className="flex p-6 md:px-10 lg:px-6 bg-gray-700 text-white [&_a]:underline [&_a]:hover:underline [&_a]:hover:text-[#DCB042] max-h-[15em] md:max-h-[11em]">
 											<div className="scriptures grow flex flex-col gap-1 pr-3 overflow-y-auto">
 												{[
 													...modelView.dailyReadings.scriptures.map(
 														(scripture, index) => (
 															<div
 																key={index}
-																className="grid grid-cols-2 gap-x-2"
+																className="grid grid-cols-2 gap-x-4"
 															>
 																<span className="w-fit">
 																	<Link
@@ -504,7 +505,7 @@ export default function Home() {
 											autoComplete="email"
 										/>
 										<button
-											className={`p-4 min-w-fit w-fit h-full md:w-[8em] bg-gray-700 text-white text-center disabled:bg-gray-400`}
+											className={`p-4 min-w-fit w-fit h-full md:w-[8em] bg-gray-600 text-white text-center disabled:bg-gray-400 hover:bg-gray-700 active:bg-gray-950`}
 											type="submit"
 											disabled={
 												mailingListStatus == "pending"

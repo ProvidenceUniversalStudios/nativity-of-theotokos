@@ -40,7 +40,7 @@ const HymnsModal = function ({ model }) {
 							<HymnsModalOrnament className="object-contain object-center h-[4em] w-[8em]" />
 						</div>
 					</div>
-					<div className="p-5 pt-8">
+					<div className="px-5 pt-6">
 						<div className="max-h-[50dvh] [@media(height<=448px)]:max-h-[15dvh] overflow-y-auto data-closed:overflow-hidden">
 							<div className="flex justify-center items-center px-2 bg-[#FEF8F3] text-black">
 								<div className="flex flex-col justify-center items-center px-2 max-w-[25em]">
@@ -72,7 +72,7 @@ const HymnsModal = function ({ model }) {
 					>
 						<div className="flex justify-center items-center w-full p-5">
 							<button
-								className="bg-[#513433] text-white p-4 w-[8em] rounded-lg"
+								className="bg-[#513433] text-white p-4 w-[8em] rounded-lg hover:bg-[#250203]/90 active:bg-[#250203]"
 								onClick={async () => {
 									await interact({ type: "CLOSE" });
 								}}

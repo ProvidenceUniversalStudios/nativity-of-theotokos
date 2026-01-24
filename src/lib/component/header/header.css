@@ -1,3 +1,28 @@
+.header {
+	scale: 1 1;
+	animation: shrink-header linear forwards;
+	transform-origin: top;
+	animation-timeline: scroll(root);
+	animation-range: 350px 460px;
+	will-change: transform;
+}
+
+.header .logo {
+	transform-origin: top left;
+	scale: 1 1;
+	animation: shrink-header-content linear forwards;
+	animation-timeline: scroll(root);
+	animation-range: 350px 460px;
+}
+
+.header .nav-menu {
+	transform-origin: top right;
+	scale: 1 1;
+	animation: shrink-header-content linear forwards;
+	animation-timeline: scroll(root);
+	animation-range: 350px 460px;
+}
+
 .header-border {
 	scale: 0 1;
 	opacity: 0;
@@ -11,5 +36,17 @@
 	to {
 		scale: 1 1;
 		opacity: 1;
+	}
+}
+
+@keyframes shrink-header {
+	to {
+		scale: 1 0.85;
+	}
+}
+
+@keyframes shrink-header-content {
+	to {
+		transform: scale(0.85, 1) translateZ(0);
 	}
 }

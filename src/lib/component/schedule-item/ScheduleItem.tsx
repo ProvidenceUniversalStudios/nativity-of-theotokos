@@ -31,7 +31,7 @@ const ScheduleItem = function ({ model }) {
 						<span className="w-17">
 							{time.time
 								.toLocaleTimeString("en-uk", {
-									hour: "2-digit",
+									hour: "numeric",
 									minute: "2-digit",
 									hour12: true,
 								})
@@ -64,7 +64,7 @@ const ScheduleItem = function ({ model }) {
 				<span className="text-sm">
 					{times[0].time
 						.toLocaleTimeString("en-uk", {
-							hour: "2-digit",
+							hour: "numeric",
 							minute: "2-digit",
 							hour12: true,
 						})
