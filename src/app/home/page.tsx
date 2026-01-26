@@ -63,13 +63,27 @@ export default function Home() {
 				className={`home bg-[linear-gradient(135deg,#F7DAC1,whitesmoke)] ${!modelView && "visible"}`}
 			>
 				<section className="hero bg-[#DCB042] text-black bg-[url(/nativity-icon.webp)] bg-cover bg-center bg-no-repeat md:bg-size-[100%] md:bg-position-[60%_85%]">
-					<div className="hero-content flex flex-col justify-center items-center md:flex-row h-[75vh] md:h-[30em] p-8 lg:p-20 bg-black/70 md:bg-none md:items-center">
+					<motion.div
+						animate={
+							splashExited && {
+								backgroundColor: [
+									"rgba(0,0,0,0)",
+									"rgba(0,0,0,0.7)",
+								],
+							}
+						}
+						viewport={{ once: true }}
+						transition={{ duration: 0.4, ease: "easeOut" }}
+						className="hero-content flex flex-col justify-center items-center md:flex-row h-[75vh] md:h-[30em] p-8 lg:p-20 md:bg-none md:items-center"
+					>
 						<motion.div
 							initial={{ opacity: 0, y: 10 }}
-							animate={{
-								opacity: splashExited ? 1 : 0,
-								y: splashExited ? 0 : 10,
-							}}
+							animate={
+								splashExited && {
+									opacity: 1,
+									y: 0,
+								}
+							}
 							viewport={{ once: true }}
 							transition={{ duration: 0.4, ease: "easeOut" }}
 							className={`${!modelView && "hidden"} hero-message flex flex-col md:w-[35em] md:max-w-1/2 lg:w-full gap-5 md:p-8 justify-center`}
@@ -106,7 +120,7 @@ export default function Home() {
 								loading="eager"
 							/>
 						</motion.div>
-					</div>
+					</motion.div>
 				</section>
 				<section className="readings text-black border-t-15 border-t-[#976029] bg-[url(/ornament_3_tr.svg)] bg-no-repeat bg-size-[13em,60em] md:bg-size-[30em,80em] bg-position-[98%_0.5%,40%_-30em] lg:bg-position-[100%_0.5%,750%_-40em]">
 					<div className="readings-content flex flex-col gap-6 p-8 py-9 lg:px-20 md:py-10 max-w-360">
@@ -334,37 +348,36 @@ export default function Home() {
 								<hr className="mt-4 mb-0 md:w-full" />
 							</span>
 							<div className="flex flex-row flex-wrap lg:justify-between gap-x-12 gap-y-6 px-8 pb-6 lg:px-20">
-								<div className="featured flex flex-col gap-4 md:max-w-1/2 lg:max-w-[45%]">
+								<motion.div
+									initial={{ opacity: 0, y: 50 }}
+									whileInView={{ opacity: 1, y: 0 }}
+									viewport={{ once: true, amount: 0.1 }}
+									transition={{
+										ease: "easeOut",
+									}}
+									className="featured flex flex-col gap-4 md:max-w-1/2 lg:max-w-[45%]"
+								>
 									<span className="text-xl">Featured</span>
-									<motion.div
-										initial={{ opacity: 0, y: 50 }}
-										whileInView={{ opacity: 1, y: 0 }}
-										viewport={{ once: true, amount: 0.1 }}
-										transition={{
-											ease: "easeOut",
-										}}
-									>
-										<NewsArticlePreview
-											model={newReadonlyModel({
-												isFeatured: true,
-												articlePreview:
-													modelView.newsArticles
-														.featuredArticle,
-											})}
-										/>
-									</motion.div>
-								</div>
-								<div className="schedule flex flex-col gap-4 flex-1 lg:max-w-5/10 ">
+									<NewsArticlePreview
+										model={newReadonlyModel({
+											isFeatured: true,
+											articlePreview:
+												modelView.newsArticles
+													.featuredArticle,
+										})}
+									/>
+								</motion.div>
+								<motion.div
+									initial={{ opacity: 0, y: 50 }}
+									whileInView={{ opacity: 1, y: 0 }}
+									viewport={{ once: true, amount: 0.1 }}
+									transition={{
+										ease: "easeOut",
+									}}
+									className="schedule flex flex-col gap-4 flex-1 lg:max-w-5/10 "
+								>
 									<span className="text-xl">Schedule</span>
-									<motion.div
-										initial={{ opacity: 0, y: 50 }}
-										whileInView={{ opacity: 1, y: 0 }}
-										viewport={{ once: true, amount: 0.1 }}
-										transition={{
-											ease: "easeOut",
-										}}
-										className="schedule-list flex flex-col w-full gap-4 pr-3 lg:pr-6 max-h-[25em] lg:max-h-[28em] overflow-y-auto"
-									>
+									<div className="schedule-list flex flex-col w-full gap-4 pr-3 lg:pr-6 max-h-[25em] lg:max-h-[28em] overflow-y-auto">
 										<ScheduleItem
 											model={newReadonlyModel({
 												scheduleItem:
@@ -388,8 +401,8 @@ export default function Home() {
 													/>
 												))}
 										</div>
-									</motion.div>
-								</div>
+									</div>
+								</motion.div>
 							</div>
 							<div className="other-stories flex flex-col gap-4 pt-6 pb-10 px-8 lg:px-20 bg-white/70  border-t border-t-[#dcb042]">
 								<span className="text-xl mb-1">More News</span>
@@ -524,7 +537,13 @@ export default function Home() {
 					)}
 				</section>
 				<section className="mailing-list bg-gray-900 text-white">
-					<div className="mailing-list-content flex flex-col gap-8 p-8 py-14 md:w-3/4 lg:w-6/10 lg:px-20">
+					<motion.div
+						initial={{ opacity: 0, y: 50 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, amount: 0.2 }}
+						transition={{ ease: "easeOut" }}
+						className="mailing-list-content flex flex-col gap-8 p-8 py-14 md:w-3/4 lg:w-6/10 lg:px-20"
+					>
 						<span
 							className={`text-[2.75rem]/tight w-3/4 mb-2 font-semibold ${georgia.className}`}
 						>
@@ -532,13 +551,7 @@ export default function Home() {
 							<hr className="mt-4 mb-0 md:w-full" />
 						</span>
 						{mailingListStatus != "subscribed" ? (
-							<motion.div
-								initial={{ opacity: 0, y: 50 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								viewport={{ once: true, amount: 0.2 }}
-								transition={{ ease: "easeOut" }}
-								className="flex flex-col gap-8"
-							>
+							<div className="flex flex-col gap-8">
 								<p>
 									{
 										"Stay up to date with the latest church news, announcements, and events straight from your mailbox. Enter your email below and subscribe if you haven't already."
@@ -578,7 +591,7 @@ export default function Home() {
 										</button>
 									</div>
 								</form>
-							</motion.div>
+							</div>
 						) : (
 							<div>
 								<p className="text-xl">
@@ -589,7 +602,7 @@ export default function Home() {
 								</p>
 							</div>
 						)}
-					</div>
+					</motion.div>
 				</section>
 			</main>
 		</>
