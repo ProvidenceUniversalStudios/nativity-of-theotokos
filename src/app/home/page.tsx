@@ -289,7 +289,7 @@ export default function Home() {
 																	</Link>
 																</span>
 																{scripture.designation && (
-																	<span>
+																	<span className="wrap-break-word hyphens-auto">
 																		{
 																			scripture.designation
 																		}
@@ -540,7 +540,7 @@ export default function Home() {
 					<motion.div
 						initial={{ opacity: 0, y: 50 }}
 						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, amount: 1 }}
+						viewport={{ once: true, amount: 0.5 }}
 						transition={{ ease: "easeOut" }}
 						className="mailing-list-content flex flex-col gap-8 p-8 py-14 md:w-3/4 lg:w-6/10 lg:px-20"
 					>

@@ -10,7 +10,7 @@ const ScheduleItem = function ({ model }) {
 	return isFeatured ? (
 		<div className="featured-schedule-item flex items-center bg-[#FEF8F3] border border-gray-900/20 rounded-lg overflow-clip">
 			<div
-				className={`grow self-stretch flex flex-col w-fit max-w-fit gap-2 items-center text-center p-4 px-5 bg-gray-900 text-white ${georgia.className}`}
+				className={`grow self-stretch flex flex-col w-fit min-w-fit max-w-fit gap-2 items-center text-center p-4 px-5 bg-gray-900 text-white ${georgia.className}`}
 			>
 				<span className="text-4xl">
 					{date.toLocaleDateString("en-uk", { day: "2-digit" })}
@@ -23,7 +23,7 @@ const ScheduleItem = function ({ model }) {
 				</span>
 				<FeaturedItemOrnament className="h-10 w-10" fill="#fff" />
 			</div>
-			<div className="flex flex-col py-3 px-6 gap-1">
+			<div className="flex flex-col py-3 px-5.5 gap-1">
 				<span className="text-xl">{title}</span>
 				<span>{location}</span>
 				{times.map((time, index) => (

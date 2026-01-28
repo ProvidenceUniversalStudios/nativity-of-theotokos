@@ -1,0 +1,13 @@
+.language-switcher {
+	animation: hide-switcher ease-out forwards;
+	animation-timeline: scroll(root);
+	animation-range: 350px 460px;
+}
+
+@keyframes hide-switcher {
+	to {
+		transform: translateY(100%);
+		display: none;
+		opacity: 0;
+	}
+}

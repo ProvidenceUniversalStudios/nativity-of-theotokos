@@ -3,7 +3,8 @@ import "./globals.css";
 import Header from "../lib/component/header/Header";
 import { newReadonlyModel } from "@mvc-react/mvc";
 import Footer from "../lib/component/footer/Footer";
-import { googleSansFlex } from "../lib/third-party/fonts";
+import { Google_Sans, Google_Sans_Flex } from "next/font/google";
+import LanguageSwitcher from "../lib/component/language-switcher/LanguageSwitcher";
 
 export const metadata: Metadata = {
 	title: {
@@ -14,6 +15,17 @@ export const metadata: Metadata = {
 		"Official website of the Nativity of the Theotokos parish of the Russian Orthodox Church in Zimbabwe. (est. 2025)",
 };
 
+const googleSansFlex = Google_Sans_Flex({
+	subsets: ["latin"],
+	variable: "--font-g-flex",
+	display: "swap",
+});
+const googleSans = Google_Sans({
+	subsets: ["cyrillic", "cyrillic-ext"],
+	variable: "--font-g-sans",
+	display: "swap",
+});
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -21,7 +33,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`antialiased ${googleSansFlex.className}`}>
+			<body
+				className={`antialiased ${googleSansFlex.className} ${googleSans.className}`}
+			>
 				<Header
 					model={newReadonlyModel({
 						title: "Nativity of the Theotokos Russian Orthodox Church",
@@ -56,6 +70,14 @@ export default function RootLayout({
 						copyrightText:
 							"2026 Nativity of the Theotokos Parish. All Rights Reserved.",
 					})}
+				/>
+				<LanguageSwitcher
+					model={{
+						modelView: { displayedLanguage: "ru" },
+						interact: async () => {
+							"use server";
+						},
+					}}
 				/>
 			</body>
 		</html>
