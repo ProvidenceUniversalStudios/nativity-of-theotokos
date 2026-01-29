@@ -142,7 +142,7 @@ export default function Home() {
 										}}
 									/>
 								)}
-								<div className="flex flex-col gap-y-6 gap-x-8 lg:flex-row">
+								<div className="flex flex-col gap-y-6 md:gap-y-8 gap-x-8 lg:flex-row">
 									<motion.div
 										initial={{ opacity: 0, y: 50 }}
 										whileInView={{ opacity: 1, y: 0 }}
@@ -316,11 +316,11 @@ export default function Home() {
 				</section>
 				<section className="daily-thought  border-t-15 border-b-15 border-t-gray-900/85 border-b-[#250203]/85">
 					{modelView?.dailyQuote && (
-						<div className="daily-thought-content flex items-center p-8 py-9 md:p-20 min-h-[25em] bg-[#0a0a0a] md:bg-[linear-gradient(to_right,#0a0a0a,transparent),url(/daily-thought-bg.jpg)] text-white bg-no-repeat bg-contain bg-right">
+						<div className="daily-thought-content flex items-center p-8 py-14 md:p-20 min-h-[25em] bg-[#0a0a0a] md:bg-[linear-gradient(to_right,#0a0a0a,transparent),url(/daily-thought-bg.jpg)] text-white bg-no-repeat bg-contain bg-right">
 							<div
 								className={`quote-box flex flex-col gap-4 items-center md:w-1/2`}
 							>
-								<p className="quote text-lg/relaxed">
+								<p className="quote font-light text-lg/relaxed">
 									<span>“</span>
 									{modelView.dailyQuote.quote}
 									<span>”</span>

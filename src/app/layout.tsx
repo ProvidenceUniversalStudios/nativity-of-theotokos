@@ -5,6 +5,7 @@ import { newReadonlyModel } from "@mvc-react/mvc";
 import Footer from "../lib/component/footer/Footer";
 import { Google_Sans, Google_Sans_Flex } from "next/font/google";
 import LanguageSwitcher from "../lib/component/language-switcher/LanguageSwitcher";
+import { Language } from "../lib/model/language-switcher";
 
 export const metadata: Metadata = {
 	title: {
@@ -31,10 +32,12 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const language: Language = "en";
+
 	return (
-		<html lang="en">
+		<html lang={language}>
 			<body
-				className={`antialiased ${googleSansFlex.className} ${googleSans.className}`}
+				className={`antialiased ${googleSansFlex.variable} ${googleSans.variable}`}
 			>
 				<Header
 					model={newReadonlyModel({

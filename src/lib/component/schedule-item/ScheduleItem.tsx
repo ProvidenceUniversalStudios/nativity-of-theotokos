@@ -37,8 +37,8 @@ const ScheduleItem = function ({ model }) {
 								})
 								.toUpperCase()}
 						</span>
-						<span className="mr-1">{"—"}</span>
-						<span>{time.designation}</span>
+						{/* <span className="mr-1">{"—"}</span> */}
+						<span className="underline">{time.designation}</span>
 					</div>
 				))}
 			</div>

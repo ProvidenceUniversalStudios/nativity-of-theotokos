@@ -10,9 +10,6 @@ import LogoIcon from "@/public/logo-icon.svg";
 import { georgia } from "../../third-party/fonts";
 import "./header.css";
 
-// const playfair = Playfair_Display({ subsets: ["latin", "cyrillic"] });
-// const dmSerif = DM_Serif_Display({ subsets: ["latin"], weight: "400" });
-
 const Header = function ({ model }) {
 	const { navlinks } = model.modelView;
 	const isWideScreen = useMediaQuery({ minWidth: 768 });
@@ -39,7 +36,7 @@ const Header = function ({ model }) {
 						/>
 					</div>
 					<div
-						className={`logo-text flex flex-col gap-0.25 ${georgia.className}`}
+						className={`logo-text flex flex-col gap-px ${georgia.className}`}
 					>
 						<span className={`text-lg`}>
 							{"Nativity of the Theotokos"}
