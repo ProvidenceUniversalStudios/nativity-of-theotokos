@@ -40,7 +40,7 @@ const SocialLink = function ({ model }) {
 							["YouTube", () => <Youtube  className="size-4"/>],
 						],
 					),
-					// FallbackComponent: () => <Other className="size-5"s />,
+					FallbackComponent: () => <Other className="size-4" />,
 				})}
 			/>
 		</Link>
