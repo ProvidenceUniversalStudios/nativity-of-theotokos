@@ -135,7 +135,7 @@ const Footer = function ({ model }) {
 					</div>
 				</div>
 				<hr className="text-gray-400 mt-4 md:w-4/10" />
-				<div className="social-links text-lg flex gap-2">
+				<div className="social-links text-lg flex gap-3">
 					<SocialLink
 						model={newReadonlyModel({
 							details: {

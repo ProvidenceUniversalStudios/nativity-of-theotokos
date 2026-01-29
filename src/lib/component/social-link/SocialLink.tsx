@@ -1,16 +1,13 @@
 import Link from "next/link";
-import "@fortawesome/fontawesome-svg-core/styles.css";
 import {
-	faWhatsapp as WhatsApp,
-	faInstagram as Instagram,
-	faYoutube as Youtube,
-	faFacebook as Facebook,
-	faGithub as Github,
-	faXTwitter as X,
-} from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope as Email } from "@fortawesome/free-regular-svg-icons";
-import { faEarthAmericas as Other } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+	SiWhatsapp as WhatsApp,
+	SiInstagram as Instagram,
+	SiYoutube as Youtube,
+	SiFacebook as Facebook,
+	SiGithub as Github,
+	SiX as X,
+} from "@icons-pack/react-simple-icons";
+import { Mail as Email, Globe as Other } from "lucide-react";
 import { newReadonlyModel } from "@mvc-react/mvc";
 import {
 	ConditionalComponent,
@@ -34,28 +31,16 @@ const SocialLink = function ({ model }) {
 					condition: details.type,
 					components: new Map<typeof details.type, () => JSX.Element>(
 						[
-							[
-								"Facebook",
-								() => <FontAwesomeIcon icon={Facebook} />,
-							],
-							["Email", () => <FontAwesomeIcon icon={Email} />],
-							["GitHub", () => <FontAwesomeIcon icon={Github} />],
-							[
-								"Instagram",
-								() => <FontAwesomeIcon icon={Instagram} />,
-							],
-							[
-								"WhatsApp",
-								() => <FontAwesomeIcon icon={WhatsApp} />,
-							],
-							["X", () => <FontAwesomeIcon icon={X} />],
-							[
-								"YouTube",
-								() => <FontAwesomeIcon icon={Youtube} />,
-							],
-						]
+							["Facebook", () => <Facebook className="size-4"/>],
+							["Email", () => <Email  className="size-4"/>],
+							["GitHub", () => <Github  className="size-4"/>],
+							["Instagram", () => <Instagram  className="size-4"/>],
+							["WhatsApp", () => <WhatsApp  className="size-4"/>],
+							["X", () => <X  className="size-4"/>],
+							["YouTube", () => <Youtube  className="size-4"/>],
+						],
 					),
-					FallbackComponent: () => <FontAwesomeIcon icon={Other} />,
+					// FallbackComponent: () => <Other className="size-5"s />,
 				})}
 			/>
 		</Link>

@@ -10,13 +10,9 @@
 		"postinstall": "prisma generate"
 	},
 	"dependencies": {
-		"@fortawesome/fontawesome-svg-core": "^7.1.0",
-		"@fortawesome/free-brands-svg-icons": "^7.1.0",
-		"@fortawesome/free-regular-svg-icons": "^7.1.0",
-		"@fortawesome/free-solid-svg-icons": "^7.1.0",
-		"@fortawesome/react-fontawesome": "^3.1.1",
 		"@grod56/placeholder": "^1.0.1",
 		"@headlessui/react": "^2.2.9",
+		"@icons-pack/react-simple-icons": "^13.8.0",
 		"@mailerlite/mailerlite-nodejs": "^1.5.0",
 		"@mvc-react/components": "^1.2.1",
 		"@mvc-react/mvc": "^3.1.0",
@@ -26,6 +22,7 @@
 		"autoprefixer": "^10.4.23",
 		"cheerio": "^1.1.2",
 		"date-fns-tz": "^3.2.0",
+		"lucide-react": "^0.563.0",
 		"motion": "^12.29.0",
 		"next": "^16.0.10",
 		"next-intl": "^4.7.0",

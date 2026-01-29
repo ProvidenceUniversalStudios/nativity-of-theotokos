@@ -35,10 +35,11 @@ const Header = function ({ model }) {
 							viewBox="0 0 430 430"
 							width={48}
 							height={48}
+							strokeWidth={9}
 						/>
 					</div>
 					<div
-						className={`logo-text flex flex-col gap-1 ${georgia.className}`}
+						className={`logo-text flex flex-col gap-0.25 ${georgia.className}`}
 					>
 						<span className={`text-lg`}>
 							{"Nativity of the Theotokos"}
