@@ -1,3 +1,4 @@
+"use client";
 import { ModeledVoidComponent } from "@mvc-react/components";
 import { HymnsModalModel } from "../../model/hymns-modal";
 import { InitializedModel } from "@mvc-react/mvc";
@@ -9,10 +10,12 @@ import {
 } from "@headlessui/react";
 import HymnsModalOrnament from "@/public/ornament_9_white.svg";
 import { georgia } from "../../third-party/fonts";
+import { useTranslations } from "next-intl";
 
 const HymnsModal = function ({ model }) {
 	const { modelView, interact } = model;
 	const { isOpen, hymns } = modelView;
+	const t = useTranslations("hymnsModal");
 
 	return (
 		<Dialog
@@ -33,7 +36,7 @@ const HymnsModal = function ({ model }) {
 					transition
 				>
 					<DialogTitle className="sr-only">
-						{"Today's Hymns"}
+						{t("hymnsForToday")}
 					</DialogTitle>
 					<div className="bg-gray-800 text-white border-0 p-4 rounded-none">
 						<div className="ornament flex justify-center items-center w-full h-[4em] ">
@@ -77,7 +80,7 @@ const HymnsModal = function ({ model }) {
 									await interact({ type: "CLOSE" });
 								}}
 							>
-								Close
+								{t("closeButton")}
 							</button>
 						</div>
 					</div>

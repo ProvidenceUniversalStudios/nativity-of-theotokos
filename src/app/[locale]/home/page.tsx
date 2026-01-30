@@ -23,11 +23,16 @@ import HymnsOrnament from "@/public/ornament_9.svg";
 import LatestNewsOrnament from "@/public/ornament_11.svg";
 import { georgia } from "@/src/lib/third-party/fonts";
 import "./home.css";
+import { useTranslations, useLocale } from "next-intl";
 
 type MailingListStatus = "subscribed" | "not_subscribed" | "pending";
 
 export default function Home() {
 	const { modelView } = useHome();
+	const t = useTranslations("home");
+	const tl = useTranslations("links");
+	const locale = useLocale();
+	const dateLocale = locale == "en" ? "en-uk" : "ru-RU";
 	const hymnsModal = useInitializedStatefulInteractiveModel(
 		hymnsModalVIInterface(),
 		{ isOpen: false, hymns: [] },
@@ -86,18 +91,16 @@ export default function Home() {
 							}
 							viewport={{ once: true }}
 							transition={{ duration: 0.4, ease: "easeOut" }}
-							className={`${!modelView && "hidden"} hero-message flex flex-col md:w-[35em] md:max-w-1/2 lg:w-full gap-5 md:p-8 justify-center`}
+							className={`${!modelView && "hidden"} hero-message flex flex-col w-full md:w-[35em] md:max-w-1/2 lg:w-full gap-5 md:p-8 justify-center`}
 						>
 							<span
-								className={`heading text-7xl ${georgia.className} text-white`}
+								className={`heading ${locale == "en" ? "text-7xl" : "text-6xl"} ${georgia.className} wrap-break-word hyphens-auto text-white`}
 							>
-								Hello and welcome
+								{t("heroTitle")}
 							</span>
 							<hr className="my-4 text-gray-300" />
 							<span className={`text-lg text-gray-300`}>
-								Official website of the Nativity of the
-								Theotokos parish of the Russian Orthodox Church
-								in Zimbabwe. (est. 2025)
+								{t("heroSubtitle")}
 							</span>
 						</motion.div>
 						<motion.div
@@ -129,7 +132,7 @@ export default function Home() {
 						<span
 							className={`text-[2.75rem]/tight w-3/4 mb-2 font-semibold md:text-black md:w-1/2 ${georgia.className}`}
 						>
-							Daily Readings
+							{t("dailyReadingsHeader")}
 							<hr className="mt-4 mb-0 md:w-full" />
 						</span>
 						{modelView?.dailyReadings ? (
@@ -189,7 +192,7 @@ export default function Home() {
 													className={`text-2xl px-5 md:px-7`}
 												>
 													{modelView.dailyReadings.currentDate.toLocaleDateString(
-														"en-uk",
+														dateLocale,
 														{
 															dateStyle: "full",
 														},
@@ -222,9 +225,7 @@ export default function Home() {
 															}
 															replace
 														>
-															{
-																"Hymns for the Day"
-															}
+															{t("dailyHymns")}
 														</Link>
 													</div>
 													<div className="px-5 md:px-7 max-h-[15em] md:max-h-[10em]">
@@ -346,7 +347,7 @@ export default function Home() {
 							<span
 								className={`px-8 lg:px-20 text-[2.75rem]/tight w-full mb-2 font-semibold md:text-black md:w-1/2 ${georgia.className}`}
 							>
-								Latest News
+								{t("latestNewsHeader")}
 								<hr className="mt-4 mb-0 md:w-full" />
 							</span>
 							<div className="flex flex-row flex-wrap lg:justify-between gap-x-12 gap-y-6 px-8 pb-6 lg:px-20">
@@ -359,7 +360,9 @@ export default function Home() {
 									}}
 									className="featured flex flex-col gap-4 md:max-w-1/2 lg:max-w-[45%]"
 								>
-									<span className="text-xl">Featured</span>
+									<span className="text-xl">
+										{t("featured")}
+									</span>
 									<NewsArticlePreview
 										model={newReadonlyModel({
 											isFeatured: true,
@@ -378,7 +381,9 @@ export default function Home() {
 									}}
 									className="schedule flex flex-col gap-4 flex-1 lg:max-w-5/10 "
 								>
-									<span className="text-xl">Schedule</span>
+									<span className="text-xl">
+										{t("schedule")}
+									</span>
 									<div className="schedule-list flex flex-col w-full gap-4 pr-3 lg:pr-6 max-h-[25em] lg:max-h-[28em] overflow-y-auto">
 										<ScheduleItem
 											model={newReadonlyModel({
@@ -407,7 +412,9 @@ export default function Home() {
 								</motion.div>
 							</div>
 							<div className="other-stories flex flex-col gap-4 pt-6 pb-10 px-8 lg:px-20 bg-white/70  border-t border-t-[#dcb042]">
-								<span className="text-xl mb-1">More News</span>
+								<span className="text-xl mb-1">
+									{t("moreNews")}
+								</span>
 								<div className="grid lg:grid-cols-2 gap-8 md:gap-6 md:w-3/4 lg:w-9/10">
 									{[
 										...modelView.newsArticles
@@ -437,7 +444,7 @@ export default function Home() {
 									className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
 									onClick={() =>
 										window.open(
-											"https://eadiocese.org/litresource",
+											tl("liturgicalResources"),
 											"_blank",
 										)
 									}
@@ -445,7 +452,7 @@ export default function Home() {
 									<span
 										className={`text-3xl mb-3 ${georgia.className}`}
 									>
-										Liturgical Resources
+										{t("liturgicalResources")}
 									</span>
 								</div>
 							</div>
@@ -454,7 +461,7 @@ export default function Home() {
 									className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
 									onClick={() =>
 										window.open(
-											"https://www.oca.org/orthodoxy/the-orthodox-faith",
+											tl("whatIsOrthodoxy"),
 											"_blank",
 										)
 									}
@@ -462,7 +469,7 @@ export default function Home() {
 									<span
 										className={`text-3xl mb-3 ${georgia.className}`}
 									>
-										What is Orthodoxy?
+										{t("whatIsOrthodoxy")}
 									</span>
 								</div>
 							</div>
@@ -476,7 +483,7 @@ export default function Home() {
 									<span
 										className={`text-3xl mb-3 ${georgia.className}`}
 									>
-										About our Parish
+										{t("aboutOurParish")}
 									</span>
 								</div>
 							</div>
@@ -547,18 +554,14 @@ export default function Home() {
 						className="mailing-list-content flex flex-col gap-8 p-8 py-14 md:w-3/4 lg:w-6/10 lg:px-20"
 					>
 						<span
-							className={`text-[2.75rem]/tight w-3/4 mb-2 font-semibold ${georgia.className}`}
+							className={`text-[2.75rem]/tight w-3/4 mb-2 font-semibold ${georgia.className} wrap-break-word hyphens-auto`}
 						>
-							Join our Mailing List
+							{t("mailingListHeader")}
 							<hr className="mt-4 mb-0 md:w-full" />
 						</span>
 						{mailingListStatus != "subscribed" ? (
 							<div className="flex flex-col gap-8">
-								<p>
-									{
-										"Stay up to date with the latest church news, announcements, and events straight from your mailbox. Enter your email below and subscribe if you haven't already."
-									}
-								</p>
+								<p>{t("mailingListDescription")}</p>
 								<form
 									action={formData => {
 										subscribe(
@@ -589,7 +592,7 @@ export default function Home() {
 												mailingListStatus == "pending"
 											}
 										>
-											Subscribe
+											{t("mailingListButton")}
 										</button>
 									</div>
 								</form>
@@ -597,10 +600,7 @@ export default function Home() {
 						) : (
 							<div>
 								<p className="text-xl">
-									Thank you for subscribing to our mailing
-									list! We will be keeping you up to date with
-									the latest news, updates, announcements and
-									more.
+									{t("mailingListSuccessMessage")}
 								</p>
 							</div>
 						)}

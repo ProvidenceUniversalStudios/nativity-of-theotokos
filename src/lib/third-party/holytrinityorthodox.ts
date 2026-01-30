@@ -2,6 +2,7 @@ import { toZonedTime } from "date-fns-tz";
 import { DailyReadings, Hymn, Image } from "../type/miscellaneous";
 import { julianDate, removeMarkup } from "../utility/miscellaneous";
 import { load } from "cheerio";
+import { getTranslations } from "next-intl/server";
 
 interface HolyTrinityOrthodox {
 	getDailyReadings: (date: Date) => Promise<DailyReadings>;
@@ -20,10 +21,21 @@ interface HolyTrinityOrthodox {
 }
 
 class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
-	private readonly baseURL =
-		"https://www.holytrinityorthodox.com/htc/ocalendar/v2calendar.php";
+	private readonly baseURL;
+	private readonly locale;
 	private readonly iconOfTheDayBaseURL =
 		"https://holytrinityorthodox.com/htc/iconoftheday/bigimages";
+
+	constructor(locale: string) {
+		if (locale == "ru") {
+			this.baseURL =
+				"https://www.holytrinityorthodox.com/htc/ocalendar/ru/v2calendar.php";
+		} else {
+			this.baseURL =
+				"https://www.holytrinityorthodox.com/htc/ocalendar/v2calendar.php";
+		}
+		this.locale = locale;
+	}
 
 	async getDailyReadings(date: Date) {
 		const localDate = toZonedTime(date, "CAT");
@@ -128,6 +140,10 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 	}
 	async getFastingInfo(date: Date) {
 		const requestURL = this._getDatedBaseURL(date);
+		const t = await getTranslations({
+			locale: this.locale,
+			namespace: "dailyReadings",
+		});
 		requestURL.searchParams.set("header", "1");
 
 		return this._getMarkedUpText(requestURL)
@@ -137,7 +153,7 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 				return (fastText ? fastText : $(".headernofast").text()).trim();
 			})
 			.then(markedUpText => removeMarkup(markedUpText))
-			.then(info => (info.length == 0 ? "No Fast Today" : info));
+			.then(info => (info.length == 0 ? t("noFast") : info));
 	}
 
 	async getIconOfTheDay(date: Date) {
@@ -201,7 +217,9 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 	}
 }
 
-const holytrinityorthodox: HolyTrinityOrthodox =
-	new HolyTrinityOrthodoxImplementation();
+// TODO: To factory
+const holytrinityorthodox = (locale: string) => {
+	return new HolyTrinityOrthodoxImplementation(locale);
+};
 
 export default holytrinityorthodox;

@@ -7,6 +7,7 @@ import { InitializedModel } from "@mvc-react/mvc";
 import { JSX } from "react";
 import { Language, LanguageSwitcherModel } from "../../model/language-switcher";
 import "./language-switcher.css";
+import { Link, usePathname } from "@/src/i18n/navigation";
 
 const languageToRenderedMap = new Map<Language, JSX.Element>([
 	[
@@ -26,16 +27,16 @@ const languageToRenderedMap = new Map<Language, JSX.Element>([
 ]);
 
 const LanguageSwitcher = function ({ model }) {
-	const { modelView, interact } = model;
+	const { modelView } = model;
 	const { displayedLanguage } = modelView;
+	const pathName = usePathname();
 
 	return (
-		<button
-			className="language-switcher sticky bottom-[-1] right-1/20 float-end z-20 p-3 w-[5em] rounded-t-lg min-w-fit bg-gray-900 hover:underline active:bg-gray-950 text-white text-sm md:text-base border border-white/20 "
-			onClick={() => interact({ type: "SWITCH_LANGUAGE" })}
-		>
-			{languageToRenderedMap.get(displayedLanguage)}
-		</button>
+		<div className="language-switcher sticky bottom-[-1] right-1/20 float-end z-20 p-3 w-[5em] rounded-t-lg min-w-fit bg-gray-900 hover:underline text-white text-sm md:text-base border border-white/20">
+			<Link href={pathName} locale={displayedLanguage}>
+				{languageToRenderedMap.get(displayedLanguage)}
+			</Link>
+		</div>
 	);
 } satisfies ModeledVoidComponent<InitializedModel<LanguageSwitcherModel>>;
 

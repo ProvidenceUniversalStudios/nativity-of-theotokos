@@ -1,22 +1,27 @@
+"use client";
+
 import FeaturedItemOrnament from "@/public/ornament_12.svg";
 import { ModeledVoidComponent } from "@mvc-react/components";
 import { ScheduleItemModel } from "../../model/schedule-item";
 import { georgia } from "../../third-party/fonts";
+import { useLocale } from "next-intl";
 
 const ScheduleItem = function ({ model }) {
 	const { scheduleItem, isFeatured } = model.modelView;
 	const { date, location, times, title } = scheduleItem;
+	const locale = useLocale();
+	const dateLocale = locale == "en" ? "en-uk" : "ru-RU";
 
 	return isFeatured ? (
 		<div className="featured-schedule-item flex items-center bg-[#FEF8F3] border border-gray-900/20 rounded-lg overflow-clip">
 			<div
-				className={`grow self-stretch flex flex-col w-fit min-w-fit max-w-fit gap-2 items-center text-center p-4 px-5 bg-gray-900 text-white ${georgia.className}`}
+				className={`grow self-stretch flex flex-col w-fit max-w-[6em] gap-2 items-center text-center p-4 px-5 bg-gray-900 text-white ${georgia.className}`}
 			>
 				<span className="text-4xl">
-					{date.toLocaleDateString("en-uk", { day: "2-digit" })}
+					{date.toLocaleDateString(dateLocale, { day: "2-digit" })}
 				</span>
 				<span className="uppercase">
-					{date.toLocaleDateString("en-uk", {
+					{date.toLocaleDateString(dateLocale, {
 						month: "short",
 						year: "2-digit",
 					})}
@@ -30,7 +35,7 @@ const ScheduleItem = function ({ model }) {
 					<div key={index} className="text-sm inline-flex gap-1">
 						<span className="w-17">
 							{time.time
-								.toLocaleTimeString("en-uk", {
+								.toLocaleTimeString(dateLocale, {
 									hour: "numeric",
 									minute: "2-digit",
 									hour12: true,
@@ -46,13 +51,13 @@ const ScheduleItem = function ({ model }) {
 	) : (
 		<div className="schedule-item flex items-center bg-[#FEF8F3] border border-gray-900/20 rounded-lg overflow-clip">
 			<div
-				className={`grow self-stretch flex flex-col min-w-fit max-w-fit gap-1 items-center text-center p-4 bg-gray-900 text-white ${georgia.className}`}
+				className={`grow self-stretch flex flex-col w-fit max-w-[5em] gap-1 items-center text-center p-4 bg-gray-900 text-white ${georgia.className}`}
 			>
 				<span className="text-xl">
-					{date.toLocaleDateString("en-uk", { day: "2-digit" })}
+					{date.toLocaleDateString(dateLocale, { day: "2-digit" })}
 				</span>
 				<span className="text-xs uppercase">
-					{date.toLocaleDateString("en-uk", {
+					{date.toLocaleDateString(dateLocale, {
 						month: "short",
 						year: "2-digit",
 					})}
@@ -63,7 +68,7 @@ const ScheduleItem = function ({ model }) {
 				<span className="text-sm">{location}</span>
 				<span className="text-sm">
 					{times[0].time
-						.toLocaleTimeString("en-uk", {
+						.toLocaleTimeString(dateLocale, {
 							hour: "numeric",
 							minute: "2-digit",
 							hour12: true,

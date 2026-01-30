@@ -9,6 +9,7 @@ import {
 import { PrismaPg } from "@prisma/adapter-pg";
 import { arrayToShuffled } from "array-shuffle";
 import { formatInTimeZone } from "date-fns-tz";
+import { getLocale, getTranslations } from "next-intl/server";
 import { NewsArticlePreview } from "../model/news-article-preview";
 import holytrinityorthodox from "../third-party/holytrinityorthodox";
 import mailerLite from "../third-party/mailer-lite";
@@ -82,7 +83,8 @@ export async function subscribeToMailingList(email: string) {
 }
 
 export async function getDailyReadings(currentDate: Date = new Date()) {
-	return holytrinityorthodox.getDailyReadings(currentDate);
+	const locale = await getLocale();
+	return holytrinityorthodox(locale).getDailyReadings(currentDate);
 }
 
 export async function getDailyQuote(currentDate: Date = new Date()) {
@@ -117,6 +119,7 @@ export async function getScheduleItems(
 	const localDate = new Date(
 		formatInTimeZone(currentDate, "CAT", "yyyy-MM-dd"),
 	);
+	const locale = await getLocale();
 	const data = await prismaClient.scheduleItem.findMany({
 		where: {
 			date: { gte: localDate },
@@ -131,15 +134,29 @@ export async function getScheduleItems(
 	const scheduleItems = data.map(
 		(record): ScheduleItem => ({
 			date: record.date,
-			title: record.title,
-			location: record.location,
-			times: record.scheduleItemTimes,
+			title:
+				locale == "en"
+					? record.title
+					: (record.titleRu ?? record.title),
+			location:
+				locale == "en"
+					? record.location
+					: (record.locationRu ?? record.location),
+			times: record.scheduleItemTimes.map(time => ({
+				time: time.time,
+				designation:
+					locale == "en"
+						? time.designation
+						: (time.designationRu ?? time.designation),
+			})),
 		}),
 	);
 	let nextScheduleItemDate = new Date(localDate);
 	while (scheduleItems.length < count) {
-		const nextScheduleItem =
-			await _getNextDefaultScheduleItem(nextScheduleItemDate);
+		const nextScheduleItem = await _getNextDefaultScheduleItem(
+			nextScheduleItemDate,
+			locale,
+		);
 		const isPresent = await prismaClient.scheduleItem.count({
 			where: {
 				date: { equals: nextScheduleItem.date },
@@ -347,7 +364,11 @@ export async function getDailyGalleryImages(
 }
 
 // TODO: To be refactored to something less ... static
-async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
+async function _getNextDefaultScheduleItem(
+	date: Date,
+	locale: string = "en",
+): Promise<ScheduleItem> {
+	const t = await getTranslations({ locale, namespace: "scheduleItem" });
 	const scheduleItemDate = new Date(date);
 	while (scheduleItemDate.getDay() > 0 && scheduleItemDate.getDay() < 6) {
 		scheduleItemDate.setDate(scheduleItemDate.getDate() + 1);
@@ -362,33 +383,33 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 		if (nextSundayDate.getMonth() != previousSundayDate.getMonth())
 			return {
 				date: scheduleItemDate,
-				location: "Nativity of the Theotokos Parish",
-				title: "Divine Liturgy",
+				location: t("mainLocation"),
+				title: t("liturgyService"),
 				times: [
 					{
 						time: new Date(
 							new Date(scheduleItemDate).setHours(12, 0, 0, 0),
 						),
-						designation: "Hours",
+						designation: t("orthros"),
 					},
 					{
 						time: new Date(
 							new Date(scheduleItemDate).setHours(12, 30, 0, 0),
 						),
-						designation: "Confessions",
+						designation: t("confessions"),
 					},
 					{
 						time: new Date(
 							new Date(scheduleItemDate).setHours(13, 0, 0, 0),
 						),
-						designation: "Liturgy",
+						designation: t("liturgy"),
 					},
 				],
 			};
 		return {
 			date: nextSundayDate,
-			location: "St. Sergius Parish",
-			title: "Typika Service",
+			location: t("secondaryLocation"),
+			title: t("typikaService"),
 			times: [
 				{
 					time: new Date(
@@ -399,7 +420,7 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 							0,
 						), // TODO: Fix these
 					),
-					designation: "Hours",
+					designation: t("orthros"),
 				},
 				{
 					time: new Date(
@@ -410,7 +431,7 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 							0,
 						),
 					),
-					designation: "Typika",
+					designation: t("typika"),
 				},
 				{
 					time: new Date(
@@ -421,7 +442,7 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 							0,
 						),
 					),
-					designation: "Catechism",
+					designation: t("catechism"),
 				},
 			],
 		};
@@ -432,8 +453,8 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 		if (scheduleItemDate.getMonth() != previousSundayDate.getMonth())
 			return {
 				date: scheduleItemDate,
-				location: "St. Sergius Parish",
-				title: "Divine Liturgy",
+				location: t("secondaryLocation"),
+				title: t("liturgyService"),
 				times: [
 					{
 						time: new Date(
@@ -444,7 +465,7 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 								0,
 							),
 						),
-						designation: "Hours",
+						designation: t("orthros"),
 					},
 					{
 						time: new Date(
@@ -455,7 +476,7 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 								0,
 							),
 						),
-						designation: "Confessions",
+						designation: t("confessions"),
 					},
 					{
 						time: new Date(
@@ -466,7 +487,7 @@ async function _getNextDefaultScheduleItem(date: Date): Promise<ScheduleItem> {
 								0,
 							),
 						),
-						designation: "Liturgy",
+						designation: t("liturgy"),
 					},
 				],
 			};

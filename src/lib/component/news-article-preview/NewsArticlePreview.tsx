@@ -1,13 +1,18 @@
+'use client';
+
 import { ModeledVoidComponent } from "@mvc-react/components";
 import { NewsArticlePreviewModel } from "../../model/news-article-preview";
 import Image from "next/image";
 import { georgia } from "../../third-party/fonts";
+import { useLocale } from "next-intl";
 
 const NewsArticlePreview = function ({ model }) {
 	const { articlePreview: article, isFeatured } = model.modelView;
 	const { title, author, dateCreated, snippet, articleImage } = article;
 	const { placeholder, source, about } = articleImage;
-	const dateString = dateCreated.toLocaleDateString("en-uk", {
+	const locale = useLocale();
+	const dateLocale = locale == 'en' ? "en-uk" : 'ru-RU';
+	const dateString = dateCreated.toLocaleDateString(dateLocale, {
 		day: "2-digit",
 		month: "long",
 		year: "numeric",

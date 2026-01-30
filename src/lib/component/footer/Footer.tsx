@@ -1,3 +1,5 @@
+"use client";
+
 import { ModeledVoidComponent } from "@mvc-react/components";
 import { FooterModel } from "../../model/footer";
 import Link from "next/link";
@@ -6,9 +8,12 @@ import { newReadonlyModel } from "@mvc-react/mvc";
 import FooterSection from "./FooterSection";
 import LogoIcon from "@/public/logo-icon.svg";
 import { georgia } from "../../third-party/fonts";
+import { useTranslations } from "next-intl";
 
 const Footer = function ({ model }) {
 	const { copyrightText } = model.modelView;
+	const t = useTranslations("footer");
+	const tl = useTranslations("links");
 
 	return (
 		<footer id="footer" className="w-full max-w-full">
@@ -21,18 +26,13 @@ const Footer = function ({ model }) {
 						/>
 						<FooterSection
 							model={newReadonlyModel({
-								title: "Nativity of the Theotokos Church",
+								title: t("heading"),
 							})}
 						>
-							<p>
-								Nativity of the Theotokos Parish of the Russian
-								Orthodox Church in Zimbabwe. Located at
-								Kingsmead Private Chapel, Cnr Rayl Road and
-								Kingsmead Road, Borrowdale, Harare.
-							</p>
+							<p>{t("description")}</p>
 							<br />
 							<span>
-								Email:{" "}
+								{`${t("email")}: `}
 								<Link
 									className="hover:underline"
 									href={
@@ -47,63 +47,61 @@ const Footer = function ({ model }) {
 					<div className="flex flex-col justify-between gap-x-16 gap-y-8 md:flex-row md:flex-wrap">
 						<FooterSection
 							model={newReadonlyModel({
-								title: "Jurisdictional",
+								title: t("jurisdictional"),
 							})}
 						>
 							<div className="flex flex-col gap-2">
 								<span>
 									<Link
 										className="hover:underline"
-										href={
-											"https://exarchate-africa.ru/dioceses_cat/yuzhno-afrikanskaya-eparhiya/"
-										}
+										href={tl("diocese")}
 										target="_blank"
 									>
-										{"Southern African Diocese"}
+										{t("diocese")}
 									</Link>
 								</span>
 								<span>
 									<Link
 										className="hover:underline"
-										href={"https://exarchate-africa.ru"}
+										href={tl("jurisdiction")}
 										target="_blank"
 									>
-										{"Patriarchal Exarchate of Africa"}
+										{t("jurisdiction")}
 									</Link>
 								</span>
 								<span>
 									<Link
 										className="hover:underline"
-										href={"https://mospat.ru/en/patriarch"}
+										href={tl("patriarch")}
 										target="_blank"
 									>
-										{"His Holiness Patriarch Kirill"}
+										{t("patriarch")}
 									</Link>
 								</span>
 								<span>
 									<Link
 										className="hover:underline"
-										href={"https://mospat.ru/en"}
+										href={tl("patriarchate")}
 										target="_blank"
 									>
-										{"Moscow Patriarchate"}
+										{t("patriarchate")}
 									</Link>
 								</span>
 							</div>
 						</FooterSection>
 						<FooterSection
-							model={newReadonlyModel({ title: "Clergy" })}
+							model={newReadonlyModel({ title: t("clergy") })}
 						>
 							<div className="flex flex-col gap-2">
-								<span>Fr Dimitri Polokhov</span>
-								<span>Fr Savva Kajawa</span>
+								<span>{t("frDimitri")}</span>
+								<span>{t("frSavva")}</span>
 							</div>
 						</FooterSection>
 						<FooterSection
-							model={newReadonlyModel({ title: "Contact" })}
+							model={newReadonlyModel({ title: t("contact") })}
 						>
 							<div className="grid grid-cols-2 gap-x-2">
-								<span>Phone</span>
+								<span>{t("phone")}</span>
 								<span>
 									<Link
 										className="hover:underline"
@@ -112,7 +110,7 @@ const Footer = function ({ model }) {
 										+263 716 063 616
 									</Link>
 								</span>
-								<span>Larisa</span>
+								<span>{t("larisa")}</span>
 								<span>
 									<Link
 										className="hover:underline"
@@ -121,7 +119,7 @@ const Footer = function ({ model }) {
 										+263 780 292 358
 									</Link>
 								</span>
-								<span>Vasily</span>
+								<span>{t("vasily")}</span>
 								<span>
 									<Link
 										className="hover:underline"
@@ -167,10 +165,10 @@ const Footer = function ({ model }) {
 				</span>
 				<div className="licenses flex flex-wrap gap-2 text-gray-400 text-xs">
 					<span>
-						Daily readings sourced from{" "}
+						{`${t("dailyReadingsLicense")} `}
 						<Link
 							className="underline hover:text-[#dcb042]"
-							href="https://holytrinityorthodox.com/"
+							href={tl("holyTrinityChurch")}
 							target="_blank"
 						>
 							Holy Trinity Orthodox Church
@@ -178,7 +176,7 @@ const Footer = function ({ model }) {
 					</span>
 					|
 					<span>
-						Logo icon by{" "}
+						{`${t("logoIconLicense")} `}
 						<Link
 							className="underline hover:text-[#dcb042]"
 							href="https://lordicon.com/"

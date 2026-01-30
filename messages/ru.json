@@ -1,0 +1,75 @@
+{
+	"header": {
+		"headerTitle": "Рождество Пресвятой Богородицы",
+		"headerSubtitle": "Русская Православная Церковь",
+		"home": "Главная",
+		"resources": "Материалы",
+		"media": "Медиа",
+		"aboutUs": "О приходе",
+		"contact": "Контакты"
+	},
+	"footer": {
+		"heading": "Храм Рождества Пресвятой Богородицы",
+		"description": "Приход Рождества Пресвятой Богородицы Русской Православной Церкви в Зимбабве. Расположен в частной часовне Kingsmead, угол Rayl Road и Kingsmead Road, Борроудейл, Хараре.",
+		"email": "Электронная почта",
+		"jurisdictional": "Юрисдикция",
+		"diocese": "Епархия Южной Африки",
+		"jurisdiction": "Патриарший экзархат Африки",
+		"patriarch": "Святейший Патриарх Кирилл",
+		"patriarchate": "Московский Патриархат",
+		"clergy": "Духовенство прихода",
+		"frDimitri": "иерей Димитрий Полохов",
+		"frSavva": "иерей Савва Каджава",
+		"contact": "Контакты",
+		"phone": "Телефон",
+		"larisa": "Лариса",
+		"vasily": "Василий",
+		"dailyReadingsLicense": "Ежедневные чтения предоставлены",
+		"logoIconLicense": "Иконка логотипа:",
+		"copyright": "2026 Приход Рождества Пресвятой Богородицы. Все права защищены."
+	},
+	"home": {
+		"heroTitle": "Привет и добро пожаловать",
+		"heroSubtitle": "Официальный сайт прихода Рождества Пресвятой Богородицы Русской Православной Церкви в Зимбабве. (осн. 2025)",
+		"dailyReadingsHeader": "Ежедневные чтения",
+		"dailyHymns": "Тропари и кондаки дня",
+		"latestNewsHeader": "Последние новости",
+		"featured": "Главная новость",
+		"schedule": "Расписание",
+		"moreNews": "Другие новости",
+		"liturgicalResources": "Богослужебные материалы",
+		"whatIsOrthodoxy": "Что такое Православие?",
+		"aboutOurParish": "О нашем приходе",
+		"mailingListHeader": "Присоединяйтесь к нашей рассылке",
+		"mailingListDescription": "Получайте последние новости прихода, объявления и события по электронной почте. Введите ваш адрес ниже, чтобы подписаться.",
+		"mailingListButton": "Подписаться",
+		"mailingListSuccessMessage": "Спасибо за подписку! Мы будем информировать вас о последних новостях, обновлениях и объявлениях прихода."
+	},
+	"dailyReadings": {
+		"noFast": "Сегодня поста нет"
+	},
+	"hymnsModal": {
+		"hymnsForToday": "Тропари и кондаки дня",
+		"closeButton": "Закрыть"
+	},
+	"scheduleItem": {
+		"liturgyService": "Божественная литургия",
+		"typikaService": "Служба Типики",
+		"mainLocation": "Приход Рождества Пресвятой Богородицы",
+		"secondaryLocation": "Приход святого Сергия",
+		"orthros": "Утреня",
+		"confessions": "Исповедь",
+		"liturgy": "Литургия",
+		"typika": "Типика",
+		"catechism": "Катехизация"
+	},
+	"links": {
+		"liturgicalResources": "https://ru.eadiocese.org/litresource",
+		"whatIsOrthodoxy": "https://pravoslavie.ru/44/",
+		"diocese": "https://exarchate-africa.ru/dioceses_cat/yuzhno-afrikanskaya-eparhiya/",
+		"jurisdiction": "https://exarchate-africa.ru",
+		"patriarch": "https://mospat.ru/ru/patriarch",
+		"patriarchate": "https://mospat.ru/ru",
+		"holyTrinityChurch": "https://holytrinityorthodox.com/ru"
+	}
+}

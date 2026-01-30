@@ -28,7 +28,7 @@ const NavigationMenu = function ({ model }) {
 			) : (
 				<Menu>
 					<MenuButton as={Fragment}>
-						<button className="flex items-center justify-center p-1 text-[28px] bg-transparent hover:text-[#DCB042] data-open:text-[#DCB042] data-open:bg-black/45">
+						<button className="flex items-center justify-center p-1 text-[28px] bg-transparent hover:text-[#DCB042] data-open:text-[#DCB042] data-open:bg-black/45 rounded-lg">
 							<MenuIcon className="size-8" strokeWidth={1.75} />
 						</button>
 					</MenuButton>

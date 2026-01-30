@@ -1,0 +1,75 @@
+{
+	"header": {
+		"headerTitle": "Nativity of the Theotokos",
+		"headerSubtitle": "Russian Orthodox Church",
+		"home": "Home",
+		"resources": "Resources",
+		"media": "Media",
+		"aboutUs": "About Us",
+		"contact": "Contact"
+	},
+	"footer": {
+		"heading": "Nativity of the Theotokos Church",
+		"description": "Nativity of the Theotokos Parish of the Russian Orthodox Church in Zimbabwe. Located at Kingsmead Private Chapel, Cnr Rayl Road and Kingsmead Road, Borrowdale, Harare.",
+		"email": "Email",
+		"jurisdictional": "Jurisdictional",
+		"diocese": "Southern African Diocese",
+		"jurisdiction": "Patriarchal Exarchate of Africa",
+		"patriarch": "His Holiness Patriarch Kirill",
+		"patriarchate": "Moscow Patriarchate",
+		"clergy": "Clergy",
+		"frDimitri": "Fr Dimitri Polokhov",
+		"frSavva": "Fr Savva Kajawa",
+		"contact": "Contact",
+		"phone": "Phone",
+		"larisa": "Larisa",
+		"vasily": "Vasily",
+		"dailyReadingsLicense": "Daily Readings sourced from",
+		"logoIconLicense": "Logo icon by",
+		"copyright": "2026 Nativity of the Theotokos Parish. All Rights Reserved."
+	},
+	"home": {
+		"heroTitle": "Hello and welcome",
+		"heroSubtitle": "Official website of the Nativity of the Theotokos parish of the Russian Orthodox Church in Zimbabwe. (est. 2025)",
+		"dailyReadingsHeader": "Daily Readings",
+		"dailyHymns": "Hymns for the Day",
+		"latestNewsHeader": "Latest News",
+		"featured": "Featured",
+		"schedule": "Schedule",
+		"moreNews": "More News",
+		"liturgicalResources": "Liturgical Resources",
+		"whatIsOrthodoxy": "What is Orthodoxy?",
+		"aboutOurParish": "About our Parish",
+		"mailingListHeader": "Join our Mailing List",
+		"mailingListDescription": "Stay up to date with the latest church news, announcements, and events straight from your mailbox. Enter your email below and subscribe if you haven't already.",
+		"mailingListButton": "Subscribe",
+		"mailingListSuccessMessage": "Thank you for subscribing to our mailing list! We will be keeping you up to date with the latest news, updates, announcements and more."
+	},
+	"dailyReadings": {
+		"noFast": "No Fast Today"
+	},
+	"hymnsModal": {
+		"hymnsForToday": "Today's Hymns",
+		"closeButton": "Close"
+	},
+	"scheduleItem": {
+		"liturgyService": "Divine Liturgy",
+		"typikaService": "Typika Service",
+		"mainLocation": "Nativity of the Theotokos Parish",
+		"secondaryLocation": "St. Sergius Parish",
+		"orthros": "Orthros",
+		"confessions": "Confessions",
+		"liturgy": "Liturgy",
+		"typika": "Typika",
+		"catechism": "Catechism"
+	},
+	"links": {
+		"liturgicalResources": "https://eadiocese.org/litresource",
+		"whatIsOrthodoxy": "https://www.oca.org/orthodoxy/the-orthodox-faith",
+		"diocese": "https://exarchate-africa.ru/en/dioceses_cat/yuzhno-afrikanskaya-eparhiya/",
+		"jurisdiction": "https://exarchate-africa.ru/en/",
+		"patriarch": "https://mospat.ru/en/patriarch",
+		"patriarchate": "https://mospat.ru/en",
+		"holyTrinityChurch": "https://holytrinityorthodox.com/"
+	}
+}
