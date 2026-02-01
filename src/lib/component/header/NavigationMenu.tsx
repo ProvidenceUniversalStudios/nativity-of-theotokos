@@ -47,7 +47,7 @@ const NavigationMenu = function ({ model }) {
 								<Link
 									className="block"
 									href={navlink.link}
-									locale={locale}
+									locale={locale != "en" ? locale : undefined}
 									replace={navlink.isInteractive}
 								>
 									{navlink.text}
