@@ -58,6 +58,10 @@
 		"hymnsForToday": "Today's Hymns",
 		"closeButton": "Close"
 	},
+	"quote": {
+		"openingQuote": "“",
+		"closingQuote": "”"
+	},
 	"scheduleItem": {
 		"liturgyService": "Divine Liturgy",
 		"typikaService": "Typika Service",

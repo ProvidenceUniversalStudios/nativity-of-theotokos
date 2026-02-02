@@ -5,14 +5,16 @@ import { HeaderModel } from "../../model/header";
 import { useMediaQuery } from "react-responsive";
 import NavigationMenu from "./NavigationMenu";
 import { newReadonlyModel } from "@mvc-react/mvc";
-import { useRouter } from "next/navigation";
 import LogoIcon from "@/public/logo-icon.svg";
 import { georgia } from "../../third-party/fonts";
 import "./header.css";
+import { useRouter } from "@/src/i18n/navigation";
+import { useLocale } from "next-intl";
 
 const Header = function ({ model }) {
 	const { navlinks } = model.modelView;
 	const isWideScreen = useMediaQuery({ minWidth: 768 });
+	const locale = useLocale();
 	const router = useRouter();
 
 	return (
@@ -23,7 +25,7 @@ const Header = function ({ model }) {
 				<div
 					className="logo flex gap-3 items-center justify-center w-fit min-w-fit hover:cursor-pointer"
 					onClick={() => {
-						router.push("/");
+						router.push("/", { locale });
 					}}
 				>
 					<div className="size-12">

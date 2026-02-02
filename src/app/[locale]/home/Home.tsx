@@ -32,6 +32,7 @@ export default function Home() {
 	const t = useTranslations("home");
 	const tLinks = useTranslations("links");
 	const tMisc = useTranslations("miscellaneous");
+	const tQuote = useTranslations("quote");
 	const locale = useLocale();
 	const dateLocale = locale == "en" ? "en-uk" : "ru-RU";
 	const hymnsModal = useInitializedStatefulInteractiveModel(
@@ -326,9 +327,9 @@ export default function Home() {
 								className={`quote-box flex flex-col gap-4 items-center md:w-1/2`}
 							>
 								<p className="quote font-light text-lg/relaxed">
-									<span>“</span>
+									<span>{tQuote("openingQuote")}</span>
 									{modelView.dailyQuote.quote}
-									<span>”</span>
+									<span>{tQuote("closingQuote")}</span>
 								</p>
 								<span className="author font-light w-full text-right">
 									— {modelView.dailyQuote.author}

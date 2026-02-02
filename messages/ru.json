@@ -58,6 +58,10 @@
 		"hymnsForToday": "Тропари и кондаки дня",
 		"closeButton": "Закрыть"
 	},
+	"quote": {
+		"openingQuote": "«",
+		"closingQuote": "»"
+	},
 	"scheduleItem": {
 		"liturgyService": "Божественная литургия",
 		"typikaService": "Служба Типики",
