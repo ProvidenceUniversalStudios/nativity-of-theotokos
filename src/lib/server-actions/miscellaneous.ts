@@ -7,5 +7,5 @@ export async function getBaseURL() {
 	const host = headersList.get("host");
 	const protocol =
 		process.env.NODE_ENV == "production" ? "https://" : "http://";
-	return `${protocol}${host?.slice(0, host.length - 1)}`;
+	return `${protocol}${host?.slice(0, host.length)}`;
 }

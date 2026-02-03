@@ -17,7 +17,7 @@ export function useHome(): HomeModel {
 						scheduleItems,
 						newsArticles,
 						dailyGalleryImages,
-					} = await getHomeSnapshot(4, 4);
+					} = await getHomeSnapshot(4, 4, 7);
 					return {
 						dailyReadings,
 						dailyQuote,

@@ -234,10 +234,16 @@ export async function getLatestNews(
 				src: string,
 				placeholder: ImagePlaceholder,
 			): Promise<void> {
-				const url = new URL(src);
-				let processedSrc = url.href;
-				if (baseURL.includes(url.hostname)) {
-					processedSrc = url.pathname;
+				let processedSrc;
+				try {
+					const url = new URL(src);
+					if (baseURL.includes(url.hostname)) {
+						processedSrc = url.pathname;
+					}
+					processedSrc = url.href;
+				} catch (error) {
+					if (!(error instanceof TypeError)) throw error;
+					processedSrc = src;
 				}
 				await prismaClient.imagePlaceholder.create({
 					data: {
@@ -251,7 +257,7 @@ export async function getLatestNews(
 			const imageLink = unplaceholderedArticles[i].imageLink;
 			const imageURL = isRemotePath(imageLink)
 				? imageLink
-				: `${baseURL}/${imageLink}`;
+				: `${baseURL}${imageLink}`;
 			await getPlaceholder(imageURL, repository);
 		}
 	}
@@ -356,14 +362,15 @@ export async function getDailyGalleryImages(
 	const repository = getPrismaPlaceholderRepository(baseUrl, prismaClient);
 	// TODO: Optimize
 	for (let i = 0; i < dailyGalleryImages.length; i++) {
+		const imageLink = dailyGalleryImages[i].imageLink;
+		const imageURL = isRemotePath(imageLink)
+			? imageLink
+			: `${baseUrl}${imageLink}`;
 		placeholderedGalleryImages.push({
 			image: {
-				source: dailyGalleryImages[i].imageLink,
+				source: imageLink,
 				about: "Gallery image",
-				placeholder: await getPlaceholder(
-					dailyGalleryImages[i].imageLink,
-					repository,
-				),
+				placeholder: await getPlaceholder(imageURL, repository),
 			},
 		});
 	}

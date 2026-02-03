@@ -36,10 +36,16 @@ export const getPrismaPlaceholderRepository = (
 			src: string,
 			placeholder: ImagePlaceholder,
 		): Promise<void> {
-			const url = new URL(src);
-			let processedSrc = url.href;
-			if (baseUrl.includes(url.hostname)) {
-				processedSrc = url.pathname;
+			let processedSrc;
+			try {
+				const url = new URL(src);
+				if (baseUrl.includes(url.hostname)) {
+					processedSrc = url.pathname;
+				}
+				processedSrc = url.href;
+			} catch (error) {
+				if (!(error instanceof TypeError)) throw error;
+				processedSrc = src;
 			}
 			await prismaClient.imagePlaceholder.create({
 				data: {
