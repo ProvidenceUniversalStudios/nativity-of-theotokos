@@ -51,6 +51,11 @@ export async function getHomeSnapshot(
 	dailyGalleryImagesCount: number = 5,
 ): Promise<HomeSnapshot> {
 	const currentDate = new Date();
+	const baseUrl = await getBaseURL();
+	const placeholderRepository = getPrismaPlaceholderRepository(
+		baseUrl,
+		prismaClient,
+	);
 	const scheduleItems = await getScheduleItems(
 		scheduleItemCount,
 		currentDate,
@@ -64,6 +69,7 @@ export async function getHomeSnapshot(
 	);
 	const modifiedDailyReadings = await getPlaceholder(
 		dailyReadings.iconOfTheDay.source,
+		placeholderRepository,
 	).then(placeholder => ({
 		...dailyReadings,
 		iconOfTheDay: { ...dailyReadings.iconOfTheDay, placeholder },
@@ -237,10 +243,9 @@ export async function getLatestNews(
 				let processedSrc;
 				try {
 					const url = new URL(src);
-					if (baseURL.includes(url.hostname)) {
+					if (baseURL.includes(url.hostname))
 						processedSrc = url.pathname;
-					}
-					processedSrc = url.href;
+					else processedSrc = url.href;
 				} catch (error) {
 					if (!(error instanceof TypeError)) throw error;
 					processedSrc = src;

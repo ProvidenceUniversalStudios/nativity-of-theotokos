@@ -25,9 +25,18 @@ export const getPrismaPlaceholderRepository = (
 ): PlaceholderRepository => {
 	return {
 		async findPlaceholder(src: string) {
+			let processedSrc;
+			try {
+				const url = new URL(src);
+				if (baseUrl.includes(url.hostname)) processedSrc = url.pathname;
+				else processedSrc = url.href;
+			} catch (error) {
+				if (!(error instanceof TypeError)) throw error;
+				processedSrc = src;
+			}
 			const result = await prismaClient.imagePlaceholder.findFirst({
 				where: {
-					imageLink: src,
+					imageLink: processedSrc,
 				},
 			});
 			return result?.placeholder as ImagePlaceholder;
@@ -39,10 +48,8 @@ export const getPrismaPlaceholderRepository = (
 			let processedSrc;
 			try {
 				const url = new URL(src);
-				if (baseUrl.includes(url.hostname)) {
-					processedSrc = url.pathname;
-				}
-				processedSrc = url.href;
+				if (baseUrl.includes(url.hostname)) processedSrc = url.pathname;
+				else processedSrc = url.href;
 			} catch (error) {
 				if (!(error instanceof TypeError)) throw error;
 				processedSrc = src;

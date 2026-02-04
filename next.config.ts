@@ -5,7 +5,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
 	images: {
-		remotePatterns: [new URL("https://holytrinityorthodox.com/**")],
+		remotePatterns: [{ protocol: "https", hostname: "**" }],
 	},
 	turbopack: {
 		rules: {
