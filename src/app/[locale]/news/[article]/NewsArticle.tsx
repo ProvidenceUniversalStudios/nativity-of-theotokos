@@ -10,48 +10,55 @@ const NewsArticle = function ({ model }) {
 	const { source, about, placeholder } = articleImage;
 	return (
 		<main className="newsarticle bg-[#FEF8F3] text-black">
-			<div className="newsarticle-content flex flex-col p-8 gap-6 border-t-15 border-[#250203]/80">
-				<span
-					className={`title text-4xl/tight ${georgia.className} font-semibold`}
-				>
-					{title}
-				</span>
-				<div className="byline flex flex-col gap-1">
-					<div className="flex items-center gap-2 -ml-8 pl-8 pr-3 text-white bg-gray-900/80 min-w-3/4 p-2">
-						<span className="author text-base">{`By ${author}`}</span>
+			<div className="newsarticle-content flex flex-col p-8 md:p-12 gap-6 border-t-15 border-[#250203]/80">
+				<div className="metadata flex flex-col gap-6 md:flex-row md:gap-x-8 lg:max-w-full">
+					<div className="headline flex flex-col gap-6 md:w-1/2">
+						<span
+							className={`title text-4xl/tight md:text-5xl/tight  lg:text-6xl/tight ${georgia.className} font-semibold`}
+						>
+							{title}
+						</span>
+						<div className="byline flex flex-col gap-1">
+							<div className="flex items-center gap-2 -ml-8 pl-8 md:-ml-12 md:pl-12 pr-3 text-white bg-gray-900/80 w-3/4 p-2">
+								<span className="author text-base md:text-xl">{`By ${author}`}</span>
+							</div>
+							<span className="date text-lg">
+								{`${toZonedTime(
+									dateCreated,
+									"CAT",
+								).toLocaleDateString("en-uk", {
+									dateStyle: "short",
+								})}${
+									dateUpdated
+										? ` (Updated: ${toZonedTime(
+												dateUpdated,
+												"CAT",
+											).toLocaleDateString("en-uk", {
+												dateStyle: "short",
+											})})`
+										: ""
+								}`}
+							</span>
+						</div>
 					</div>
-					<span className="date text-lg">
-						{`${toZonedTime(dateCreated, "CAT").toLocaleDateString(
-							"en-uk",
-							{
-								dateStyle: "short",
-							},
-						)}${
-							dateUpdated
-								? ` (Updated: ${toZonedTime(
-										dateUpdated,
-										"CAT",
-									).toLocaleDateString("en-uk", {
-										dateStyle: "short",
-									})})`
-								: ""
-						}`}
-					</span>
+					<div className="flex justify-stretch items-stretch w-full h-[15em] rounded-lg overflow-clip md:w-1/2 md:h-fit md:grow md:self-stretch md:max-h-[25em]">
+						<Image
+							className="grow object-cover object-center"
+							height={538}
+							width={538}
+							alt={about ?? "News article image"}
+							title={about}
+							src={source}
+							placeholder="blur"
+							blurDataURL={placeholder}
+						/>
+					</div>
 				</div>
-				<div className="flex justify-stretch items-stretch w-full h-[15em] max-h-[80dvh] rounded-lg overflow-clip">
-					<Image
-						className="grow object-cover object-center"
-						height={538}
-						width={538}
-						alt={about ?? "News article image"}
-						title={about}
-						src={source}
-						placeholder="blur"
-						blurDataURL={placeholder}
-					/>
-				</div>
-				<hr className="text-black/50 mt-3 w-full self-center" />
-				<p className="body text-lg/relaxed">{body}</p>
+				<hr className="text-black/50 mt-6 mb-3 w-full self-center md:w-3/4" />
+				<p
+					className={`body text-lg/relaxed md:w-55/100 md:min-w-lg self-center md:text-xl/relaxed`}
+					dangerouslySetInnerHTML={{ __html: body }}
+				/>
 			</div>
 		</main>
 	);
