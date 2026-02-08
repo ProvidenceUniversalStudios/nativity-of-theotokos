@@ -58,6 +58,7 @@ export default function Home() {
 
 	useLayoutEffect(() => {
 		window.history.scrollRestoration = "manual";
+		window.scrollTo(0, 0);
 	}, []);
 
 	return (

@@ -12,6 +12,7 @@ export default function Maintenance() {
 	const t = useTranslations("maintenance");
 
 	useLayoutEffect(() => {
+		window.history.scrollRestoration = "manual";
 		window.scrollTo(0, 0);
 	}, []);
 
@@ -20,7 +21,7 @@ export default function Maintenance() {
 			<div className="maintenance-content flex items-center justify-center text-center p-8 py-15 pb-20 grow min-h-max h-full border-t-15 border-[#9C3801]/90">
 				<div className="flex flex-col items-center justify-center gap-6 w-md">
 					<MaintenanceGraphic
-						className="h-54 w-64"
+						className="h-54 md:h-48 w-64"
 						opacity={0.9}
 						fill="#000"
 					/>

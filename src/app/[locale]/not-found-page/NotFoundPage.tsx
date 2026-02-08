@@ -26,6 +26,7 @@ export default function NotFoundPage() {
 	const t = useTranslations("notFound");
 
 	useLayoutEffect(() => {
+		window.history.scrollRestoration = "manual";
 		window.scrollTo(0, 0);
 	}, []);
 
@@ -34,7 +35,7 @@ export default function NotFoundPage() {
 			<div className="not-found-content flex items-center justify-center text-center p-8 py-15 pb-20 h-full min-h-max border-t-15 border-[#976029]/90">
 				<div className="flex flex-col items-center justify-center gap-6 w-md">
 					<NotFoundGraphic
-						className="h-64 w-80"
+						className="h-64 md:h-48 w-80"
 						opacity={0.9}
 						fill="#000"
 					/>

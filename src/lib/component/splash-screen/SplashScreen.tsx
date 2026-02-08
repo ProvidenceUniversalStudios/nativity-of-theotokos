@@ -26,7 +26,7 @@ const SplashScreen = function ({ model }) {
 							className="logo flex gap-3 items-center justify-center max-w-[25em] animate-pulse"
 						>
 							<LogoIcon
-								className="h-20 w-20 object-center object-contain"
+								className="size-20 object-center object-contain"
 								viewBox="0 0 430 430"
 							/>
 						</motion.div>

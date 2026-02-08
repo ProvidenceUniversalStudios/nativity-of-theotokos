@@ -94,8 +94,7 @@ export default async function RootLayout({
 					<LanguageSwitcher
 						model={{
 							modelView: {
-								displayedLanguage:
-									locale == "en" ? "ru" : locale,
+								displayedLanguage: locale == "en" ? "ru" : "en",
 							},
 							interact: async () => {
 								"use server";

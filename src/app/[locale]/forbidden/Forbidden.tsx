@@ -12,6 +12,7 @@ export default function Forbidden() {
 	const t = useTranslations("unauthorized");
 
 	useLayoutEffect(() => {
+		window.history.scrollRestoration = "manual";
 		window.scrollTo(0, 0);
 	}, []);
 
@@ -20,7 +21,7 @@ export default function Forbidden() {
 			<div className="forbidden-content flex items-center justify-center text-center p-8 py-15 pb-20 grow min-h-max h-full border-t-15 border-[#832C0B]/90">
 				<div className="flex flex-col items-center justify-center gap-6 w-md">
 					<ForbiddenGraphic
-						className="h-64 w-80"
+						className="h-64 md:h-48 w-80"
 						opacity={0.9}
 						fill="#000"
 					/>

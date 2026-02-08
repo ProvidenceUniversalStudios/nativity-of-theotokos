@@ -13,6 +13,7 @@ const ErrorPage = function ({ model }) {
 	const t = useTranslations("error");
 
 	useLayoutEffect(() => {
+		window.history.scrollRestoration = "manual";
 		window.scrollTo(0, 0);
 	}, []);
 
@@ -21,7 +22,7 @@ const ErrorPage = function ({ model }) {
 			<div className="error-content flex items-center justify-center text-center p-8 py-15 pb-20 grow min-h-max h-full border-t-15 border-red-950/90">
 				<div className="flex flex-col items-center justify-center gap-6 w-md">
 					<CloudAlert
-						className="h-54 w-64"
+						className="h-54 md:h-48 w-64"
 						opacity={0.9}
 						strokeWidth={0.7}
 					/>
