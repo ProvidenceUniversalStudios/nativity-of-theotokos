@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import Header from "../../lib/component/header/Header";
 import { newReadonlyModel } from "@mvc-react/mvc";
 import Footer from "../../lib/component/footer/Footer";
@@ -45,8 +45,8 @@ export default async function RootLayout({
 	params: Promise<{ locale: string }>;
 }>) {
 	const { locale } = await params;
-	const h = await getTranslations("header");
-	const f = await getTranslations("footer");
+	const tHeader = await getTranslations("header");
+	const tFooter = await getTranslations("footer");
 	if (!hasLocale(routing.locales, locale)) {
 		notFound();
 	}
@@ -59,27 +59,27 @@ export default async function RootLayout({
 				<NextIntlClientProvider>
 					<Header
 						model={newReadonlyModel({
-							title: `${h("headerTitle")} ${h("headerSubtitle")}`,
+							title: `${tHeader("headerTitle")} ${tHeader("headerSubtitle")}`,
 							navlinks: [
-								{ link: "/", text: h("home") },
+								{ link: "/", text: tHeader("home") },
 								{
 									link: "/#resources",
-									text: h("resources"),
+									text: tHeader("resources"),
 									isInteractive: true,
 								},
 								{
 									link: "/#media",
-									text: h("media"),
+									text: tHeader("media"),
 									isInteractive: true,
 								},
 								{
 									link: "/#resources",
-									text: h("aboutUs"),
+									text: tHeader("aboutUs"),
 									isInteractive: true,
 								},
 								{
 									link: "/#footer",
-									text: h("contact"),
+									text: tHeader("contact"),
 									isInteractive: true,
 								},
 							],
@@ -88,13 +88,14 @@ export default async function RootLayout({
 					{children}
 					<Footer
 						model={newReadonlyModel({
-							copyrightText: f("copyright"),
+							copyrightText: tFooter("copyright"),
 						})}
 					/>
 					<LanguageSwitcher
 						model={{
 							modelView: {
-								displayedLanguage: locale == "en" ? "ru" : "en",
+								displayedLanguage:
+									locale == "en" ? "ru" : locale,
 							},
 							interact: async () => {
 								"use server";

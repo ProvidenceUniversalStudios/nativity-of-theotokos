@@ -5,6 +5,7 @@ import { useRouter } from "@/src/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { useLayoutEffect } from "react";
 
 export async function generateMetadata({
 	params,
@@ -19,14 +20,18 @@ export async function generateMetadata({
 	};
 }
 
-export default function NotFound() {
+export default function NotFoundPage() {
 	const router = useRouter();
 	const locale = useLocale();
 	const t = useTranslations("notFound");
 
+	useLayoutEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<main className={`not-found bg-[#FEF8F3] text-black`}>
-			<div className="not-found-content flex items-center justify-center text-center p-8 py-15 pb-20 grow h-max border-t-15 border-[#976029]/90">
+			<div className="not-found-content flex items-center justify-center text-center p-8 py-15 pb-20 h-full min-h-max border-t-15 border-[#976029]/90">
 				<div className="flex flex-col items-center justify-center gap-6 w-md">
 					<NotFoundGraphic
 						className="h-64 w-80"

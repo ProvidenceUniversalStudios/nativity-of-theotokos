@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import NotFound from "./not-found/NotFound";
+import NotFoundPage from "./not-found-page/NotFoundPage";
 
 export async function generateMetadata({
 	params,
@@ -15,6 +15,6 @@ export async function generateMetadata({
 	};
 }
 
-export default function Page() {
-	return <NotFound />;
+export default function NotFound() {
+	return <NotFoundPage />;
 }

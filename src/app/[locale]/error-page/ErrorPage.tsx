@@ -6,14 +6,19 @@ import { ErrorPageModel } from "@/src/lib/model/error-page";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { CloudAlert } from "lucide-react";
+import { useLayoutEffect } from "react";
 
 const ErrorPage = function ({ model }) {
 	const { message, resetFunction } = model.modelView;
 	const t = useTranslations("error");
 
+	useLayoutEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<main className={`error bg-[#FEF8F3] text-black`}>
-			<div className="error-content flex items-center justify-center text-center p-8 py-15 pb-20 grow h-max border-t-15 border-red-950/90">
+			<div className="error-content flex items-center justify-center text-center p-8 py-15 pb-20 grow min-h-max h-full border-t-15 border-red-950/90">
 				<div className="flex flex-col items-center justify-center gap-6 w-md">
 					<CloudAlert
 						className="h-54 w-64"

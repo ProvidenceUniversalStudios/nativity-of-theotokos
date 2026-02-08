@@ -4,15 +4,20 @@ import { useRouter } from "@/src/i18n/navigation";
 import { georgia } from "@/src/lib/third-party/fonts";
 import { useLocale, useTranslations } from "next-intl";
 import ForbiddenGraphic from "@/public/ui/icon-3.svg";
+import { useLayoutEffect } from "react";
 
 export default function Forbidden() {
 	const router = useRouter();
 	const locale = useLocale();
 	const t = useTranslations("unauthorized");
 
+	useLayoutEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<main className={`forbidden bg-[#FEF8F3] text-black`}>
-			<div className="forbidden-content flex items-center justify-center text-center p-8 py-15 pb-20 grow h-max border-t-15 border-[#832C0B]/90">
+			<div className="forbidden-content flex items-center justify-center text-center p-8 py-15 pb-20 grow min-h-max h-full border-t-15 border-[#832C0B]/90">
 				<div className="flex flex-col items-center justify-center gap-6 w-md">
 					<ForbiddenGraphic
 						className="h-64 w-80"

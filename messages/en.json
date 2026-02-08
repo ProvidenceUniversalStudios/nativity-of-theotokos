@@ -12,9 +12,9 @@
 		"tryAgain": "Try Again"
 	},
 	"notFound": {
-		"metaTitle": "Page not Found",
-		"title": "Page not Found",
-		"description": "The page you are looking for does not exist, was moved, or was deleted.",
+		"metaTitle": "Resource not Found",
+		"title": "Resource not Found",
+		"description": "The page or resource you are looking for does not exist, was moved, or was deleted.",
 		"goHome": "Go Home"
 	},
 	"unauthorized": {
