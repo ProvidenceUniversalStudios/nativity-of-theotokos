@@ -425,11 +425,11 @@ export default function Home() {
 									</div>
 								</motion.div>
 							</div>
-							<div className="other-stories flex flex-col gap-4 pt-6 pb-15 px-8 lg:px-20 bg-white/70 border-t-2 border-t-[#dcb042]">
+							<div className="other-stories flex flex-col gap-4 pt-10 pb-15 px-8 lg:px-20 bg-white/70 border-t-2 border-t-[#dcb042]">
 								<span className="text-xl mb-1">
 									{t("moreNews")}
 								</span>
-								<div className="grid lg:grid-cols-2 gap-8 md:gap-6 md:w-3/4 lg:w-9/10">
+								<div className="grid lg:grid-cols-2 gap-8 md:gap-6 md:w-3/4 lg:w-85/100">
 									{[
 										...modelView.newsArticles
 											.otherNewsArticles,
@@ -451,12 +451,12 @@ export default function Home() {
 					id="resources"
 					className="resources bg-gray-900 text-white"
 				>
-					<div className="h-3.75 w-full bg-[#250203] bg-[url(/ui/border-5.jpg)] bg-position-[50%_50%] bg-size-[60%] md:bg-size-[40%] lg:bg-size-[25%] bg-repeat-x" />
+					<div className="h-3.75 w-full bg-[#250203] bg-[url(/ui/border-8.jpg)] bg-position-[50%_50%] bg-size-[25%] md:bg-size-[15%] lg:bg-size-[15%] bg-repeat-x" />
 					<div className="resources-content flex flex-col gap-8 p-8 py-14 lg:p-20">
 						<div className="flex flex-col gap-6 w-full justify-center items-center md:flex-row">
-							<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/ui/liturgical-resources.jpg)] bg-cover bg-center rounded-lg overflow-clip">
+							<div className="flex md:size-[22em] w-full h-[22em] bg-[linear-gradient(to_bottom,transparent,black),url(/ui/liturgical-resources.jpg)] bg-cover bg-center bg-no-repeat rounded-lg overflow-clip border border-black/70 text-white hover:text-[#dcb042] hover:scale-[1.03]  active:border-[#dcb042] transition ease-out duration-200">
 								<div
-									className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
+									className="flex size-full p-6 justify-center items-end text-center hover:cursor-pointer"
 									onClick={() =>
 										window.open(
 											tLinks("liturgicalResources"),
@@ -465,15 +465,15 @@ export default function Home() {
 									}
 								>
 									<span
-										className={`text-3xl mb-3 ${georgia.className}`}
+										className={`text-3xl mb-3`}
 									>
 										{t("liturgicalResources")}
 									</span>
 								</div>
 							</div>
-							<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/ui/what-is-orthodoxy.jpg)] bg-cover bg-center rounded-lg overflow-clip">
+							<div className="flex md:size-[22em] w-full h-[22em] bg-[linear-gradient(to_bottom,transparent,black),url(/ui/what-is-orthodoxy.jpg)] bg-cover bg-center bg-no-repeat rounded-lg overflow-clip border border-black/70 text-white hover:text-[#dcb042] hover:scale-[1.03]  active:border-[#dcb042] transition ease-out duration-200">
 								<div
-									className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
+									className="flex size-full p-6 justify-center items-end text-center hover:cursor-pointer"
 									onClick={() =>
 										window.open(
 											tLinks("whatIsOrthodoxy"),
@@ -482,21 +482,21 @@ export default function Home() {
 									}
 								>
 									<span
-										className={`text-3xl mb-3 ${georgia.className}`}
+										className={`text-3xl mb-3`}
 									>
 										{t("whatIsOrthodoxy")}
 									</span>
 								</div>
 							</div>
-							<div className="flex size-[20em] bg-[linear-gradient(to_bottom,transparent,black),url(/ui/about-our-parish.jpg)] bg-cover bg-center rounded-lg overflow-clip">
+							<div className="flex md:size-[22em] w-full h-[22em] bg-[linear-gradient(to_bottom,transparent,black),url(/ui/about-our-parish.jpg)] bg-cover bg-center bg-no-repeat rounded-lg overflow-clip border border-black/70 text-white hover:text-[#dcb042] hover:scale-[1.03]  active:border-[#dcb042] transition ease-out duration-200">
 								<div
-									className="flex size-full p-6 justify-center items-end text-center  text-white hover:cursor-pointer"
+									className="flex size-full p-6 justify-center items-end text-center hover:cursor-pointer"
 									onClick={() =>
 										router.push("/about-us", { locale })
 									}
 								>
 									<span
-										className={`text-3xl mb-3 ${georgia.className}`}
+										className={`text-3xl mb-3`}
 									>
 										{t("aboutOurParish")}
 									</span>
@@ -504,7 +504,7 @@ export default function Home() {
 							</div>
 						</div>
 					</div>
-					<div className="h-3.75 w-full bg-[#250203] bg-[url(/ui/border-5.jpg)] bg-position-[50%_50%] bg-size-[60%] md:bg-size-[40%] lg:bg-size-[25%] bg-repeat-x" />
+					<div className="h-3.75 w-full bg-[#250203] bg-[url(/ui/border-8.jpg)] bg-position-[50%_50%] bg-size-[25%] md:bg-size-[15%] lg:bg-size-[15%] bg-repeat-x" />
 				</section>
 				<section id="media" className="gallery text-black">
 					{modelView && (

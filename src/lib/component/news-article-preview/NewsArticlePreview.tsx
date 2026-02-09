@@ -14,20 +14,21 @@ const NewsArticlePreview = function ({ model }) {
 	const { placeholder, source, about } = articleImage;
 	const router = useRouter();
 	const locale = useLocale();
-	const dateLocale = locale == "en" ? "en-uk" : "ru-RU";
+	const dateLocale = "ru-RU";
 	const dateString = toZonedTime(dateCreated, "CAT").toLocaleDateString(
 		dateLocale,
 		{
-			day: "2-digit",
-			month: "long",
-			year: "numeric",
+			dateStyle: "short",
 		},
 	);
 
 	return isFeatured ? (
 		<div
-			className="featured-card flex flex-col hover:cursor-pointer bg-[#FEF8F3] border border-gray-900/20 rounded-lg overflow-clip"
-			onClick={() => router.push("/news")}
+			className="featured-card flex flex-col hover:cursor-pointer bg-[#FEF8F3] border border-gray-900/20 rounded-lg overflow-clip  hover:border-[#dcb042] hover:[&_.title]:underline hover:scale-[1.03] transition ease-out duration-150"
+			onClick={() => {
+				router.push("/news");
+				router.refresh();
+			}}
 		>
 			<div className="flex justify-stretch items-stretch w-full h-[15em] max-h-[80dvh]">
 				<Image
@@ -46,15 +47,18 @@ const NewsArticlePreview = function ({ model }) {
 					{title}
 				</span>
 				<span className="timestamp text-sm text-gray-600">
-					{author} | {dateString}
+					{author} — {dateString}
 				</span>
 				<p className="text-base line-clamp-6">{snippet}</p>
 			</div>
 		</div>
 	) : (
 		<div
-			className="normal-card flex flex-row items-center gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer"
-			onClick={() => router.push("/news")}
+			className="normal-card flex flex-row items-center max-w-[27em] gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer hover:[&_.title]:underline"
+			onClick={() => {
+				router.push("/news");
+				router.refresh();
+			}}
 		>
 			<div className="flex justify-stretch items-stretch w-[7em] min-w-[7em] h-[6em] max-h-[6em] md:w-[8em] md:min-w-[8em] md:h-[6.4em] md:max-h-[6.4em] rounded-lg overflow-clip">
 				<Image
@@ -71,7 +75,7 @@ const NewsArticlePreview = function ({ model }) {
 			<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
 				<span className="title text-sm md:text-base">{title}</span>
 				<span className="byline text-xs md:text-sm text-gray-600">
-					{author} | {dateString}
+					{author} — {dateString}
 				</span>
 				<p className="line-clamp-2 hidden">{snippet}</p>
 			</div>
