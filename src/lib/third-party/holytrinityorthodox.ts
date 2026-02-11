@@ -1,8 +1,8 @@
-import { toZonedTime } from "date-fns-tz";
-import { DailyReadings, Hymn, Image } from "../type/miscellaneous";
-import { julianDate, removeMarkup } from "../utility/miscellaneous";
 import { load } from "cheerio";
+import { toZonedTime } from "date-fns-tz";
 import { getTranslations } from "next-intl/server";
+import { DailyReadings, Hymn, Image } from "../type/miscellaneous";
+import { removeMarkup } from "../utility/miscellaneous";
 
 interface HolyTrinityOrthodox {
 	getDailyReadings: (date: Date) => Promise<DailyReadings>;
@@ -23,16 +23,19 @@ interface HolyTrinityOrthodox {
 class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 	private readonly baseURL;
 	private readonly locale;
-	private readonly iconOfTheDayBaseURL =
-		"https://holytrinityorthodox.com/htc/iconoftheday/bigimages";
+	private readonly iconOfTheDayBaseURL;
 
 	constructor(locale: string) {
 		if (locale == "ru") {
 			this.baseURL =
 				"https://www.holytrinityorthodox.com/htc/ocalendar/ru/v2calendar.php";
+			this.iconOfTheDayBaseURL =
+				"https://www.holytrinityorthodox.com/htc/iconoftheday/ru/v6TitleIconTroparion.php";
 		} else {
 			this.baseURL =
 				"https://www.holytrinityorthodox.com/htc/ocalendar/v2calendar.php";
+			this.iconOfTheDayBaseURL =
+				"https://www.holytrinityorthodox.com/htc/iconoftheday/v6TitleIconTroparion.php";
 		}
 		this.locale = locale;
 	}
@@ -157,21 +160,23 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 	}
 
 	async getIconOfTheDay(date: Date) {
-		const liturgicalCalendarDate = julianDate(date);
-		const month = (liturgicalCalendarDate.getMonth() + 1)
-			.toString()
-			.padStart(2, "0");
-		const day = liturgicalCalendarDate
-			.getDate()
-			.toString()
-			.padStart(2, "0");
-		let link = "/ui/saint-of-the-day-fallback.webp";
-		const saintOfTheDayLink = `${this.iconOfTheDayBaseURL}/${month}/${month}${day}.jpg`;
-		const response = await fetch(saintOfTheDayLink, { method: "HEAD" });
-		if (response.ok) {
-			link = saintOfTheDayLink;
-		}
-		return { source: link } as Pick<Image, "source"> & Partial<Image>;
+		const requestURL = this._getDatedBaseURL(
+			date,
+			this.iconOfTheDayBaseURL,
+		);
+		requestURL.searchParams.set("img", "1");
+		const encoding = requestURL.href.includes("/ru/") ? "UTF-8" : undefined;
+
+		return (await this._getMarkedUpText(requestURL, encoding).then(html => {
+			const $ = load(html);
+			const iconImage = $(".icon_img");
+			const about = iconImage.attr("alt")!.replace(/\&.+\;/, "");
+			const source = new URL(
+				iconImage.attr("src")!,
+				`${requestURL.origin}`,
+			).href;
+			return { source, about };
+		})) satisfies Pick<Image, "source" | "about"> & Partial<Image>;
 	}
 
 	async getHymns(date: Date) {
@@ -194,7 +199,10 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 		});
 	}
 
-	private _getMarkedUpText(url: URL) {
+	private _getMarkedUpText(
+		url: URL,
+		encoding: "windows-1251" | "UTF-8" = "windows-1251",
+	) {
 		return fetch(url)
 			.then(response => {
 				if (response.ok) return response.arrayBuffer();
@@ -203,12 +211,12 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 				);
 			})
 			.then(encodedResponse =>
-				new TextDecoder("windows-1251").decode(encodedResponse),
+				new TextDecoder(encoding).decode(encodedResponse),
 			);
 	}
 
-	private _getDatedBaseURL(date: Date) {
-		const requestURL = new URL(this.baseURL);
+	private _getDatedBaseURL(date: Date, baseURL: string = this.baseURL) {
+		const requestURL = new URL(baseURL);
 
 		requestURL.searchParams.set("today", date.getDate().toString());
 		requestURL.searchParams.set("month", (date.getMonth() + 1).toString());

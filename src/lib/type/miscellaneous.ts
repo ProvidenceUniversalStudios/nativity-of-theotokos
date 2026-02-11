@@ -23,7 +23,7 @@ export type DailyReadings = {
 	saints: string;
 	scriptures: DailyReadingsScripture[];
 	fastingInfo: string;
-	iconOfTheDay: Pick<Image, "source"> & Partial<Image>;
+	iconOfTheDay: Pick<Image, "source" | "about"> & Partial<Image>;
 	hymns: Hymn[];
 };
 

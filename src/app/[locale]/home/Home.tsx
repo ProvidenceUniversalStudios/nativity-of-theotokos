@@ -172,8 +172,16 @@ export default function Home() {
 												className="grow object-cover object-center hover:cursor-pointer"
 												height={364}
 												width={240}
-												alt="Icon of the day"
-												title="Icon of the day"
+												alt={
+													modelView.dailyReadings
+														.iconOfTheDay.about ??
+													"Icon of the day"
+												}
+												title={
+													modelView.dailyReadings
+														.iconOfTheDay.about ??
+													"Icon of the day"
+												}
 												placeholder={
 													modelView.dailyReadings
 														.iconOfTheDay
