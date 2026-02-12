@@ -225,7 +225,6 @@ class HolyTrinityOrthodoxImplementation implements HolyTrinityOrthodox {
 	}
 }
 
-// TODO: To factory
 const holytrinityorthodox = (locale: string) => {
 	return new HolyTrinityOrthodoxImplementation(locale);
 };

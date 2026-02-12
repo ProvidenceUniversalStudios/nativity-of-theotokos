@@ -81,22 +81,19 @@ model NewsArticle {
 }
 
 model FeaturedArticle {
-    newsArticle   NewsArticle @relation(fields: [newsArticleId], references: [id])
+    newsArticle   NewsArticle @relation(fields: [newsArticleId], references: [id], onDelete: Cascade)
     newsArticleId Int         @id
 }
 
 model GalleryImage {
-    id                 Int                 @id @default(autoincrement())
-    imageLink          String
-    dailyGalleryImages DailyGalleryImage[]
+    id        Int    @id @default(autoincrement())
+    imageLink String
 }
 
 model DailyGalleryImage {
-    date           DateTime     @db.Date
-    galleryImage   GalleryImage @relation(fields: [galleryImageId], references: [id])
-    galleryImageId Int
-
-    @@id([date, galleryImageId])
+    id        Int      @id @default(autoincrement())
+    date      DateTime @db.Date
+    imageLink String   @unique
 }
 
 model ImagePlaceholder {
