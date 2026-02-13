@@ -1,6 +1,5 @@
 "use client";
-
-import { LoadingBarContext } from "@/src/lib/component/loading-bar/LoadingBar";
+import { PageLoadingBarContext } from "@/src/lib/component/page-loading-bar/PageLoadingBar";
 import { loadingBarVIInterface } from "@/src/lib/model-implementation/loading-bar";
 import { useNewStatefulInteractiveModel } from "@mvc-react/stateful";
 
@@ -9,14 +8,14 @@ export const ClientProviders = function ({
 }: {
 	children: React.ReactNode;
 }) {
-	const loadingBarModel = useNewStatefulInteractiveModel(
+	const pageLoadingBar = useNewStatefulInteractiveModel(
 		loadingBarVIInterface(),
 	);
 
 	return (
-		<LoadingBarContext.Provider value={loadingBarModel}>
+		<PageLoadingBarContext.Provider value={pageLoadingBar}>
 			{children}
-		</LoadingBarContext.Provider>
+		</PageLoadingBarContext.Provider>
 	);
 };
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { LoadingBarContext } from "@/src/lib/component/loading-bar/LoadingBar";
 import { errorPageVIInterface } from "@/src/lib/model-implementation/error-page";
 import { useInitializedStatefulInteractiveModel } from "@mvc-react/stateful";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { useContext, useEffect, useLayoutEffect } from "react";
 import ErrorPage from "./error-page/ErrorPage";
+import { PageLoadingBarContext } from "@/src/lib/component/page-loading-bar/PageLoadingBar";
 
 export async function generateMetadata({
 	params,
@@ -29,10 +29,10 @@ export default function Page({
 	reset: () => void;
 }) {
 	const message = error.digest ? `digest: ${error.digest}` : error.message;
-	const loadingBar = useContext(LoadingBarContext);
+	const pageLoadingBar = useContext(PageLoadingBarContext);
 	const { modelView: errorPageModelView, interact: errorPageInteract } =
 		useInitializedStatefulInteractiveModel(
-			errorPageVIInterface(reset, loadingBar),
+			errorPageVIInterface(reset, pageLoadingBar),
 			{ message },
 		);
 
@@ -46,14 +46,14 @@ export default function Page({
 			// HACK
 			setTimeout(
 				() =>
-					loadingBar.interact({
+					pageLoadingBar.interact({
 						type: "SET_LOADING",
 						input: { value: false },
 					}),
 				1000,
 			);
 		};
-	}, [loadingBar]);
+	}, [pageLoadingBar]);
 
 	return (
 		<ErrorPage

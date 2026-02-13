@@ -5,7 +5,7 @@ import { NavigationMenuModel } from "../../model/navigation-menu";
 import { TextAlignJustifyIcon as MenuIcon } from "lucide-react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Fragment } from "react/jsx-runtime";
-import { Link } from "../loading-bar/navigation";
+import { Link } from "../page-loading-bar/navigation";
 
 const NavigationMenu = function ({ model }) {
 	const { navlinks, menuType } = model.modelView;

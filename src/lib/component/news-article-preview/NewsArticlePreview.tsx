@@ -6,14 +6,14 @@ import Image from "next/image";
 import { georgia } from "../../third-party/fonts";
 import { toZonedTime } from "date-fns-tz";
 import { useRouter } from "@/src/i18n/navigation";
-import { useLoadingBarRouter } from "../loading-bar/navigation";
+import { usePageLoadingBarRouter } from "../page-loading-bar/navigation";
 import { useTranslations } from "next-intl";
 
 const NewsArticlePreview = function ({ model }) {
 	const { articlePreview: article, isFeatured } = model.modelView;
 	const { title, author, dateCreated, snippet, articleImage } = article;
 	const { placeholder, source, about } = articleImage;
-	const router = useLoadingBarRouter(useRouter);
+	const router = usePageLoadingBarRouter(useRouter);
 	const dateLocale = "ru-RU";
 	const dateString = toZonedTime(dateCreated, "CAT").toLocaleDateString(
 		dateLocale,

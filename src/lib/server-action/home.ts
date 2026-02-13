@@ -208,11 +208,12 @@ export async function getLatestNews(
 ): Promise<LatestNews> {
 	const baseURL = await getBaseURL();
 	const otherArticles = await prismaClient.newsArticle.findMany({
-		where: {
-			featuredArticle: {
-				is: null,
-			},
-		},
+		// TODO: Reinstate when we have enough articles
+		// where: {
+		// 	featuredArticle: {
+		// 		is: null,
+		// 	},
+		// },
 		orderBy: {
 			dateCreated: "desc",
 		},

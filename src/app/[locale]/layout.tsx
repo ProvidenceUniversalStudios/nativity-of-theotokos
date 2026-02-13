@@ -1,15 +1,15 @@
+import "@/src/app/globals.css";
 import { routing } from "@/src/i18n/routing";
 import Footer from "@/src/lib/component/footer/Footer";
 import Header from "@/src/lib/component/header/Header";
 import LanguageSwitcher from "@/src/lib/component/language-switcher/LanguageSwitcher";
-import LoadingBar from "@/src/lib/component/loading-bar/LoadingBar";
+import PageLoadingBar from "@/src/lib/component/page-loading-bar/PageLoadingBar";
 import { newReadonlyModel } from "@mvc-react/mvc";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Google_Sans, Google_Sans_Flex } from "next/font/google";
 import { notFound } from "next/navigation";
-import "@/src/app/globals.css";
 import ClientProviders from "./client-providers";
 
 export async function generateMetadata({
@@ -61,7 +61,7 @@ export default async function RootLayout({
 			>
 				<NextIntlClientProvider>
 					<ClientProviders>
-						<LoadingBar />
+						<PageLoadingBar />
 						<Header
 							model={newReadonlyModel({
 								navlinks: [
@@ -72,13 +72,13 @@ export default async function RootLayout({
 										isReplaceable: true,
 									},
 									{
-										link: "/#media",
-										text: tNavMenu("media"),
+										link: "/#resources",
+										text: tNavMenu("aboutUs"),
 										isReplaceable: true,
 									},
 									{
-										link: "/#resources",
-										text: tNavMenu("aboutUs"),
+										link: "/#media",
+										text: tNavMenu("media"),
 										isReplaceable: true,
 									},
 									{

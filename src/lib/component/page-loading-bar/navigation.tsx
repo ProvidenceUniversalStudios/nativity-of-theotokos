@@ -1,12 +1,12 @@
 import {
-	useRouter,
-	usePathname,
 	Link as LocalizedLink,
+	usePathname,
+	useRouter,
 } from "@/src/i18n/navigation";
-import { ComponentProps, useContext } from "react";
-import { LoadingBarContext } from "./LoadingBar";
-import { QueryParams } from "next-intl/navigation";
 import { useLocale } from "next-intl";
+import { QueryParams } from "next-intl/navigation";
+import { ComponentProps, useContext } from "react";
+import { PageLoadingBarContext } from "./PageLoadingBar";
 
 function triggerLoading(
 	pathName: string,
@@ -25,13 +25,13 @@ function triggerLoading(
 	return destinationPathname != pathName;
 }
 
-export function useLoadingBarRouter<T extends typeof useRouter>(
+export function usePageLoadingBarRouter<T extends typeof useRouter>(
 	useRouterHook: T,
 ) {
 	const router = useRouterHook();
 	const pathName = usePathname();
 	const locale = useLocale();
-	const { interact } = useContext(LoadingBarContext);
+	const { interact } = useContext(PageLoadingBarContext);
 	return {
 		...router,
 		push(href, options?) {
@@ -61,7 +61,7 @@ export function Link(props: ComponentProps<typeof LocalizedLink>) {
 	const { href, locale } = props;
 	const pathName = usePathname();
 	const currentLocale = useLocale();
-	const { interact } = useContext(LoadingBarContext);
+	const { interact } = useContext(PageLoadingBarContext);
 
 	return (
 		<LocalizedLink

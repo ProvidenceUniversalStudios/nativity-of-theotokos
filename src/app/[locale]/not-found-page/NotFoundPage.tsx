@@ -1,8 +1,8 @@
 "use client";
 import NotFoundGraphic from "@/public/ui/ornament_35.svg";
 import { useRouter } from "@/src/i18n/navigation";
-import { LoadingBarContext } from "@/src/lib/component/loading-bar/LoadingBar";
-import { useLoadingBarRouter } from "@/src/lib/component/loading-bar/navigation";
+import { usePageLoadingBarRouter } from "@/src/lib/component/page-loading-bar/navigation";
+import { PageLoadingBarContext } from "@/src/lib/component/page-loading-bar/PageLoadingBar";
 import { georgia } from "@/src/lib/third-party/fonts";
 import { Metadata } from "next";
 import { useTranslations } from "next-intl";
@@ -23,8 +23,8 @@ export async function generateMetadata({
 }
 
 export default function NotFoundPage() {
-	const router = useLoadingBarRouter(useRouter);
-	const loadingBar = useContext(LoadingBarContext);
+	const router = usePageLoadingBarRouter(useRouter);
+	const pageLoadingBar = useContext(PageLoadingBarContext);
 	const t = useTranslations("notFound");
 
 	useLayoutEffect(() => {
@@ -50,7 +50,7 @@ export default function NotFoundPage() {
 					<button
 						className="text-white rounded-lg bg-[#250203]/82 p-4 w-30 hover:bg-[#250203]/92 active:bg-[#250203]"
 						onClick={() => {
-							if (loadingBar.modelView) router.push("/");
+							if (pageLoadingBar.modelView) router.push("/");
 							else window.open("/", "_self");
 						}}
 					>

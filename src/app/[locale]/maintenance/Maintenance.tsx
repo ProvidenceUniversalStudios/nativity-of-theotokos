@@ -2,13 +2,13 @@
 
 import MaintenanceGraphic from "@/public/ui/ornament_36.svg";
 import { useRouter } from "@/src/i18n/navigation";
-import { useLoadingBarRouter } from "@/src/lib/component/loading-bar/navigation";
+import { usePageLoadingBarRouter } from "@/src/lib/component/page-loading-bar/navigation";
 import { georgia } from "@/src/lib/third-party/fonts";
 import { useTranslations } from "next-intl";
 import { useLayoutEffect } from "react";
 
 export default function Maintenance() {
-	const router = useLoadingBarRouter(useRouter);
+	const router = usePageLoadingBarRouter(useRouter);
 	const t = useTranslations("maintenance");
 
 	useLayoutEffect(() => {

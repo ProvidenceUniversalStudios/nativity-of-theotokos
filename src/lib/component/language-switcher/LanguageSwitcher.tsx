@@ -5,7 +5,7 @@ import { useInitializedStatefulInteractiveModel } from "@mvc-react/stateful";
 import { languageToggleButtonVIInterface } from "../../model-implementation/language-toggle-button";
 import { LanguageSwitcherModel } from "../../model/language-switcher";
 import { Language } from "../../type/miscellaneous";
-import { useLoadingBarRouter } from "../loading-bar/navigation";
+import { usePageLoadingBarRouter } from "../page-loading-bar/navigation";
 import LanguageToggleButton from "./LanguageToggleButton";
 import { ModeledVoidComponent } from "@mvc-react/components";
 import EventEmitter from "node:events";
@@ -15,7 +15,7 @@ const LanguageSwitcher = function ({ model }) {
 	const { locale } = model.modelView;
 	const displayedLanguage: Language = locale == "en" ? "ru" : "en";
 	const currentPathName = usePathname();
-	const router = useLoadingBarRouter(useRouter);
+	const router = usePageLoadingBarRouter(useRouter);
 	const [localeChangeEmitter] = useState(new EventEmitter());
 	const languageToggleButton = useInitializedStatefulInteractiveModel(
 		languageToggleButtonVIInterface(

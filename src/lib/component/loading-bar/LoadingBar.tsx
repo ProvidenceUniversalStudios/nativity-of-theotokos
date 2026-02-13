@@ -1,19 +1,13 @@
 "use client";
 
+import { usePathname } from "@/src/i18n/navigation";
+import { ModeledVoidComponent } from "@mvc-react/components";
+import { useEffect, useState } from "react";
 import { LoadingBarModel } from "../../model/loading-bar";
 import "./loading-bar.css";
-import { usePathname } from "@/src/i18n/navigation";
-import { createContext, useContext, useEffect, useState } from "react";
 
-export const LoadingBarContext = createContext<LoadingBarModel>({
-	interact: async function () {
-		throw new Error("Function not implemented.");
-	},
-	modelView: null,
-});
-
-const LoadingBar = function () {
-	const { modelView, interact } = useContext(LoadingBarContext);
+const LoadingBar = function ({ model }) {
+	const { modelView, interact } = model;
 	const currentPathName = usePathname();
 	const [initialPathName, setInitialPathName] = useState(currentPathName);
 
@@ -35,6 +29,6 @@ const LoadingBar = function () {
 			className={`loading-bar h-[1.5px] bg-[#dcb042] sticky top-0 z-12 ${!modelView?.isLoading && "hidden"}`}
 		/>
 	);
-};
+} satisfies ModeledVoidComponent<LoadingBarModel>;
 
 export default LoadingBar;

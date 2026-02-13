@@ -5,7 +5,7 @@ import LatestNewsOrnament from "@/public/ui/ornament_11.svg";
 import HymnsOrnament from "@/public/ui/ornament_9.svg";
 import { useRouter } from "@/src/i18n/navigation";
 import HymnsModal from "@/src/lib/component/hymns-modal/HymnsModal";
-import { useLoadingBarRouter } from "@/src/lib/component/loading-bar/navigation";
+import { usePageLoadingBarRouter } from "@/src/lib/component/page-loading-bar/navigation";
 import NewsArticlePreview from "@/src/lib/component/news-article-preview/NewsArticlePreview";
 import ScheduleItem from "@/src/lib/component/schedule-item/ScheduleItem";
 import SplashScreen from "@/src/lib/component/splash-screen/SplashScreen";
@@ -32,7 +32,7 @@ type MailingListStatus = "subscribed" | "not_subscribed" | "pending";
 
 export default function Home() {
 	const { modelView } = useHome();
-	const router = useLoadingBarRouter(useRouter);
+	const router = usePageLoadingBarRouter(useRouter);
 	const t = useTranslations("home");
 	const tLinks = useTranslations("links");
 	const tQuote = useTranslations("quote");
@@ -166,7 +166,7 @@ export default function Home() {
 										transition={{
 											ease: "easeOut",
 										}}
-										className="daily-saints flex md:flex-row md:h-fit items-stretch bg-[#FEF8F3] border text-black border-gray-900/20 rounded-lg overflow-clip"
+										className="daily-saints flex md:flex-row md:h-fit md:max-h-[23em] items-stretch bg-[#FEF8F3] border text-black border-gray-900/20 rounded-lg overflow-clip"
 									>
 										<div className="md:flex min-w-60 w-60 lg:min-w-60 lg:w-60 items-stretch justify-center p-2 hidden bg-gray-800">
 											<Image
@@ -603,7 +603,7 @@ export default function Home() {
 										setMailingListStatus("pending");
 									}}
 								>
-									<div className="flex flex-nowrap items-stretch text-black rounded-lg overflow-clip">
+									<div className="flex flex-nowrap items-stretch text-black rounded-lg overflow-clip md:max-w-[32em]">
 										<input
 											className="grow p-4 bg-[whitesmoke] w-full"
 											type="email"
