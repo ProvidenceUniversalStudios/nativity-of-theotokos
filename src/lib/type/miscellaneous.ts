@@ -50,6 +50,7 @@ export type Image = {
 };
 
 export type NewsArticle = {
+	uri: string;
 	title: string;
 	author: string;
 	body: string;

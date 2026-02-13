@@ -35,6 +35,7 @@ export async function getArticle(articleId: string): Promise<NewsArticle> {
 			placeholderRepository,
 		);
 		return {
+			uri: article.id.toString(),
 			title: article.title,
 			author: article.author,
 			dateCreated: article.dateCreated,

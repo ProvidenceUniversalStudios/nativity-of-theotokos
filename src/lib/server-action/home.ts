@@ -287,6 +287,7 @@ export async function getLatestNews(
 	return {
 		featuredArticle: {
 			...featuredArticle.newsArticle,
+			uri: featuredArticle.newsArticle.id.toString(), // TODO: Alter schema
 			articleImage: {
 				source: featuredArticle.newsArticle.imageLink,
 				placeholder: articlePlaceholders.get(
@@ -296,6 +297,7 @@ export async function getLatestNews(
 		},
 		otherNewsArticles: otherArticles.map(article => ({
 			...article,
+			uri: article.id.toString(),
 			articleImage: {
 				source: article.imageLink,
 				placeholder: articlePlaceholders.get(
