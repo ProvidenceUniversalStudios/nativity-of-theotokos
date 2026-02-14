@@ -3,18 +3,24 @@ import { NewsArticleModel } from "@/src/lib/model/news-article";
 import { georgia } from "@/src/lib/third-party/fonts";
 import { ModeledVoidComponent } from "@mvc-react/components";
 import { toZonedTime } from "date-fns-tz";
+import { Share as Share } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 
 const NewsArticle = function ({ model }) {
 	const { article } = model.modelView;
-	const { title, author, articleImage, dateCreated, dateUpdated, body } =
+	const { title, author, articleImage, dateCreated, dateUpdated, body, uri } =
 		article;
 	const { source, about, placeholder } = articleImage;
 	const locale = useLocale();
 	const dateLocale = locale == "ru" ? "ru-RU" : "en-uk";
 	const t = useTranslations("news");
 	const tCaptions = useTranslations("imageCaptions");
+	const articlePath = `/news/${uri}`;
+	const shareData: ShareData = {
+		title,
+		url: `${window.location.origin}/${articlePath}`,
+	};
 
 	return (
 		<main className="newsarticle bg-[#FEF8F3] text-black">
@@ -61,6 +67,19 @@ const NewsArticle = function ({ model }) {
 							blurDataURL={placeholder}
 						/>
 					</div>
+				</div>
+				<div className="share-widget flex gap-3 self-end text-sm items-center">
+					<button
+						className="share flex p-0 gap-3 items-end"
+						onClick={() => {
+							if (navigator.canShare(shareData)) {
+								navigator.share(shareData);
+							}
+						}}
+					>
+						<span className="uppercase text-sm">Share</span>
+						<Share stroke="#250203" strokeWidth={1.5} />
+					</button>
 				</div>
 				<hr className="text-black/50 mt-6 mb-3 w-full self-center md:w-3/4" />
 				<p

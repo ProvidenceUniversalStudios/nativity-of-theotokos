@@ -5,15 +5,14 @@ import { NewsArticlePreviewModel } from "../../model/news-article-preview";
 import Image from "next/image";
 import { georgia } from "../../third-party/fonts";
 import { toZonedTime } from "date-fns-tz";
-import { useRouter } from "@/src/i18n/navigation";
-import { usePageLoadingBarRouter } from "../page-loading-bar/navigation";
 import { useTranslations } from "next-intl";
 
 const NewsArticlePreview = function ({ model }) {
 	const { articlePreview: article, isFeatured } = model.modelView;
 	const { title, author, dateCreated, snippet, articleImage, uri } = article;
 	const { placeholder, source, about } = articleImage;
-	const router = usePageLoadingBarRouter(useRouter);
+	const articleLink = `/news/${uri}`;
+	// const router = usePageLoadingBarRouter(useRouter);
 	const dateLocale = "ru-RU";
 	const dateString = toZonedTime(dateCreated, "CAT").toLocaleDateString(
 		dateLocale,
@@ -27,8 +26,8 @@ const NewsArticlePreview = function ({ model }) {
 		<div
 			className="featured-card flex flex-col select-none hover:cursor-pointer bg-[#FEF8F3] border border-gray-900/20 rounded-lg overflow-clip hover:border-[#dcb042] hover:[&_.title]:underline hover:scale-[1.03] active:border-[#dcb042] active:[&_.title]:underline active:scale-[1.03] transition ease-out duration-150"
 			onClick={() => {
-				router.push(`/news/${uri}`);
-				router.refresh();
+				// router.push(`/news/${uri}`); // TODO: Restored when home splash is fixed
+				window.open(articleLink, "_blank");
 			}}
 		>
 			<div className="flex justify-stretch items-stretch w-full h-[15em] max-h-[80dvh]">
@@ -43,9 +42,16 @@ const NewsArticlePreview = function ({ model }) {
 				/>
 			</div>
 			<div className="card-details p-4 flex flex-col gap-1.5">
-				<span className={`title text-xl mb-1 ${georgia.className}`}>
-					{title}
-				</span>
+				<a
+					className="no-underline"
+					href={articleLink}
+					target="_blank"
+					onClick={e => e.preventDefault()}
+				>
+					<span className={`title text-xl mb-1 ${georgia.className}`}>
+						{title}
+					</span>
+				</a>
 				<span className="timestamp text-sm text-gray-600">
 					{author} — {dateString}
 				</span>
@@ -56,8 +62,8 @@ const NewsArticlePreview = function ({ model }) {
 		<div
 			className="normal-card flex flex-row items-center max-w-[27em] gap-4 md:gap-0 lg:bg-transparent lg:text-black hover:cursor-pointer hover:[&_.title]:underline active:[&_.title]:underline select-none"
 			onClick={() => {
-				router.push(`/news/${uri}`);
-				router.refresh();
+				// router.push(`/news/${uri}`); // TODO: Restored when home splash is fixed
+				window.open(articleLink, "_blank");
 			}}
 		>
 			<div className="flex justify-stretch items-stretch w-[7em] min-w-[7em] h-[6em] max-h-[6em] md:w-[8em] md:min-w-[8em] md:h-[6.4em] md:max-h-[6.4em] rounded-lg overflow-clip">
@@ -72,7 +78,14 @@ const NewsArticlePreview = function ({ model }) {
 				/>
 			</div>
 			<div className="card-details py-4 md:px-6 flex flex-col gap-1.5">
-				<span className="title text-sm lg:text-base">{title}</span>
+				<a
+					className="no-underline"
+					href={articleLink}
+					target="_blank"
+					onClick={e => e.preventDefault()}
+				>
+					<span className="title text-sm lg:text-base">{title}</span>
+				</a>
 				<span className="byline text-xs lg:text-sm text-gray-600">
 					{author} — {dateString}
 				</span>

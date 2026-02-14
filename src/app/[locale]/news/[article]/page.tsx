@@ -16,7 +16,7 @@ function articleJsonLd(article: NewsArticleType) {
 			"@type": "Person",
 			name: author,
 		},
-		image: articleImage,
+		image: articleImage.source,
 	};
 }
 
