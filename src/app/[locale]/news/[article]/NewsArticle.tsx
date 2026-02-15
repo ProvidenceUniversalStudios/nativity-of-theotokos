@@ -68,9 +68,9 @@ const NewsArticle = function ({ model }) {
 						/>
 					</div>
 				</div>
-				<div className="share-widget flex gap-3 self-end text-sm items-center">
+				<div className="flex gap-3 self-end text-sm items-center">
 					<button
-						className="share flex p-0 gap-3 items-end"
+						className="flex p-0 gap-3 items-end"
 						onClick={() => {
 							if (navigator.canShare(shareData)) {
 								navigator.share(shareData);
@@ -81,7 +81,7 @@ const NewsArticle = function ({ model }) {
 						<Share stroke="#250203" strokeWidth={1.5} />
 					</button>
 				</div>
-				<hr className="text-black/50 mt-6 mb-3 w-full self-center md:w-3/4" />
+				<hr className="text-black/50 my-3 w-full self-center md:w-3/4" />
 				<p
 					className={`body text-lg/relaxed md:w-55/100 md:min-w-lg self-center md:text-xl/relaxed`}
 					dangerouslySetInnerHTML={{ __html: body }}

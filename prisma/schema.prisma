@@ -93,7 +93,9 @@ model GalleryImage {
 model DailyGalleryImage {
     id        Int      @id @default(autoincrement())
     date      DateTime @db.Date
-    imageLink String   @unique
+    imageLink String
+
+    @@unique([date, imageLink])
 }
 
 model ImagePlaceholder {
