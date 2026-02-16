@@ -44,6 +44,7 @@ export async function getArticle(articleId: string): Promise<NewsArticle> {
 			snippet: article.snippet,
 			articleImage: {
 				source: article.imageLink,
+				about: article.imageCaption ?? undefined,
 				placeholder,
 			},
 		};

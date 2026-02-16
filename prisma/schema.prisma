@@ -73,6 +73,7 @@ model NewsArticle {
     body            String
     snippet         String
     imageLink       String
+    imageCaption    String?
     titleRu         String?
     authorRu        String?
     bodyRu          String?

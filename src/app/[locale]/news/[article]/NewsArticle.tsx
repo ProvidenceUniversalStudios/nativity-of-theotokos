@@ -55,17 +55,24 @@ const NewsArticle = function ({ model }) {
 							</span>
 						</div>
 					</div>
-					<div className="flex justify-stretch items-stretch w-full h-[15em] rounded-lg overflow-clip md:w-1/2 md:h-fit md:grow md:self-stretch md:max-h-[25em]">
-						<Image
-							className="grow object-cover object-center"
-							height={600}
-							width={600}
-							alt={about ?? tCaptions("newsArticleImage")}
-							title={about}
-							src={source}
-							placeholder="blur"
-							blurDataURL={placeholder}
-						/>
+					<div className="flex flex-col gap-3 w-full md:w-1/2 md:grow md:self-stretch">
+						<div className="flex justify-stretch items-stretch w-full h-[15em] rounded-lg overflow-clip md:h-fit md:max-h-[25em]">
+							<Image
+								className="grow object-cover object-center"
+								height={600}
+								width={600}
+								alt={about ?? tCaptions("newsArticleImage")}
+								title={about}
+								src={source}
+								placeholder="blur"
+								blurDataURL={placeholder}
+							/>
+						</div>
+						{about && (
+							<span className={`text-xs/relaxed uppercase`}>
+								{about}
+							</span>
+						)}
 					</div>
 				</div>
 				<div className="flex gap-3 self-end text-sm items-center">
@@ -81,7 +88,7 @@ const NewsArticle = function ({ model }) {
 						<Share stroke="#250203" strokeWidth={1.5} />
 					</button>
 				</div>
-				<hr className="text-black/50 my-3 w-full self-center md:w-3/4" />
+				<hr className="text-black/50 w-full self-center md:w-3/4" />
 				<p
 					className={`body text-lg/relaxed md:w-55/100 md:min-w-lg self-center md:text-xl/relaxed`}
 					dangerouslySetInnerHTML={{ __html: body }}
