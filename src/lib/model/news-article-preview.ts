@@ -1,7 +1,10 @@
 import { ReadonlyModel } from "@mvc-react/mvc";
 import { NewsArticle } from "../type/miscellaneous";
 
-export type NewsArticlePreview = Omit<NewsArticle, "body" | "dateUpdated">;
+export type NewsArticlePreview = Omit<
+	NewsArticle,
+	"body" | "dateUpdated" | "url"
+>;
 
 export interface NewsArticlePreviewModelView {
 	articlePreview: NewsArticlePreview;
