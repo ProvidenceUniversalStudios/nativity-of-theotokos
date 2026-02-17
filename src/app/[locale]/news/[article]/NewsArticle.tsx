@@ -97,7 +97,7 @@ const NewsArticle = function ({ model }) {
 						model={newReadonlyModel({
 							details: {
 								type: "WhatsApp",
-								link: `https://wa.me/?text=${encodedShareData.title}\n\n${encodedShareData.url}`,
+								link: `https://wa.me/?text=${encodedShareData.title}%20${encodedShareData.url}`,
 							},
 						})}
 					/>
