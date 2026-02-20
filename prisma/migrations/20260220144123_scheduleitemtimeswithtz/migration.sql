@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "ScheduleItemTime" ALTER COLUMN "time" SET DATA TYPE TIMESTAMPTZ;

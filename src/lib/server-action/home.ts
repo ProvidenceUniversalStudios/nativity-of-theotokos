@@ -8,7 +8,7 @@ import {
 } from "@grod56/placeholder";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { arrayToShuffled } from "array-shuffle";
-import { formatInTimeZone, toZonedTime } from "date-fns-tz";
+import { formatInTimeZone } from "date-fns-tz";
 import { getLocale, getTranslations } from "next-intl/server";
 import { NewsArticlePreview } from "../model/news-article-preview";
 import holytrinityorthodox from "../third-party/holytrinityorthodox";
@@ -174,7 +174,15 @@ export async function getScheduleItems(
 			...scheduleItem,
 			times: scheduleItem.times.map(time => ({
 				...time,
-				time: toZonedTime(time.time, "CAT"), // This works!
+				time: new Date(
+					Date.UTC(
+						time.time.getFullYear(),
+						time.time.getMonth() + 1,
+						time.time.getDate(),
+						time.time.getHours() - 2,
+						time.time.getMinutes(),
+					),
+				),
 			})),
 		}));
 		const isPresent = await prismaClient.scheduleItem.count({
